@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - apt:
+      name:
+      - gedit
+      - meld
+    become: yes
+
+
+  - name: Install Telegram
+    snap:
+      name: telegram-desktop
+    become: yes
