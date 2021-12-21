@@ -12,9 +12,9 @@
     become: yes
 
 
-  - name: Install Telegram
-    snap:
+  - snap:
       name:
       - telegram-desktop
       - glances
+      - vlc
     become: yes
