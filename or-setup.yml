@@ -4,12 +4,17 @@
   tasks:
   - apt:
       name:
-      - gedit
       - meld
+      - jq
+      - tmux
+      - htop
+      update_cache: yes
     become: yes
 
 
   - name: Install Telegram
     snap:
-      name: telegram-desktop
+      name:
+      - telegram-desktop
+      - glances
     become: yes
