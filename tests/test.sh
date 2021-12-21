@@ -1,13 +1,11 @@
 #!/bin/bash
 set -e
 
-UBUNTU_VERSION=impish
+TESTS_DIR=$(dirname "${BASH_SOURCE}")
 
-repo_root=$(git rev-parse --show-toplevel)
-repo_name=$(basename "${repo_root}")
-instance_name="${repo_name}-test"
+source "${TESTS_DIR}/compute_env.sh"
 
-multipass delete -p "${instance_name}" || true
-multipass launch --name "${instance_name}" "${UBUNTU_VERSION}"
-multipass mount "${repo_root}" "${instance_name}:/${repo_name}"
-multipass exec "${instance_name}" -- bash -c "ANSIBLE_BECOME_ASK_PASS=0 /${repo_name}/setup.sh"
+multipass delete -p "${INSTANCE_NAME}" || true
+multipass launch --name "${INSTANCE_NAME}" "${UBUNTU_VERSION}"
+multipass mount "${REPO_ROOT}" "${INSTANCE_NAME}:/${REPO_NAME}"
+"${TESTS_DIR}/exec_setup.sh"
