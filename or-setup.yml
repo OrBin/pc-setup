@@ -3,38 +3,8 @@
   connection: local
   tasks:
 
-  - stat:
-      path: /
-    register: stat_root
-
-  - name: stat /var/lib/apt/periodic/update-stamp
-    stat:
-      path: /var/lib/apt/periodic/update-stamp
-    register: stat_update_stamp
-
-  - set_fact:
-      last_apt_update_time: "{{stat_update_stamp.stat.mtime}}"
-    when: stat_update_stamp.stat is defined and stat_update_stamp.stat.exists
-
-  - name: stat /var/lib/apt/periodic/update-success-stamp
-    stat:
-      path: /var/lib/apt/periodic/update-success-stamp
-    when: stat_update_stamp.stat is not defined or not stat_update_stamp.stat.exists
-    register: stat_update_success_stamp
-
-  - set_fact:
-      last_apt_update_time: "{{stat_update_success_stamp.stat.mtime}}"
-    when: stat_update_success_stamp.stat is defined and stat_update_success_stamp.stat.exists
-
-
-  - debug:
-      msg: "Seems that apt-get update was never run since the initial OS installation, running apt-get update"
-    when: last_apt_update_time|float - stat_root.stat.ctime < 3600
-
-  - apt:
-      update_cache: yes
-    become: yes
-    when: last_apt_update_time|float - stat_root.stat.ctime < 3600
+  - import_tasks: tasks/timely-apt-update.yml
+    tags: ['timely-apt-update']
 
   - apt:
       name:
