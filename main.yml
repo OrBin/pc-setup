@@ -17,3 +17,7 @@
   - import_tasks: tasks/personal-tools.yml
     tags: ['personal-tools']
 
+# TODO set up aliases
+# TODO set up completion
+# TODO set up configuration for git and more
+# TODO set up SSH keys
