@@ -4,4 +4,9 @@
     - vlc
   become: yes
 
-# TODO: chrome
+- name: Install Google Chrome
+  import_role:
+    name: cmprescott.chrome
+  become: yes
+
+# TODO: zoom

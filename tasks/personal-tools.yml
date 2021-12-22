@@ -3,3 +3,5 @@
     name:
     - telegram-desktop
   become: yes
+
+# TODO spotify
