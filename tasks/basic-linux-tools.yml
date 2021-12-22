@@ -1,5 +1,5 @@
 ---
-- name: Installing basic linux tools (apt)
+- name: Install basic linux tools (apt)
   apt:
     name:
     - meld
@@ -10,9 +10,18 @@
   become: yes
 
 
-- name: Installing basic linux tools (snap)
+- name: Install basic linux tools (snap)
   snap:
     name:
     - glances
   become: yes
 
+- name: Download prettyping
+  get_url:
+    url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
+    dest: /opt/prettyping # TODO add to path or link to /usr/bin/
+    mode: '711'
+  become: yes
+
+
+# TODO: hstr, ncdu
