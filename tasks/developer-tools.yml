@@ -1,7 +1,7 @@
-# TODO: docker, JetBrains IDE(s)
+# TODO: docker, JetBrains IDE(s), recent python version/pyenv, golang
 
 - name: Install developer tools (snap)
   snap:
     name:
-    - gh
+    - gh # TODO install from an official source
   become: yes
