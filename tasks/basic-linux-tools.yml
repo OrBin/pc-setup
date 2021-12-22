@@ -6,6 +6,7 @@
     - jq
     - tmux
     - htop
+    - bat  # TODO alias batcat=bat + completion
   become: yes
 
 
@@ -14,3 +15,4 @@
     name:
     - glances
   become: yes
+
