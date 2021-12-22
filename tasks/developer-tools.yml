@@ -1,1 +1,7 @@
-# TODO: docker, JetBrains IDE(s), GH CLI
+# TODO: docker, JetBrains IDE(s)
+
+- name: Install developer tools (snap)
+  snap:
+    name:
+    - gh
+  become: yes
