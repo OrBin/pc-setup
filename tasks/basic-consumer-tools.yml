@@ -1,0 +1,7 @@
+- name: Install basic consumer tools (snap)
+  snap:
+    name:
+    - vlc
+  become: yes
+
+# TODO: chrome

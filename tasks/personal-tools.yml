@@ -1,0 +1,5 @@
+- name: Install personal tools (snap)
+  snap:
+    name:
+    - telegram-desktop
+  become: yes

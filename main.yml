@@ -8,18 +8,12 @@
   - import_tasks: tasks/basic-linux-tools.yml
     tags: ['basic-linux-tools']
 
-#  - apt:
-#      name:
-#      - meld
-#      - jq
-#      - tmux
-#      - htop
-#    become: yes
+  - import_tasks: tasks/basic-consumer-tools.yml
+    tags: ['basic-consumer-tools']
 
+  - import_tasks: tasks/developer-tools.yml
+    tags: ['developer-tools']
 
-  - snap:
-      name:
-      - telegram-desktop
-#      - glances
-      - vlc
-    become: yes
+  - import_tasks: tasks/personal-tools.yml
+    tags: ['personal-tools']
+
