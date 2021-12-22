@@ -1,23 +1,25 @@
 ---
-- hosts: localhost
-  connection: local
-  tasks:
+- hosts: all
 
+  tasks:
   - import_tasks: tasks/timely-apt-update.yml
     tags: ['timely-apt-update']
 
-  - apt:
-      name:
-      - meld
-      - jq
-      - tmux
-      - htop
-    become: yes
+  - import_tasks: tasks/basic-linux-tools.yml
+    tags: ['basic-linux-tools']
+
+#  - apt:
+#      name:
+#      - meld
+#      - jq
+#      - tmux
+#      - htop
+#    become: yes
 
 
   - snap:
       name:
       - telegram-desktop
-      - glances
+#      - glances
       - vlc
     become: yes

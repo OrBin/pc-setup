@@ -1,0 +1,16 @@
+---
+- name: Installing basic linux tools (apt)
+  apt:
+    name:
+    - meld
+    - jq
+    - tmux
+    - htop
+  become: yes
+
+
+- name: Installing basic linux tools (snap)
+  snap:
+    name:
+    - glances
+  become: yes
