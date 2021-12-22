@@ -9,4 +9,8 @@
     name: cmprescott.chrome
   become: yes
 
-# TODO: zoom
+- name: Install Zoom
+  apt:
+    deb: https://zoom.us/client/latest/zoom_{{download_architecture}}.deb
+  become: yes
+

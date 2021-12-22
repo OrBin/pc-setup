@@ -1,6 +1,9 @@
 ---
 - hosts: all
 
+  vars_files:
+    - vars.yml
+
   tasks:
   - import_tasks: tasks/timely-apt-update.yml
     tags: ['timely-apt-update']
@@ -16,6 +19,8 @@
 
   - import_tasks: tasks/personal-tools.yml
     tags: ['personal-tools']
+
+# TODO install slack (where does it belong?)
 
 # TODO set up aliases
 # TODO set up completion
