@@ -1,7 +1,23 @@
 # TODO: docker, JetBrains IDE(s), recent python version/pyenv, golang
 
-- name: Install developer tools (snap)
-  snap:
+- name: Download GH CLI GPG key public ring
+  get_url:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
+    mode: '0644'
+  become: yes
+
+- name: Add GH CLI repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+    state: present
+    filename: /etc/apt/sources.list.d/github-cli.list
+  become: yes
+
+- name: Install basic linux tools (apt)
+  apt:
+    update_cache: yes  # Required to update GH CLI repo
     name:
-    - gh # TODO install from an official source - https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
+    - gh
+    - git
   become: yes
