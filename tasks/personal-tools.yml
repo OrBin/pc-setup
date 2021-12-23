@@ -4,3 +4,6 @@
     - telegram-desktop
     - spotify
   become: yes
+
+# TODO kazam for screen casting
+# TODO pinta for image editing

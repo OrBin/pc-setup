@@ -21,3 +21,13 @@
     - gh
     - git
   become: yes
+
+- name: Install Docker
+  import_role:
+    name: geerlingguy.docker
+  vars:
+    docker_compose_version: "1.29.2"
+    docker_apt_arch: "{{packages_architecture}}"
+    docker_users:
+      - "{{ansible_user_id}}"  # Self user (the user running this setup)
+  become: yes

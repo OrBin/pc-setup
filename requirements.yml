@@ -1,3 +1,4 @@
 ---
 roles:
   - name: cmprescott.chrome
+  - name: geerlingguy.docker
