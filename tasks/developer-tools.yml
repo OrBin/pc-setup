@@ -1,4 +1,4 @@
-# TODO: docker, JetBrains IDE(s), recent python version/pyenv, golang
+# TODO: docker, JetBrains IDE(s), recent python version/pyenv, golang, NodeJS, setup Python venv
 
 - name: Download GH CLI GPG key public ring
   get_url:
