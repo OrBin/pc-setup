@@ -10,6 +10,7 @@
     - hstr # TODO hstr --show-configuration >> ~/.bashrc
     - ncdu # TODO alias du=ncdu
     - nano
+    - ffmpeg
   become: yes
 
 

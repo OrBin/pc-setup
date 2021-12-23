@@ -20,6 +20,8 @@
     name:
     - gh
     - git
+    - nmap
+    - wireshark
   become: yes
 
 - name: Install Docker
