@@ -34,10 +34,10 @@
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
   become: yes
 
-  - name: Install JetBrains IDEs
-    snap:
-      name:
-        - pycharm-professional
-        - goland
-      classic: yes
-    become: yes
+- name: Install JetBrains IDEs
+  snap:
+    name:
+      - pycharm-professional
+      - goland
+    classic: yes
+  become: yes
