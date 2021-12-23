@@ -7,6 +7,8 @@
     - tmux
     - htop
     - bat  # TODO alias batcat=bat + completion
+    - hstr # TODO hstr --show-configuration >> ~/.bashrc
+    - ncdu # TODO alias du=ncdu
   become: yes
 
 
@@ -22,6 +24,3 @@
     dest: /opt/prettyping # TODO add to path or link to /usr/bin/
     mode: '711'
   become: yes
-
-
-# TODO: hstr, ncdu
