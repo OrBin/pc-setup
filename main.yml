@@ -5,6 +5,13 @@
     - vars.yml
 
   tasks:
+  - name: Check architecture of packages
+    shell: dpkg --print-architecture
+    register: dpkg_print_architecture
+
+  - set_fact:
+      packages_architecture: "{{dpkg_print_architecture.stdout}}"
+
   - import_tasks: tasks/timely-apt-update.yml
     tags: ['timely-apt-update']
 
