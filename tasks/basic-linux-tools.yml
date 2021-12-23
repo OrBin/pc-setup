@@ -9,6 +9,7 @@
     - bat  # TODO alias batcat=bat + completion
     - hstr # TODO hstr --show-configuration >> ~/.bashrc
     - ncdu # TODO alias du=ncdu
+    - nano
   become: yes
 
 

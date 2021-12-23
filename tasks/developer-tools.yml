@@ -1,4 +1,4 @@
-# TODO: docker, JetBrains IDE(s), recent python version/pyenv, golang, NodeJS, setup Python venv
+# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv
 
 - name: Download GH CLI GPG key public ring
   get_url:
@@ -31,3 +31,11 @@
     docker_users:
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
   become: yes
+
+  - name: Install JetBrains IDEs
+    snap:
+      name:
+        - pycharm-professional
+        - goland
+      classic: yes
+    become: yes
