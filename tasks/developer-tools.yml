@@ -1,4 +1,4 @@
-# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv, awscli
+# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv, awscli, postman
 
 - name: Download GH CLI GPG key public ring
   get_url:
