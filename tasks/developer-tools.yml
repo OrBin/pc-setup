@@ -34,6 +34,11 @@
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
   become: yes
 
+- name: Install dive
+  apt:
+    deb: "https://github.com/wagoodman/dive/releases/download/v{{dive_version}}/dive_{{dive_version}}_linux_{{packages_architecture}}.deb"
+  become: yes
+
 - name: Install JetBrains IDEs
   snap:
     name:
