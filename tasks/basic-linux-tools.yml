@@ -13,11 +13,16 @@
     - ffmpeg
   become: yes
 
-
 - name: Install basic linux tools (snap)
   snap:
     name:
     - glances
+  become: yes
+
+- name: Install basic linux tools (pip)
+  pip:
+    name:
+    - thefuck # TODO put eval "$(thefuck --alias)" in ~/.bashrc, and alias f=fuck
   become: yes
 
 - name: Download prettyping
