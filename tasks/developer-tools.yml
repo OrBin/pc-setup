@@ -53,16 +53,11 @@
     channel: "{{postman_snap_channel}}"
   become: yes
 
-- name: Download AWS CLI
-  get_url:
-    url: "https://awscli.amazonaws.com/awscli-exe-linux-{{ansible_architecture}}.zip"
-    dest: "{{temp_dir}}/awscli.zip"
-  register: download_awscli
-
-- name: Extract AWS CLI
+- name: Download and extract AWS CLI
   unarchive:
-    src: "{{download_awscli.dest}}"
-    dest: "{{temp_dir}}/awscli"
+    src: "https://awscli.amazonaws.com/awscli-exe-linux-{{ansible_architecture}}.zip"
+    dest: "{{temp_dir}}"
+    remote_src: yes
   register: unarchive_awscli
 
 - name: Install AWS CLI
