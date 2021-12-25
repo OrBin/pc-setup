@@ -5,12 +5,8 @@
     - vars.yml
 
   tasks:
-  - name: Check architecture of packages
-    shell: dpkg --print-architecture
-    register: dpkg_print_architecture
-
-  - set_fact:
-      packages_architecture: "{{dpkg_print_architecture.stdout}}"
+  - import_tasks: tasks/setup.yml
+    tags: ['setup']
 
   - import_tasks: tasks/timely-apt-update.yml
     tags: ['timely-apt-update']
@@ -26,6 +22,10 @@
 
   - import_tasks: tasks/personal-tools.yml
     tags: ['personal-tools']
+
+  - import_tasks: tasks/teardown.yml
+    tags: ['teardown']
+
 
 # TODO install slack (where does it belong?)
 # TODO configure desktop, taskbar, lockscreen (swaylock? - available via apt) and hotkeys (where does it belong?)

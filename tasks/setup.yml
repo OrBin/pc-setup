@@ -1,0 +1,10 @@
+- name: Check architecture of packages
+  shell: dpkg --print-architecture
+  register: dpkg_print_architecture
+
+- set_fact:
+    packages_architecture: "{{dpkg_print_architecture.stdout}}"
+
+- file:
+    path: "{{temp_dir}}"
+    state: directory
