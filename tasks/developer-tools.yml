@@ -1,4 +1,4 @@
-# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv, awscli, postman
+# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv, awscli
 
 - name: Download GH CLI GPG key public ring
   get_url:
@@ -45,4 +45,10 @@
       - pycharm-professional
       - goland
     classic: yes
+  become: yes
+
+- name: Install Postman
+  snap:
+    name: postman
+    channel: "{{postman_snap_channel}}"
   become: yes
