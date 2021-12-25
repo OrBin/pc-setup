@@ -32,6 +32,7 @@
 
 # TODO set up aliases
 # TODO set up completion
-# TODO set up configuration for git and more
+# TODO set up configuration for git (with personal/work email) and more
+# TODO gh auth login
 # TODO set up SSH keys (and add to wherever necessary)
 # TODO add hebrew keyboard
