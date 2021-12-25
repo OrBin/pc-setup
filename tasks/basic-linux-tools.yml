@@ -46,8 +46,14 @@
 - name: Download prettyping
   get_url:
     url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
-    dest: /opt/prettyping # TODO add to path or link to /usr/bin/
+    dest: /opt/prettyping
     mode: '711'
   become: yes
+  register: download_prettyping
 
-# TODO diff-so-fancy
+- name: Create a symlink to prettyping
+  file:
+    src: "{{download_prettyping.dest}}"
+    dest: /usr/bin/prettyping
+    state: link
+  become: yes
