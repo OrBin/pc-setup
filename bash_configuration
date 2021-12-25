@@ -1,6 +1,6 @@
 alias cat='batcat'
 alias ping='prettyping --nolegend'
 alias top='htop'
-git config --global pager.diff 'diff-so-fancy | less --tabs=1,5 -RFX'
-git config --global pager.show 'diff-so-fancy | less --tabs=1,5 -RFX'
+git config --global pager.diff 'diff-so-fancy | less --tabs=1,5 -RFX' # TODO move to an ansible git_config stanza: https://docs.ansible.com/ansible/latest/collections/community/general/git_config_module.html
+git config --global pager.show 'diff-so-fancy | less --tabs=1,5 -RFX' # TODO move to an ansible git_config stanza: https://docs.ansible.com/ansible/latest/collections/community/general/git_config_module.html
 alias du='ncdu -rr'
