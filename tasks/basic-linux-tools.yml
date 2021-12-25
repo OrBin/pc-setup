@@ -6,12 +6,21 @@
     - jq
     - tmux
     - htop
-    - bat  # TODO alias batcat=bat + completion
-    - hstr # TODO hstr --show-configuration >> ~/.bashrc
-    - ncdu # TODO alias du=ncdu
+    - bat
+    - hstr
+    - ncdu
     - nano
     - ffmpeg
   become: yes
+
+- name: Generate configuration for hstr
+  shell: hstr --show-configuration
+  register: hstr_configuration
+
+- name: Add hstr configuration to bash configuration
+  lineinfile:
+    path: "{{bash_configuration_file_path}}"
+    line: "{{hstr_configuration.stdout}}"
 
 - name: Install basic linux tools (snap)
   snap:
@@ -22,8 +31,17 @@
 - name: Install basic linux tools (pip)
   pip:
     name:
-    - thefuck # TODO put eval "$(thefuck --alias)" in ~/.bashrc, and alias f=fuck
+    - thefuck
   become: yes
+
+- name: Evaluate alias for thefuck
+  shell: thefuck --alias
+  register: thefuck_alias
+
+- name: Add thefuck alias to bash configuration
+  lineinfile:
+    path: "{{bash_configuration_file_path}}"
+    line: "{{thefuck_alias.stdout}}"
 
 - name: Download prettyping
   get_url:
@@ -31,3 +49,5 @@
     dest: /opt/prettyping # TODO add to path or link to /usr/bin/
     mode: '711'
   become: yes
+
+# TODO diff-so-fancy

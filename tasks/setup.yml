@@ -5,6 +5,17 @@
 - set_fact:
     packages_architecture: "{{dpkg_print_architecture.stdout}}"
 
-- file:
+- name: Create directory for setup temporary files
+  file:
     path: "{{temp_dir}}"
     state: directory
+
+- name: Create initial bash_configuration file
+  copy:
+    src: "{{playbook_dir}}/playbook_dir/bash_configuration"
+    dest: "{{temp_dir}}/bash_configuration"
+  register: create_bash_configuration
+
+- set_fact:
+    bash_configuration_file_path: "{{create_bash_configuration.dest}}"
+

@@ -1,0 +1,6 @@
+alias cat='batcat'
+alias ping='prettyping --nolegend'
+alias top='htop'
+git config --global pager.diff 'diff-so-fancy | less --tabs=1,5 -RFX'
+git config --global pager.show 'diff-so-fancy | less --tabs=1,5 -RFX'
+alias du='ncdu -rr'
