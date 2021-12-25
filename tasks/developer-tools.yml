@@ -1,4 +1,4 @@
-# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv, awscli
+# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv
 
 - name: Download GH CLI GPG key public ring
   get_url:
@@ -51,4 +51,20 @@
   snap:
     name: postman
     channel: "{{postman_snap_channel}}"
+  become: yes
+
+- name: Download AWS CLI
+  get_url:
+    url: "https://awscli.amazonaws.com/awscli-exe-linux-{{ansible_architecture}}.zip"
+    dest: "{{temp_dir}}/awscli.zip"
+  register: download_awscli
+
+- name: Extract AWS CLI
+  unarchive:
+    src: "{{download_awscli.dest}}"
+    dest: "{{temp_dir}}/awscli"
+  register: unarchive_awscli
+
+- name: Install AWS CLI
+  shell: "{{unarchive_awscli.dest}}/aws/install"
   become: yes
