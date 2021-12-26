@@ -39,9 +39,11 @@
   register: thefuck_alias
 
 - name: Add thefuck alias to bash configuration
-  lineinfile:
+  blockinfile:
+    block: |
+      {{thefuck_alias.stdout}}
+      alias f=fuck
     path: "{{bash_configuration_file_path}}"
-    line: "{{thefuck_alias.stdout}}"
 
 - name: Download prettyping
   get_url:
