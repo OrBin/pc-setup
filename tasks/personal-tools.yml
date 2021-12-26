@@ -1,9 +1,3 @@
-- name: Install basic linux tools (apt)
-  apt:
-    name:
-    - steam
-  become: yes
-
 - name: Install personal tools (snap)
   snap:
     name:
@@ -48,6 +42,10 @@
     state: link
   become: yes
 
+- name: Install Steam
+  apt:
+    deb: https://repo.steampowered.com/steam/archive/precise/steam_latest.deb
+  become: yes
 
 # TODO chrome extensions
 
