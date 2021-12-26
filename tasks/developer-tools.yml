@@ -60,7 +60,7 @@
   register: unarchive_awscli
 
 - name: Install AWS CLI
-  shell: "{{unarchive_awscli.dest}}/aws/install"
+  shell: "{{unarchive_awscli.dest}}/aws/install --update"
   become: yes
 
 - name: Install NodeJS
