@@ -23,6 +23,9 @@
   - import_tasks: tasks/personal-tools.yml
     tags: ['personal-tools']
 
+  - import_tasks: tasks/configuration.yml
+    tags: ['configuration']
+
   - import_tasks: tasks/teardown.yml
     tags: ['teardown']
 
