@@ -1,3 +1,9 @@
+- name: Install basic linux tools (apt)
+  apt:
+    name:
+    - steam
+  become: yes
+
 - name: Install personal tools (snap)
   snap:
     name:
@@ -27,10 +33,22 @@
     name: pinta
   become: yes
 
+- name: Download Audacity
+  get_url:
+    url: "https://github.com/audacity/audacity/releases/download/Audacity-{{audacity_version}}/audacity-linux-{{audacity_version}}-{{ansible_architecture}}.AppImage"
+    dest: /opt/audacity.AppImage
+    mode: '711'
+  become: yes
+  register: download_audacity
+
+- name: Create a symlink to Audacity
+  file:
+    src: "{{download_audacity.dest}}"
+    dest: /usr/bin/audacity
+    state: link
+  become: yes
 
 
-# TODO audacity - personal only
-# TODO steam - personal only
 # TODO chrome extensions
 
 # TODO cura+openscad
