@@ -1,4 +1,4 @@
-# TODO: recent python version/pyenv, golang, NodeJS, setup Python venv
+# TODO: recent python version/pyenv, golang, setup Python venv
 
 - name: Download GH CLI GPG key public ring
   get_url:
@@ -63,3 +63,17 @@
 - name: Install AWS CLI
   shell: "{{unarchive_awscli.dest}}/aws/install"
   become: yes
+
+- name: Install NodeJS
+  import_role:
+    name: geerlingguy.nodejs
+  vars:
+    nodejs_version: "16.x"
+  become: yes
+
+- name: Install diff-so-fancy
+  npm:
+    name: diff-so-fancy
+    global: yes
+  become: yes
+
