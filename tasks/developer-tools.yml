@@ -7,16 +7,15 @@
     mode: '0644'
   become: yes
 
-- name: Add GH CLI repository into sources list
-  ansible.builtin.apt_repository:
+- name: Add GH CLI apt repository into sources list
+  apt_repository:
     repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
-    state: present
     filename: /etc/apt/sources.list.d/github-cli.list
+    update_cache: yes
   become: yes
 
 - name: Install basic linux tools (apt)
   apt:
-    update_cache: yes  # Required to update GH CLI repo
     name:
     - gh
     - git

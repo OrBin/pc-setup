@@ -5,8 +5,30 @@
     - spotify
   become: yes
 
-# TODO kazam for screen casting
-# TODO pinta for image editing
+- name: Add Kazam apt repository into sources list
+  apt_repository:
+    repo: "ppa:kazam-team/stable-series"
+    update_cache: yes
+  become: yes
+
+- name: Install Kazam
+  apt:
+    name: kazam
+  become: yes
+
+- name: Add Pinta apt repository into sources list
+  apt_repository:
+    repo: "ppa:pinta-maintainers/pinta-stable"
+    update_cache: yes
+  become: yes
+
+- name: Install Pinta
+  apt:
+    name: pinta
+  become: yes
+
+
+
 # TODO audacity - personal only
 # TODO steam - personal only
 # TODO chrome extensions
