@@ -5,6 +5,12 @@
     - spotify
   become: yes
 
+- name: Install personal tools (apt)
+  apt:
+    name:
+    - openscad
+  become: yes
+
 
 - name: Install Kazam
   pip:
@@ -42,6 +48,19 @@
     deb: https://repo.steampowered.com/steam/archive/precise/steam_latest.deb
   become: yes
 
-# TODO chrome extensions
+- name: Download Cura
+  get_url:
+    url: "https://software.ultimaker.com/cura/Ultimaker_Cura-{{cura_version}}.AppImage"
+    dest: /opt/cura.AppImage
+    mode: '711'
+  become: yes
+  register: download_cura
 
-# TODO cura+openscad
+- name: Create a symlink to Cura
+  file:
+    src: "{{download_cura.dest}}"
+    dest: /usr/bin/cura
+    state: link
+  become: yes
+
+# TODO Cura configuration and plugins
