@@ -1,0 +1,9 @@
+name: Test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - checkout
+      - run: |
+          bash -c "ANSIBLE_BECOME_ASK_PASS=0 ${GITHUB_WORKSPACE}/setup.sh --extra-vars \"@/${GITHUB_WORKSPACE}/tests/test_vars.yml\""
