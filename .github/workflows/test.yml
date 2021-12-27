@@ -2,7 +2,7 @@ name: Test
 on: [push]
 jobs:
   test:
-    runs-on: ubuntu-21.10
+    runs-on: ubuntu-20.04  # Should actually be 21.10, but GH Actions currently supports only 18.04 and 20.04
     steps:
       - uses: actions/checkout@v2
       - run: |
