@@ -1,0 +1,15 @@
+- name: Ask whether to install slack or not
+  pause:
+    prompt: Install slack? (y/N)
+  when: install_slack is undefined
+  register: install_slack_prompt
+
+- name: Set install_slack to "yes"
+  set_fact:
+    install_slack: yes
+  when: "{{ (install_slack_prompt.user_input|lower) in ['y', 'yes'] }}"
+
+- name: Set install_slack to "no"
+  set_fact:
+    install_slack: no
+  when: install_slack is undefined

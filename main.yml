@@ -5,6 +5,9 @@
     - vars.yml
 
   tasks:
+  - import_tasks: tasks/user_inputs.yml
+    tags: ['setup']
+
   - import_tasks: tasks/setup.yml
     tags: ['setup']
 
