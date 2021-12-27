@@ -11,11 +11,6 @@
     name: Kazam
   become: yes
 
-- name: Install Kazam
-  apt:
-    name: kazam
-  become: yes
-
 - name: Add Pinta apt repository into sources list
   apt_repository:
     repo: "ppa:pinta-maintainers/pinta-stable"

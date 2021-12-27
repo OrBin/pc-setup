@@ -1,8 +1,8 @@
-- name: Update .bashrc # TODO fix
+---
+- name: Update .bashrc
   blockinfile:
     block: "{{ lookup('file', bash_configuration_file_path) }}"
-    path: "{{ lookup('file', ansible_user_dir+'/.bashrc') }}"
+    path: "{{ansible_user_dir}}/.bashrc"
     backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
-    validate: "source {{ansible_user_dir}}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
