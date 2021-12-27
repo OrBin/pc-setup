@@ -17,5 +17,6 @@
 - name: Install Slack
   snap:
     name: slack
+    classic: yes
   become: yes
   when: install_slack
