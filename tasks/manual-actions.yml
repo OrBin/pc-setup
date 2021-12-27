@@ -18,6 +18,7 @@
     - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
     - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
     - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
+  when: "{{prompt_for_manual_actions}}"
 
 - name: Notify user that they should manually install Chrome extensions
   pause:
