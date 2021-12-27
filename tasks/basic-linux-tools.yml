@@ -1,4 +1,12 @@
 ---
+- name: Configure name servers
+  import_role:
+    name: ahuffman.resolv
+  vars:
+    resolv_nameservers:
+      - "8.8.8.8"
+      - "8.8.4.4"
+
 - name: Install basic linux tools (apt)
   apt:
     name:
@@ -11,6 +19,7 @@
     - ncdu
     - nano
     - ffmpeg
+    - python3-distutils-extra
   become: yes
 
 - name: Generate configuration for hstr

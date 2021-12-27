@@ -3,3 +3,4 @@ roles:
   - name: cmprescott.chrome
   - name: geerlingguy.docker
   - name: geerlingguy.nodejs
+  - name: ahuffman.resolv

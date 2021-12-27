@@ -5,15 +5,10 @@
     - spotify
   become: yes
 
-- name: Add Kazam apt repository into sources list
-  apt_repository:
-    repo: "ppa:kazam-team/stable-series"
-    update_cache: yes
-  become: yes
 
 - name: Install Kazam
-  apt:
-    name: kazam
+  pip:
+    name: Kazam
   become: yes
 
 - name: Add Pinta apt repository into sources list
