@@ -2,3 +2,23 @@ alias cat='batcat'
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu -rr'
+
+set_bluez_cards_profile() {
+    for card in $(pactl list short cards | cut -d $'\t' -f 2 | grep bluez_card); do
+        pactl set-card-profile "${card}" "${1}"
+    done
+}
+alias headset_zoom="set_bluez_cards_profile headset_head_unit"
+alias headset_music="set_bluez_cards_profile a2dp_sink"
+
+toucharm() {
+    touch "$1" && charm "$1"
+}
+
+restart_plasmashell() {
+    killall plasmashell
+    plasmashell > /dev/null 2>&1 &
+}
+
+alias ecr_login='$(aws ecr get-login | sed -E "s/-e none //")'
+

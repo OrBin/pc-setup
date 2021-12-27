@@ -1,14 +1,14 @@
 ---
 # TODO: recent python version/pyenv, golang, setup Python venv
 
-- name: Download GH CLI GPG key public ring
+- name: Download GitHub CLI GPG key public ring
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
     dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
     mode: '0644'
   become: yes
 
-- name: Add GH CLI apt repository into sources list
+- name: Add GitHub CLI apt repository into sources list
   apt_repository:
     repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
     filename: /etc/apt/sources.list.d/github-cli.list
@@ -23,6 +23,15 @@
     - nmap
     - wireshark
   become: yes
+
+- name: Evaluate completion for GitHub CLI
+  shell: gh completion -s bash
+  register: gh_completion
+
+- name: Add GitHub CLI completion to bash configuration
+  blockinfile:
+    block: "{{gh_completion.stdout}}"
+    path: "{{bash_configuration_file_path}}"
 
 - name: Install Docker
   import_role:

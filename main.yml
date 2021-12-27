@@ -38,8 +38,6 @@
 
 # TODO configure desktop, taskbar, lockscreen and hotkeys (where does it belong?)
 
-# TODO set up aliases
-# TODO set up completion
 # TODO set up configuration for git (with personal/work email) and more
 # TODO gh auth login
 # TODO set up SSH keys (and add to wherever necessary)
