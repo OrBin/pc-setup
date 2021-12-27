@@ -29,6 +29,9 @@
   - import_tasks: tasks/configuration.yml
     tags: ['configuration']
 
+  - import_tasks: tasks/manual-actions.yml
+    tags: ['manual-actions']
+
   - import_tasks: tasks/teardown.yml
     tags: ['teardown']
 

@@ -1,0 +1,27 @@
+---
+- name: Open Chrome extensions pages
+  shell: "google-chrome 'https://chrome.google.com/webstore/detail/{{ item }}'"
+  loop:
+    - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
+    - fihnjjcciajhdojfnbdddfaoknhalnja  # I don't care about cookies
+    - bcjindcccaagfpapjjmafapmmgkkhgoa  # JSON Formatter
+    - hdokiejnpimakedhajhdlcegeplioahd  # LastPass
+    - laookkfknpbbblfpciffpaejjkokdgca  # Momentum
+    - fjcldmjmjhkklehbacihaiopjklihlgg  # News Feed Eradicator
+    - jlmafbaeoofdegohdhinkhilhclaklkp  # OctoLinker
+    - bkhaagjahfmjljalopjnoealnfndnagc  # Octotree - GitHub code tree
+    - hlepfoohegkhhmjieoechaddaejaokhf  # Refined GitHub
+    - niloccemoadcdkdjlinkgdfekeahmflj  # Save to Pocket
+    - epcnnfbjfcgphgdmggkamkmgojdagdnn  # uBlock
+    - ldgiafaliifpknmgofiifianlnbgflgj  # Ugly Email
+    - egmbedhkleiholijlmnlhgcflooajdnb  # Unified Docs Switcher
+    - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
+    - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
+    - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
+
+- name: Notify user that they should manually install Chrome extensions
+  pause:
+    prompt: |
+      Please install chrome extensions.
+      I have opened their pages for you, just go on and install them :)
+  when: "{{prompt_for_manual_actions}}"
