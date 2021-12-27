@@ -14,3 +14,8 @@
     deb: https://zoom.us/client/latest/zoom_{{packages_architecture}}.deb
   become: yes
 
+- name: Install Slack
+  snap:
+    name: slack
+  become: yes
+  when: install_slack
