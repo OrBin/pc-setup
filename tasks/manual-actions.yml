@@ -1,4 +1,11 @@
 ---
+- name: Notify user that they should manually install Chrome extensions
+  pause:
+    prompt: |
+      Please install chrome extensions.
+      Press enter to automatically open their pages on chrome.
+  when: "{{prompt_for_manual_actions}}"
+
 - name: Open Chrome extensions pages
   shell: "google-chrome 'https://chrome.google.com/webstore/detail/{{ item }}'"
   loop:
@@ -20,9 +27,13 @@
     - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
   when: "{{prompt_for_manual_actions}}"
 
-- name: Notify user that they should manually install Chrome extensions
+- name: Notify user that they should login to GitHub CLI
   pause:
     prompt: |
-      Please install chrome extensions.
-      I have opened their pages for you, just go on and install them :)
+      Please login to GitHub CLI. 
+      Press enter to start.
+  when: "{{prompt_for_manual_actions}}"
+
+- name: Open Konsole for login to GitHub CLI
+  shell: "konsole -e gh auth login --web"
   when: "{{prompt_for_manual_actions}}"
