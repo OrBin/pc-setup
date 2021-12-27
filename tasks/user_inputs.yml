@@ -1,3 +1,4 @@
+---
 - name: Ask whether to install slack or not
   pause:
     prompt: Install slack? (y/N)

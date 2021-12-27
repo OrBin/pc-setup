@@ -1,0 +1,13 @@
+---
+- name: Open Chrome extensions pages
+    shell: "google-chrome 'https://chrome.google.com/webstore/detail/{{ item }}'"
+    loop:
+       - hdokiejnpimakedhajhdlcegeplioahd  # LastPass
+       - epcnnfbjfcgphgdmggkamkmgojdagdnn  # uBlock
+
+- name: Notify user that they should manually install Chrome extensions
+  pause:
+    prompt: |
+      Please install chrome extensions.
+      I have opened their pages for you, just go on and install them :)
+  when: "{{prompt_for_manual_actions}}"

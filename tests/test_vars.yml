@@ -1,2 +1,3 @@
 ---
 install_slack: yes
+prompt_for_manual_actions: no
