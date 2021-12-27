@@ -1,4 +1,4 @@
-- name: Update .bashrc
+- name: Update .bashrc # TODO fix
   blockinfile:
     block: "{{ lookup('file', bash_configuration_file_path) }}"
     path: "{{ lookup('file', ansible_user_dir+'/.bashrc') }}"
