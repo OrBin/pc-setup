@@ -7,7 +7,7 @@
 - name: Set install_slack to "yes"
   set_fact:
     install_slack: yes
-  when: "{{ (install_slack_prompt.user_input|lower) in ['y', 'yes'] }}"
+  when: install_slack is undefined and (install_slack_prompt.user_input|lower) in ['y', 'yes']
 
 - name: Set install_slack to "no"
   set_fact:
