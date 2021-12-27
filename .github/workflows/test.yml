@@ -4,6 +4,6 @@ jobs:
   test:
     runs-on: ubuntu-21.10
     steps:
-      - actions/checkout@v2
+      - uses: actions/checkout@v2
       - run: |
           bash -c "ANSIBLE_BECOME_ASK_PASS=0 ${GITHUB_WORKSPACE}/setup.sh --extra-vars \"@/${GITHUB_WORKSPACE}/tests/test_vars.yml\""
