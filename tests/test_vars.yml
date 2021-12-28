@@ -1,3 +1,5 @@
 ---
 install_slack: yes
 prompt_for_manual_actions: no
+ssh_key_passphrase: ''
+git_user_email: foo@example.com

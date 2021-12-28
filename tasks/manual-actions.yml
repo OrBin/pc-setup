@@ -27,6 +27,7 @@
     - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
   when: "{{prompt_for_manual_actions}}"
 
+# TODO only do this when not logged in
 - name: Notify user that they should login to GitHub CLI
   pause:
     prompt: |
@@ -34,6 +35,41 @@
       Press enter to start.
   when: "{{prompt_for_manual_actions}}"
 
+# TODO only do this when not logged in
 - name: Open Konsole for login to GitHub CLI
   shell: "konsole -e gh auth login --web"
   when: "{{prompt_for_manual_actions}}"
+
+# TODO only do this when SSH key does not exist
+- name: Request user input for SSH key passphrase
+  pause:
+    prompt: "Please enter passphrase for SSH key: "
+  when: "{{prompt_for_manual_actions}}"
+  register: ssh_key_passphrase
+
+# TODO only do this when SSH key does not exist
+- name: Generate an OpenSSH keypair with the default values (4096 bits, rsa) and encrypted private key
+  openssh_keypair:
+    path: "{{ansible_user_dir}}/.ssh/id_rsa"
+    passphrase: "{{ssh_key_passphrase}}"
+    mode: "0600"
+
+# TODO only do this when user email is not configured
+- name: Request user email for git configuration
+  pause:
+    prompt: "Please enter user email for git configuration: "
+  when: "{{prompt_for_manual_actions}}"
+  register: git_user_email
+
+- name: Configure git user name
+  git_config:
+    name: user.name
+    value: Or Bin
+    scope: global
+
+# TODO only do this when user email is not configured
+- name: Configure git user email
+  git_config:
+    name: user.email
+    value: "{{git_user_email}}"
+    scope: global
