@@ -1,5 +1,12 @@
 name: Test
-on: [push]
+on:
+# This just won't work on 20.04.
+# Maybe try something like this:
+# * Create EC2 instance
+# * SCP the repo into it
+# * SSH and execute the test in it
+# * Destroy the EC2 instance
+# Read also: https://medium.com/codemonday/github-actions-for-ci-cd-with-ec2-codedeploy-and-s3-e93e75bf1ce0
 jobs:
   test:
     runs-on: ubuntu-20.04  # Should actually be 21.10, but GH Actions currently supports only 18.04 and 20.04
