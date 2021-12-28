@@ -9,6 +9,8 @@
     name: cmprescott.chrome
   become: yes
 
+# TODO make chrome the default browser
+
 - name: Install Zoom
   apt:
     deb: https://zoom.us/client/latest/zoom_{{packages_architecture}}.deb
