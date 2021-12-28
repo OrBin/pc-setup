@@ -1,5 +1,5 @@
 name: Test
-on: []
+on: workflow_dispatch
 # This just won't work on 20.04.
 # Maybe try something like this:
 # * Create EC2 instance
