@@ -72,7 +72,6 @@ jobs:
 
     - name: Install multipass and wait until multipass is ready
       run: |
-        set -x
         # Trying to run snap too early yields an error: 
         # "too early for operation, device not yet seeded or device model not acknowledged"
         sleep 5  
