@@ -4,7 +4,8 @@
     path: /var/lib/apt/periodic/update-stamp
   register: stat_update_stamp
 
-- set_fact:
+- name: Set last_apt_update_time from update-stamp
+  set_fact:
     last_apt_update_time: "{{stat_update_stamp.stat.mtime}}"
   when: stat_update_stamp.stat is defined and stat_update_stamp.stat.exists
 
@@ -14,9 +15,15 @@
   when: stat_update_stamp.stat is not defined or not stat_update_stamp.stat.exists
   register: stat_update_success_stamp
 
-- set_fact:
+- name: Set last_apt_update_time from update-success-stamp
+  set_fact:
     last_apt_update_time: "{{stat_update_success_stamp.stat.mtime}}"
   when: stat_update_success_stamp.stat is defined and stat_update_success_stamp.stat.exists
+
+- name: Default last_apt_update_time to epoch time
+  set_fact:
+    last_apt_update_time: "0"
+  when: last_apt_update_time is not defined
 
 - debug:
     msg: "apt update was not run in the last 7 days, running"
