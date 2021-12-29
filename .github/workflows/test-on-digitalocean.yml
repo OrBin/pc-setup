@@ -16,15 +16,17 @@ jobs:
         doctl auth init \
           --access-token '${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}' 
 
-    - name: Create droplet and test
-      id: create_droplet
-      # TODO split this step
+    - name: Save SSH key and calculate fingerprint
+      id: ssh_keys
       run: |
-        set -x
         echo '${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}' > "${SSH_KEY_FILE}"
         chmod 0600 "${SSH_KEY_FILE}"
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
+        echo "::set-output name=fingerprint::${fingerprint}"
 
+    - name: Create droplet
+      id: create_droplet
+      run: |
         droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}"
         droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
 
@@ -33,7 +35,7 @@ jobs:
             --image ubuntu-20-04-x64 \
             --size s-2vcpu-4gb \
             --region nyc1 \
-            --ssh-keys "${fingerprint}" \
+            --ssh-keys "${{ steps.ssh_keys.outputs.fingerprint }}" \
             --wait \
             --output json \
             "${droplet_name}"
@@ -45,25 +47,32 @@ jobs:
         droplet_id=$(jq -r '.[0].id' <<< "${create_response}")
         echo "::set-output name=droplet_id::${droplet_id}"
 
-    - name: Test
-      # TODO split this step
+    - name: Define ssh_to_droplet
       run: |
-        ssh_to_droplet() {
-          ssh \
-          -o StrictHostKeyChecking=no \
-          "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
-          -i "${SSH_KEY_FILE}" \
-          $*
-        }
-        
-        # First, wait until SSH server is available
+        echo '
+           () {
+            ssh \
+            -o StrictHostKeyChecking=no \
+            "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
+            -i "${SSH_KEY_FILE}" \
+            $*
+          }
+        ' >> $HOME/.bashrc
+
+    - name: Wait until SSH server is available
+      run: |
         retries=0
         until ssh_to_droplet true || [ "${retries}" -ge 3 ]; do
           sleep 1
           retries=$((retries+1))
         done
 
-        ssh_to_droplet snap install multipass
+    - name: Install multipass
+      run: ssh_to_droplet snap install multipass
+
+    - name: Test
+      run: |
+        set -x
         ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
         ssh_to_droplet /tmp/repo/tests/test.sh
 
