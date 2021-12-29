@@ -25,7 +25,7 @@ jobs:
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
 
         droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}"
-        droplet_name="${droplet_name//[\/_]/-} # Replace / and _ with -
+        droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
 
         create_response=$( \
           doctl compute droplet create \
