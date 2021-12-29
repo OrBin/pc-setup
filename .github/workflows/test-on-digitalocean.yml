@@ -23,7 +23,7 @@ jobs:
         chmod 0600 "${SSH_KEY_FILE}"
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
 
-        create_response = $( \
+        create_response=$( \
           doctl compute droplet create \
             --image ubuntu-20-04-x64 \
             --size s-2vcpu-4gb \
@@ -34,7 +34,7 @@ jobs:
             "ci-${GITHUB_REPOSITORY//\//_}-${GITHUB_REF_NAME//\//_}-${GITHUB_SHA}"
         )
         
-        ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< $create_response)
+        ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
         
         ssh_to_droplet() {
           ssh \
