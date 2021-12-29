@@ -71,7 +71,7 @@ jobs:
         exit 1  # SSH is available, fail the step
 
     - name: Install multipass
-      run: sleep 10 && ssh_to_droplet snap install multipass
+      run: sleep 5 && ssh_to_droplet snap install multipass
 
     - name: Test
       run: |
