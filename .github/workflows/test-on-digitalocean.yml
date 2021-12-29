@@ -46,7 +46,6 @@ jobs:
         echo "::set-output name=droplet_id::${droplet_id}"
 
     - name: Test
-      id: create_droplet
       # TODO split this step
       run: |
         ssh_to_droplet() {
