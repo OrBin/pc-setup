@@ -7,6 +7,7 @@
   when: "{{prompt_for_manual_actions}}"
 
 - name: Open Chrome extensions pages
+  # TODO only do this when not installed
   shell: "google-chrome 'https://chrome.google.com/webstore/detail/{{ item }}'"
   loop:
     - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
@@ -27,18 +28,20 @@
     - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
   when: "{{prompt_for_manual_actions}}"
 
-# TODO only do this when not logged in
+- name: Check GitHub CLI auth status
+  shell: gh auth status
+  register: gh_auth_status
+
 - name: Notify user that they should login to GitHub CLI
   pause:
     prompt: |
       Please login to GitHub CLI. 
       Press enter to start.
-  when: "{{prompt_for_manual_actions}}"
+  when: "{{ prompt_for_manual_actions and gh_auth_status.rc != 0 }}"
 
-# TODO only do this when not logged in
 - name: Open Konsole for login to GitHub CLI
   shell: "konsole -e gh auth login --web"
-  when: "{{prompt_for_manual_actions}}"
+  when: "{{ prompt_for_manual_actions and gh_auth_status.rc != 0 }}"
 
 # TODO only do this when SSH key does not exist
 - name: Request user input for SSH key passphrase
