@@ -87,12 +87,21 @@ jobs:
         exit 1  # multipass is available, fail the step
 
 
+    - name: Clone repo
+      id: clone
+      # TODO clone current ref
+      run: |
+        droplet_local_repo_path="~/${GITHUB_REPOSITORY#*\/}/"
+        echo "Cloning into ${droplet_local_repo_path}"
+        ssh_to_droplet git clone https://github.com/${{ github.repository }}.git "${droplet_local_repo_path}"
+        
+        echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
+
     - name: Test
       run: |
-        set -x
-        ssh_to_droplet git clone https://github.com/${{ github.repository }}.git /tmp/repo/
-        ssh_to_droplet "cd /tmp/repo/ && tests/test.sh"
+        ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && tests/test.sh"
 
     - name: Delete droplet
       run: |
         doctl compute droplet delete ${{ steps.create_droplet.outputs.droplet_id }}
+      if: ${{ always() }}
