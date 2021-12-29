@@ -1,0 +1,48 @@
+name: Multipass PoC
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    env:
+      SSH_KEY_FILE: /tmp/id_rsa
+    steps:
+    - name: Install doctl
+      run: |
+          sudo snap install doctl
+          sudo snap connect doctl:ssh-keys :ssh-keys
+
+    - name: Authenticate to doctl
+      run: |
+        doctl auth init \
+          --access-token '${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}' 
+
+    - name: Create droplet and test
+      # TODO split this step
+      run: |
+        echo '${{DIGITALOCEAN_SSH_PRIVATE_KEY}}' > "${SSH_KEY_FILE}"
+        fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
+
+        create_response = $( \
+          doctl compute droplet create \
+            --image ubuntu-20-04-x64 \
+            --size s-2vcpu-4gb \
+            --region nyc1 \
+            --ssh-keys "${fingerprint}"
+            --wait \
+            --output json \
+            "ci-${GITHUB_REPOSITORY//\//_}-${GITHUB_REF_NAME//\//_}-${GITHUB_SHA}"
+        )
+        
+        ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< $create_response)
+        
+        ssh_to_droplet() {
+          ssh \
+          -o StrictHostKeyChecking=no \
+          "root@${ip_address}" \
+          -i "${SSH_KEY_FILE}" \
+          $*
+        }
+        
+        ssh_to_droplet snap install multipass
+        ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
+        ssh_to_droplet /tmp/repo/tests/test.sh
