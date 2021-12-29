@@ -28,7 +28,7 @@ jobs:
             --image ubuntu-20-04-x64 \
             --size s-2vcpu-4gb \
             --region nyc1 \
-            --ssh-keys "${fingerprint}"
+            --ssh-keys "${fingerprint}" \
             --wait \
             --output json \
             "ci-${GITHUB_REPOSITORY//\//_}-${GITHUB_REF_NAME//\//_}-${GITHUB_SHA}"
@@ -47,3 +47,6 @@ jobs:
         ssh_to_droplet snap install multipass
         ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
         ssh_to_droplet /tmp/repo/tests/test.sh
+
+        droplet_id=$(jq -r '.[0].id' <<< $create_response)
+        doctl compute droplet delete "${droplet_id}"
