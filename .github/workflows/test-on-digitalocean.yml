@@ -79,4 +79,6 @@ jobs:
         ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
         ssh_to_droplet /tmp/repo/tests/test.sh
 
+    - name: Delete droplet
+      run: |
         doctl compute droplet delete ${{ steps.create_droplet.outputs.droplet_id }}
