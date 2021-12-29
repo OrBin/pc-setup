@@ -6,3 +6,25 @@
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
+- name: Update xkbrc
+  ini_file:
+    path: "{{ansible_user_dir}}/.config/kxkbrc"
+    section: Layout
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop: "{{ layout_section | dict2items }}"
+  # Not using ini lookup as input since it does not return the keys, only the values
+  vars:
+    layout_section:
+      DisplayNames: ","
+      LayoutList: "us,il"
+      LayoutLoopCount: "-1"
+      Model: "pc101"
+      Options: "grp:alt_shift_toggle,grp:lalt_lshift_toggle"
+      ResetOldOptions: "true"
+      ShowFlag: "false"
+      ShowLabel: "true"
+      ShowLayoutIndicator: "true"
+      ShowSingle: "false"
+      SwitchMode: "Global"
+      Use: "true"
