@@ -89,11 +89,11 @@ jobs:
 
     - name: Clone repo
       id: clone
-      # TODO clone current ref
       run: |
         droplet_local_repo_path="~/${GITHUB_REPOSITORY#*\/}/"
         echo "Cloning into ${droplet_local_repo_path}"
         ssh_to_droplet git clone https://github.com/${{ github.repository }}.git "${droplet_local_repo_path}"
+        ssh_to_droplet "cd ${droplet_local_repo_path} && git checkout ${{ github.sha || github.head_ref || github.ref }}"
         
         echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
 
