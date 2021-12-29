@@ -28,7 +28,7 @@
 
 - name: Add hstr configuration to bash configuration
   lineinfile:
-    path: "{{bash_configuration_file_path}}"
+    path: "{{bashrc_file_path}}"
     line: "{{hstr_configuration.stdout}}"
 
 - name: Install basic linux tools (snap)
@@ -52,7 +52,7 @@
     block: |
       {{thefuck_alias.stdout}}
       alias f=fuck
-    path: "{{bash_configuration_file_path}}"
+    path: "{{bashrc_file_path}}"
 
 - name: Download prettyping
   get_url:

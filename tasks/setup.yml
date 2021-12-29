@@ -10,12 +10,12 @@
     path: "{{temp_dir}}"
     state: directory
 
-- name: Create initial bash_configuration file
+- name: Create initial bashrc file
   copy:
-    src: "{{playbook_dir}}/bash_configuration"
-    dest: "{{temp_dir}}/bash_configuration"
-  register: create_bash_configuration
+    src: "{{playbook_dir}}/configuration/bashrc"
+    dest: "{{temp_dir}}/bashrc"
+  register: create_bashrc
 
 - set_fact:
-    bash_configuration_file_path: "{{create_bash_configuration.dest}}"
+    bashrc_file_path: "{{create_bashrc.dest}}"
 

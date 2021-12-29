@@ -31,7 +31,7 @@
 - name: Add GitHub CLI completion to bash configuration
   blockinfile:
     block: "{{gh_completion.stdout}}"
-    path: "{{bash_configuration_file_path}}"
+    path: "{{bashrc_file_path}}"
 
 - name: Install developer tools (snap)
   snap:
