@@ -7,14 +7,10 @@ jobs:
       SSH_KEY_FILE: /tmp/id_rsa
     steps:
     - name: Install doctl
-      run: |
-          sudo snap install doctl
-#          sudo snap connect doctl:ssh-keys :ssh-keys
+      run: sudo snap install doctl
 
     - name: Authenticate to doctl
-      run: |
-        doctl auth init \
-          --access-token '${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}' 
+      run: doctl auth init --access-token '${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}'
 
     - name: Save SSH key and calculate fingerprint
       id: ssh_keys
