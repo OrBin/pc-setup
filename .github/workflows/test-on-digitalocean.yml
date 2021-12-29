@@ -49,23 +49,26 @@ jobs:
 
     - name: Define ssh_to_droplet
       run: |
-        echo '
-           ssh_to_droplet() {
-            ssh \
+        mkdir -p "${HOME}/.local/bin" 
+
+        echo 'ssh \
             -o StrictHostKeyChecking=no \
             "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
             -i "${SSH_KEY_FILE}" \
-            $*
-          }
-        ' >> $HOME/.bashrc
+            $*' > "${HOME}/.local/bin/ssh_to_droplet"
+        
+        chmod +x "${HOME}/.local/bin/ssh_to_droplet"
+        echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
     - name: Wait until SSH server is available
       run: |
         retries=0
-        until ssh_to_droplet true || [ "${retries}" -ge 3 ]; do
+        until [ "${retries}" -ge 30 ]; do 
+          ssh_to_droplet true && exit 0  # SSH is available
           sleep 1
           retries=$((retries+1))
         done
+        exit 1  # SSH is available, fail the step
 
     - name: Install multipass
       run: ssh_to_droplet snap install multipass
