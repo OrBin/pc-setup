@@ -19,6 +19,7 @@ jobs:
     - name: Create droplet and test
       # TODO split this step
       run: |
+        set -x
         echo '${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}' > "${SSH_KEY_FILE}"
         chmod 0600 "${SSH_KEY_FILE}"
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
