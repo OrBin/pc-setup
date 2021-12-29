@@ -17,6 +17,7 @@ jobs:
           --access-token '${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}' 
 
     - name: Create droplet and test
+      id: create_droplet
       # TODO split this step
       run: |
         set -x
@@ -38,19 +39,33 @@ jobs:
             "${droplet_name}"
         )
         
-        ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
-        
+        droplet_ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
+        echo "::set-output name=droplet_ip_address::${droplet_ip_address}"
+
+        droplet_id=$(jq -r '.[0].id' <<< "${create_response}")
+        echo "::set-output name=droplet_id::${droplet_id}"
+
+    - name: Test
+      id: create_droplet
+      # TODO split this step
+      run: |
         ssh_to_droplet() {
           ssh \
           -o StrictHostKeyChecking=no \
-          "root@${ip_address}" \
+          "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
           -i "${SSH_KEY_FILE}" \
           $*
         }
         
+        # First, wait until SSH server is available
+        retries=0
+        until ssh_to_droplet true || [ "${retries}" -ge 3 ]; do
+          sleep 1
+          retries=$((retries+1))
+        done
+
         ssh_to_droplet snap install multipass
         ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
         ssh_to_droplet /tmp/repo/tests/test.sh
 
-        droplet_id=$(jq -r '.[0].id' <<< "${create_response}")
-        doctl compute droplet delete "${droplet_id}"
+        doctl compute droplet delete ${{ steps.create_droplet.outputs.droplet_id }}
