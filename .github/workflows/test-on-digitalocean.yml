@@ -60,11 +60,11 @@ jobs:
         chmod +x "${HOME}/.local/bin/ssh_to_droplet"
         echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
-    - name: Wait until SSH server is available
+    - name: Wait until SSH server is available and snap is ready
       run: |
         retries=0
         until [ "${retries}" -ge 30 ]; do 
-          ssh_to_droplet true && exit 0  # SSH is available
+          ssh_to_droplet snap && exit 0  # SSH is available
           sleep 1
           retries=$((retries+1))
         done
