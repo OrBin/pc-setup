@@ -9,7 +9,7 @@ jobs:
     - name: Install doctl
       run: |
           sudo snap install doctl
-          sudo snap connect doctl:ssh-keys :ssh-keys
+#          sudo snap connect doctl:ssh-keys :ssh-keys
 
     - name: Authenticate to doctl
       run: |
