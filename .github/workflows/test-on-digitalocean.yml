@@ -70,14 +70,27 @@ jobs:
         done
         exit 1  # SSH is available, fail the step
 
-    - name: Install multipass
-      run: sleep 5 && ssh_to_droplet snap install multipass
+    - name: Install multipass and wait until multipass is ready
+      run: |
+        set -x
+        # Trying to run snap too early yields an error: 
+        # "too early for operation, device not yet seeded or device model not acknowledged"
+        sleep 5  
+        ssh_to_droplet snap install multipass
+        
+        retries=0
+        until [ "${retries}" -ge 30 ]; do 
+          ssh_to_droplet multipass list && exit 0  # multipass is available
+          sleep 1
+          retries=$((retries+1))
+        done
+        exit 1  # multipass is available, fail the step
+
 
     - name: Test
       run: |
         set -x
         ssh_to_droplet git clone https://github.com/${{ github.repository }}.git /tmp/repo/
-        ssh_to_droplet "multipass list"
         ssh_to_droplet "cd /tmp/repo/ && tests/test.sh"
 
     - name: Delete droplet
