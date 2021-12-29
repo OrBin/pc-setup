@@ -1,25 +1,6 @@
 ---
 # TODO: recent python version/pyenv, golang, setup Python venv
 
-- name: Install developer tools (apt)
-  apt:
-    name:
-    - gh
-    - git
-    - nmap
-    - wireshark
-  become: yes
-
-- name: Install developer tools (snap)
-  snap:
-    name:
-    - doctl
-  become: yes
-
-- name: Connect doctl to ssh-keys interface
-  shell: snap connect doctl:ssh-keys :ssh-keys
-  become: yes
-
 - name: Download GitHub CLI GPG key public ring
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
@@ -34,6 +15,15 @@
     update_cache: yes
   become: yes
 
+- name: Install developer tools (apt)
+  apt:
+    name:
+    - gh
+    - git
+    - nmap
+    - wireshark
+  become: yes
+
 - name: Evaluate completion for GitHub CLI
   shell: gh completion -s bash
   register: gh_completion
@@ -42,6 +32,16 @@
   blockinfile:
     block: "{{gh_completion.stdout}}"
     path: "{{bash_configuration_file_path}}"
+
+- name: Install developer tools (snap)
+  snap:
+    name:
+    - doctl
+  become: yes
+
+- name: Connect doctl to ssh-keys interface
+  shell: snap connect doctl:ssh-keys :ssh-keys
+  become: yes
 
 - name: Install Docker
   import_role:
