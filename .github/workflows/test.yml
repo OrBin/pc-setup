@@ -1,4 +1,4 @@
-name: Multipass PoC
+name: Test setup
 on: push
 jobs:
   test:
