@@ -76,7 +76,7 @@ jobs:
     - name: Test
       run: |
         set -x
-        ssh_to_droplet git clone ssh://git@github.com/${{ github.repository }}.git /tmp/repo/
+        ssh_to_droplet git clone https://github.com/${{ github.repository }}.git /tmp/repo/
         ssh_to_droplet /tmp/repo/tests/test.sh
 
     - name: Delete droplet
