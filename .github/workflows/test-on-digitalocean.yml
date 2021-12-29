@@ -50,7 +50,7 @@ jobs:
     - name: Define ssh_to_droplet
       run: |
         echo '
-           () {
+           ssh_to_droplet() {
             ssh \
             -o StrictHostKeyChecking=no \
             "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
