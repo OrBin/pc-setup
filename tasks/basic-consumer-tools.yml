@@ -9,7 +9,8 @@
     name: cmprescott.chrome
   become: yes
 
-# TODO make chrome the default browser
+- name: Make Google Chrome the default browser
+  shell: xdg-settings set default-web-browser chrome.desktop
 
 - name: Install Zoom
   apt:
