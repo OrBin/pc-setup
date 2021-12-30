@@ -47,7 +47,6 @@
   import_role:
     name: geerlingguy.docker
   vars:
-    docker_compose_version: "{{docker_compose_version}}"
     docker_apt_arch: "{{packages_architecture}}"
     docker_users:
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
@@ -86,15 +85,12 @@
 - name: Install NodeJS
   import_role:
     name: geerlingguy.nodejs
-  vars:
-    nodejs_version: "{{ nodejs_version }}"
   become: yes
 
 - name: Install Go
   import_role:
     name: geerlingguy.go
   vars:
-    go_version: "{{ go_version }}"
     go_platform: linux
     go_arch: "{{ packages_architecture }}"
   become: yes
