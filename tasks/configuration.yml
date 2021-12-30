@@ -34,3 +34,15 @@
     name: user.name
     value: Or Bin
     scope: global
+
+
+- name: Configure git aliases
+  git_config:
+    name: "alias.{{ item.key }}"
+    value: "{{ item.value }}"
+    scope: global
+  loop: "{{ aliases | dict2items }}"
+  vars:
+    aliases:
+      co: checkout
+

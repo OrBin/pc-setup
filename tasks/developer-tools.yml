@@ -1,5 +1,5 @@
 ---
-# TODO: recent python version/pyenv, golang, setup Python venv
+# TODO: recent python version/pyenv, setup Python venv, multipass
 
 - name: Download GitHub CLI GPG key public ring
   get_url:
@@ -47,7 +47,7 @@
   import_role:
     name: geerlingguy.docker
   vars:
-    docker_compose_version: "1.29.2"
+    docker_compose_version: "{{docker_compose_version}}"
     docker_apt_arch: "{{packages_architecture}}"
     docker_users:
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
@@ -87,7 +87,16 @@
   import_role:
     name: geerlingguy.nodejs
   vars:
-    nodejs_version: "16.x"
+    nodejs_version: "{{ nodejs_version }}"
+  become: yes
+
+- name: Install Go
+  import_role:
+    name: geerlingguy.go
+  vars:
+    go_version: "{{ go_version }}"
+    go_platform: linux
+    go_arch: "{{ packages_architecture }}"
   become: yes
 
 - name: Install diff-so-fancy
