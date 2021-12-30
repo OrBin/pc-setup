@@ -57,6 +57,8 @@
     passphrase: "{{ssh_key_passphrase}}"
     mode: "0600"
 
+# TODO notify user to add public key to wherever needed
+
 # TODO only do this when user email is not configured
 - name: Request user email for git configuration
   pause:
