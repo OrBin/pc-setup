@@ -10,7 +10,8 @@
   become: yes
 
 - name: Make Google Chrome the default browser
-  shell: xdg-settings set default-web-browser chrome.desktop
+  shell: xdg-settings set default-web-browser google-chrome.desktop
+  # If this doesn't persist, try this: https://askubuntu.com/a/216342/287192
 
 - name: Install Zoom
   apt:
