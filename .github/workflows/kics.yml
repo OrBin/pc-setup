@@ -1,0 +1,8 @@
+name: Run kics.io
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: KICS Github Action
+      uses: Checkmarx/kics-github-action@v1.4
