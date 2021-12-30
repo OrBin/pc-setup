@@ -4,7 +4,6 @@
     prompt: |
       Please install chrome extensions.
       Press enter to automatically open their pages on chrome.
-  when: "{{prompt_for_manual_actions}}"
 
 - name: Open Chrome extensions pages
   # TODO only do this when not installed
@@ -26,55 +25,58 @@
     - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
     - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
     - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
-  when: "{{prompt_for_manual_actions}}"
 
 - name: Check GitHub CLI auth status
   shell: gh auth status
+  ignore_errors: yes
   register: gh_auth_status
 
-- name: Notify user that they should login to GitHub CLI
-  pause:
-    prompt: |
-      Please login to GitHub CLI. 
-      Press enter to start.
-  when: "{{ prompt_for_manual_actions and gh_auth_status.rc != 0 }}"
+- name: GitHub CLI authentication
+  block:
+    - name: Notify user that they should login to GitHub CLI
+      pause:
+        prompt: |
+          Please login to GitHub CLI.
+          Press enter to start.
 
-- name: Open Konsole for login to GitHub CLI
-  shell: "konsole -e gh auth login --web"
-  when: "{{ prompt_for_manual_actions and gh_auth_status.rc != 0 }}"
+    - name: Open Konsole for login to GitHub CLI
+      shell: "konsole -e gh auth login --web"
 
-# TODO only do this when SSH key does not exist
-- name: Request user input for SSH key passphrase
-  pause:
-    prompt: "Please enter passphrase for SSH key: "
-  when: "{{prompt_for_manual_actions}}"
-  register: ssh_key_passphrase
+  when: "{{ gh_auth_status.rc != 0 }}"
 
-# TODO only do this when SSH key does not exist
-- name: Generate an OpenSSH keypair with the default values (4096 bits, rsa) and encrypted private key
-  openssh_keypair:
+- name: stat SSH key
+  stat:
     path: "{{ansible_user_dir}}/.ssh/id_rsa"
-    passphrase: "{{ssh_key_passphrase}}"
-    mode: "0600"
+  register: stat_ssh_key
 
-# TODO notify user to add public key to wherever needed
+- name: SSH key creation
+  block:
+    - name: Request user input for SSH key passphrase
+      pause:
+        prompt: "Please enter passphrase for SSH key: "
+      register: ssh_key_passphrase
 
-# TODO only do this when user email is not configured
-- name: Request user email for git configuration
-  pause:
-    prompt: "Please enter user email for git configuration: "
-  when: "{{prompt_for_manual_actions}}"
-  register: git_user_email
+    - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa) and encrypted private key
+      openssh_keypair:
+        path: "{{ansible_user_dir}}/.ssh/id_rsa"
+        passphrase: "{{ssh_key_passphrase}}"
+        mode: "0600"
 
-- name: Configure git user name
-  git_config:
-    name: user.name
-    value: Or Bin
-    scope: global
+    # TODO notify user to add public key to wherever needed
 
-# TODO only do this when user email is not configured
+  when: "{{stat_update_stamp.stat is not defined or not stat_update_stamp.stat.exists}}"
+
 - name: Configure git user email
-  git_config:
-    name: user.email
-    value: "{{git_user_email}}"
-    scope: global
+  block:
+    - name: Request user email for git configuration
+      pause:
+        prompt: "Please enter user email for git configuration: "
+      register: git_user_email
+
+    - name: Configure git user email
+      git_config:
+        name: user.email
+        value: "{{git_user_email}}"
+        scope: global
+
+  when: "{{ not git_user_email_is_defined }}"

@@ -28,3 +28,9 @@
       ShowSingle: "false"
       SwitchMode: "Global"
       Use: "true"
+
+- name: Configure git user name
+  git_config:
+    name: user.name
+    value: Or Bin
+    scope: global
