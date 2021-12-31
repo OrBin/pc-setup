@@ -1,5 +1,5 @@
 ---
-# TODO: recent python version/pyenv, setup Python venv, multipass, kubectl
+# TODO: recent python version/pyenv, setup Python venv, multipass
 
 - name: Download GitHub CLI GPG key public ring
   get_url:
@@ -127,10 +127,15 @@
 - name: Check Lens' latest version
   uri:
     url: https://api.k8slens.dev/binaries/latest.json
-#    return_content: yes
   register: lens_latest_version_response
 
 - name: Install Lens
   apt:
     deb:  "https://api.k8slens.dev/binaries/Lens-{{ lens_latest_version_response.json.version }}.{{ packages_architecture }}.deb"
+  become: yes
+
+- name: Install kubectl
+  snap:
+    name: kubectl
+    classic: yes
   become: yes
