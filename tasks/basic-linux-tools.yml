@@ -30,7 +30,6 @@
   lineinfile:
     path: "{{bashrc_file_path}}"
     line: "{{hstr_configuration.stdout}}"
-    marker: ""
 
 - name: Install basic linux tools (snap)
   snap:
