@@ -1,5 +1,5 @@
 ---
-# TODO: recent python version/pyenv, setup Python venv, multipass
+# TODO: recent python version/pyenv, setup Python venv, multipass, kubectl
 
 - name: Download GitHub CLI GPG key public ring
   get_url:
