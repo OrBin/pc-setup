@@ -1,5 +1,5 @@
 ---
-# TODO: recent python version/pyenv, setup Python venv, multipass
+# TODO: recent python version/pyenv, setup Python venv
 
 - name: Download GitHub CLI GPG key public ring
   get_url:
@@ -37,6 +37,7 @@
   snap:
     name:
     - doctl
+    - multipass
   become: yes
 
 - name: Connect doctl to ssh-keys interface
