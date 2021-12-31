@@ -29,3 +29,9 @@
 - name: Set git_user_email_is_defined
   set_fact:
     git_user_email_is_defined: git_config_result.config_values["user.email"] is defined
+
+- name: Running apt update if was not run in the last 7 days, running
+  apt:
+    update_cache: yes
+    cache_valid_time: "{{ 60 * 60 * 24 * 7 }}"
+  become: yes

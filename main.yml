@@ -11,9 +11,6 @@
   - import_tasks: tasks/setup.yml
     tags: ['setup']
 
-  - import_tasks: tasks/timely-apt-update.yml
-    tags: ['timely-apt-update']
-
   - import_tasks: tasks/basic-linux-tools.yml
     tags: ['basic-linux-tools']
 
