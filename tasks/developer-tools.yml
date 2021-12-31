@@ -32,6 +32,7 @@
   blockinfile:
     block: "{{gh_completion.stdout}}"
     path: "{{bashrc_file_path}}"
+    marker: ""
 
 - name: Install developer tools (snap)
   snap:

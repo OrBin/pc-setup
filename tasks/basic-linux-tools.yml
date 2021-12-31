@@ -30,6 +30,7 @@
   lineinfile:
     path: "{{bashrc_file_path}}"
     line: "{{hstr_configuration.stdout}}"
+    marker: ""
 
 - name: Install basic linux tools (snap)
   snap:
@@ -53,6 +54,7 @@
       {{thefuck_alias.stdout}}
       alias f=fuck
     path: "{{bashrc_file_path}}"
+    marker: ""
 
 - name: Download prettyping
   get_url:
