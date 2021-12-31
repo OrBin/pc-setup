@@ -1,7 +1,7 @@
 ---
-- name: Update .bashrc
+- name: Update user .bashrc
   blockinfile:
-    block: "{{ lookup('file', bashrc_file_path) }}"
+    block: "{{ lookup('file', user_bashrc_file_path) }}"
     path: "{{ansible_user_dir}}/.bashrc"
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK"

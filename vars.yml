@@ -5,7 +5,20 @@ dive_version: 0.10.0
 postman_snap_channel: v9/stable
 audacity_version: 3.1.3
 cura_version: 4.12.1
-docker_compose_version: 1.29.2  # Used by geerlingguy.docker
-nodejs_version: 16.x  # Used by geerlingguy.nodejs
-go_version: 1.17.5  # Used by geerlingguy.go
-go_checksum: bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e  # Used by geerlingguy.go; calculate by running: curl https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz | sha256sum
+
+# Used by geerlingguy.docker:
+docker_compose_version: 1.29.2
+
+# Used by geerlingguy.nodejs:
+nodejs_version: 16.x
+
+# Used by geerlingguy.go:
+go_version: 1.17.5
+go_checksum: bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e  # Calculate by: curl https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz | sha256sum
+
+# Used by avanov.pyenv:
+pyenv_env: user
+pyenv_global: 3.10.1
+pyenv_python_versions:
+  - "{{ pyenv_global }}"
+pyenv_virtualenvs: []

@@ -1,6 +1,4 @@
 ---
-# TODO: recent python version/pyenv, setup Python venv
-
 - name: Download GitHub CLI GPG key public ring
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
@@ -31,7 +29,7 @@
 - name: Add GitHub CLI completion to bash configuration
   blockinfile:
     block: "{{gh_completion.stdout}}"
-    path: "{{bashrc_file_path}}"
+    path: "{{user_bashrc_file_path}}"
     marker: ""
 
 - name: Install developer tools (snap)
@@ -141,3 +139,14 @@
     name: kubectl
     classic: yes
   become: yes
+
+- name: Install pyenv
+  import_role:
+    name: avanov.pyenv
+  vars:
+    pyenv_setting_path: "{{user_bashrc_file_path}}"
+
+- name: Add pyenv path to PATH in user bashrc
+  lineinfile:
+    path: "{{user_bashrc_file_path}}"
+    line: 'eval "$(pyenv init --path)"'

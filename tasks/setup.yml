@@ -11,15 +11,15 @@
     path: "{{temp_dir}}"
     state: directory
 
-- name: Create initial bashrc file
+- name: Create initial user bashrc file
   copy:
-    src: "{{playbook_dir}}/configuration/bashrc"
-    dest: "{{temp_dir}}/bashrc"
-  register: create_bashrc
+    src: "{{playbook_dir}}/configuration/user_bashrc"
+    dest: "{{temp_dir}}/user_bashrc"
+  register: create_user_bashrc
 
-- name: Set bashrc_file_path
+- name: Set user_bashrc_file_path
   set_fact:
-    bashrc_file_path: "{{create_bashrc.dest}}"
+    user_bashrc_file_path: "{{create_user_bashrc.dest}}"
 
 - name: Read git config
   git_config:
