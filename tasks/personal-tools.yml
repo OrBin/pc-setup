@@ -62,5 +62,3 @@
     dest: /usr/bin/cura
     state: link
   become: yes
-
-# TODO Cura configuration and plugins

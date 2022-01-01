@@ -1,5 +1,5 @@
 ---
-- name: Notify user that they should manually install Chrome extensions
+- name: Notify user to manually install Chrome extensions
   pause:
     prompt: |
       Please install chrome extensions.
@@ -39,7 +39,7 @@
 
 - name: GitHub CLI authentication
   block:
-    - name: Notify user that they should login to GitHub CLI
+    - name: Notify user to login to GitHub CLI
       pause:
         prompt: |
           Please login to GitHub CLI.
@@ -86,3 +86,12 @@
         scope: global
 
   when: "{{ not git_user_email_is_defined }}"
+
+- name: Notify user to log in to Cura and restore from backup
+  pause:
+    prompt: |
+      Please log in to Cura and restore from backup.
+      Press enter to automatically open Cura.
+
+- name: Open Cura to allow restore from backup
+  shell: "cura &"
