@@ -5,6 +5,7 @@ dive_version: 0.10.0
 postman_snap_channel: v9/stable
 audacity_version: 3.1.3
 cura_version: 4.12.1
+add_ssh_key_to_github: yes
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2

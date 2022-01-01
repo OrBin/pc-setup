@@ -1,9 +1,9 @@
 ---
 - name: Notify user to manually install Chrome extensions
   pause:
-    prompt: |
+    prompt: |-
       Please install chrome extensions.
-      Press enter to automatically open their pages on chrome.
+      Press enter to automatically open their pages on chrome
 
 - name: Open Chrome extensions pages
   # TODO Only do this when not installed. Location may possibly depend on who installs Chrome.
@@ -41,9 +41,9 @@
   block:
     - name: Notify user to login to GitHub CLI
       pause:
-        prompt: |
+        prompt: |-
           Please login to GitHub CLI.
-          Press enter to start.
+          Press enter to start
 
     - name: Open Konsole for login to GitHub CLI
       shell: "konsole -e gh auth login --web"
@@ -67,8 +67,23 @@
         path: "{{ansible_user_dir}}/.ssh/id_rsa"
         passphrase: "{{ssh_key_passphrase}}"
         mode: "0600"
+      register: ssh_key
 
-    # TODO notify user to add public key to wherever needed
+    - name: Adding SSH key to GitHub
+      shell: "gh ssh-key add {{ ssh_key.filename }} --title '{{ ansible_user_id }}@{{ ansible_hostname }} (Added by Ansible)'"
+      when: "{{add_ssh_key_to_github}}"
+
+    - name: Notify user to add public key to wherever needed
+      pause:
+        prompt: |-
+          Please add public key to wherever needed:
+            ✅ AWS
+            ✅ DigitalOcean
+            ✅ OctoPrint
+            ✅ Home Assistant
+            ✅ Any specific servers or services
+          
+          Press Enter to continue
 
   when: "{{stat_update_stamp.stat is not defined or not stat_update_stamp.stat.exists}}"
 
@@ -89,9 +104,9 @@
 
 - name: Notify user to log in to Cura and restore from backup
   pause:
-    prompt: |
+    prompt: |-
       Please log in to Cura and restore from backup.
-      Press enter to automatically open Cura.
+      Press enter to automatically open Cura
 
 - name: Open Cura to allow restore from backup
   shell: "cura &"
