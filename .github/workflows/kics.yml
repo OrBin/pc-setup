@@ -9,4 +9,5 @@ jobs:
       with:
         output_path: results/
     - name: Display KICS results
+      if: ${{ always() }}
       run: cat results/results.json
