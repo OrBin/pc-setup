@@ -6,3 +6,7 @@ jobs:
     steps:
     - name: KICS Github Action
       uses: Checkmarx/kics-github-action@v1.4
+      with:
+        output_path: results/
+    - name: Display KICS results
+      run: cat results/results.json
