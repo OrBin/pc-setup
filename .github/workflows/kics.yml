@@ -4,9 +4,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: KICS Github Action
       uses: Checkmarx/kics-github-action@v1.4
       with:
+        path: .
         output_path: results/
     - name: Display KICS results
       if: ${{ always() }}
