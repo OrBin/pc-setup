@@ -101,20 +101,34 @@
 
   when: git_config_result.config_values["user.email"] is not defined
 
-- name: Notify user to log in to Cura and restore from backup
-  pause:
-    prompt: |-
-      Please log in to Cura and restore from backup.
-      Press enter to automatically open Cura
+- name: Check if Cura is already configured
+  shell: grep -iRl "Ender-3" ~/.local/share/cura/*/cura.cfg
+  register: cura_config_check
 
-- name: Open Cura to allow restore from backup
-  shell: "cura &"
+- name: Configure Cura
+  block:
+  - name: Notify user to log in to Cura and restore from backup
+    pause:
+      prompt: |-
+        Please log in to Cura and restore from backup.
+        Press enter to automatically open Cura
 
-- name: Notify user to log in to Spotify
-  pause:
-    prompt: |-
-      Please log in to Spotify.
-      Press enter to automatically open Spotify
+  - name: Open Cura to allow restore from backup
+    shell: "cura &"
+  when: cura_config_check.rc != 0
 
-- name: Open Spotify to allow restore from backup
-  shell: "spotify &"
+- name: Check if already logged in to Spotify
+  shell: grep -Rq autologin ~/snap/spotify/current/.config/spotify/prefs
+  register: spotify_login_check
+
+- name: Log in to Spotify
+  block:
+  - name: Notify user to log in to Spotify
+    pause:
+      prompt: |-
+        Please log in to Spotify.
+        Press enter to automatically open Spotify
+
+  - name: Open Spotify to allow restore from backup
+    shell: "spotify &"
+  when: spotify_login_check.rc != 0
