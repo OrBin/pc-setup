@@ -16,7 +16,11 @@
   become: yes
 
 - name: Set Google Chrome as the default browser
-  shell: kwriteconfig5 --file kdeglobals --group General --key 'BrowserApplication' google-chrome.desktop
+  shell: |
+    xdg-settings set default-web-browser google-chrome.desktop
+    kwriteconfig5 --file kdeglobals --group General --key 'BrowserApplication' google-chrome.desktop
+    xdg-mime default google-chrome.desktop x-scheme-handler/http
+    xdg-mime default google-chrome.desktop x-scheme-handler/https
 
 - name: Install Zoom
   apt:
