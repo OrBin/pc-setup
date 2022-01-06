@@ -21,10 +21,6 @@ touchngo() {
     touch "$1" && goland "$1"
 }
 
-restart_plasmashell() {
-    killall plasmashell
-    plasmashell > /dev/null 2>&1 &
-}
-
+alias restart_plasmashell='(kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell > /dev/null 2>&1'
 alias ecr_login='$(aws ecr get-login | sed -E "s/-e none //")'
 
