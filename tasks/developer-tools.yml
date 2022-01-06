@@ -129,9 +129,17 @@
     url: https://api.k8slens.dev/binaries/latest.json
   register: lens_latest_version_response
 
+- name: Download Lens
+  get_url:
+    url: "https://api.k8slens.dev/binaries/Lens-{{ lens_latest_version_response.json.version }}.{{ packages_architecture }}.deb"
+    dest: "{{temp_dir}}"
+    mode: '444'
+  become: yes
+  register: download_lens
+
 - name: Install Lens
   apt:
-    deb:  "https://api.k8slens.dev/binaries/Lens-{{ lens_latest_version_response.json.version }}.{{ packages_architecture }}.deb"
+    deb:  "{{ download_lens.dest }}"
   become: yes
 
 - name: Install kubectl
@@ -150,3 +158,8 @@
   lineinfile:
     path: "{{user_bashrc_file_path}}"
     line: 'eval "$(pyenv init --path)"'
+
+- name: Install ansible-lint
+  pip:
+    name: "ansible-lint[core,community,yamllint]"
+  become: yes
