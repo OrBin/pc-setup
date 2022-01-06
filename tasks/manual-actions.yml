@@ -85,7 +85,12 @@
           
           Press Enter to continue
 
-  when: "{{stat_update_stamp.stat is not defined or not stat_update_stamp.stat.exists}}"
+  when: stat_ssh_key.stat is not defined or not stat_ssh_key.stat.exists
+
+- name: Read git config
+  git_config:
+    list_all: yes
+  register: git_config_result
 
 - name: Configure git user email
   block:
@@ -97,10 +102,10 @@
     - name: Configure git user email
       git_config:
         name: user.email
-        value: "{{git_user_email}}"
+        value: "{{ git_user_email.user_input }}"
         scope: global
 
-  when: "{{ not git_user_email_is_defined }}"
+  when: git_config_result.config_values["user.email"] is not defined
 
 - name: Notify user to log in to Cura and restore from backup
   pause:

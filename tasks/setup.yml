@@ -21,17 +21,6 @@
   set_fact:
     user_bashrc_file_path: "{{create_user_bashrc.dest}}"
 
-- name: Read git config
-  git_config:
-    list_all: yes
-  ignore_errors: yes
-  register: git_config_result
-
-- name: Set git_user_email_is_defined
-  set_fact:
-    # Return code 127 means "command not found"; In this case, it means that git is not installed
-    git_user_email_is_defined: git_config_result.rc != and && git_config_result.config_values["user.email"] is defined
-
 - name: Running apt update if was not run in the last 7 days, running
   apt:
     update_cache: yes
