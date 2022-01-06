@@ -52,14 +52,15 @@
 
 - name: stat SSH key
   stat:
-    path: "{{ansible_user_dir}}/.ssh/id_rsa"
+    path: "{{ ansible_user_dir }}/.ssh/id_rsa"
   register: stat_ssh_key
 
 - name: SSH key creation
   block:
     - name: Request user input for SSH key passphrase
       pause:
-        prompt: "Please enter passphrase for SSH key: "
+        prompt: |- 
+          Please enter passphrase for SSH key
       register: ssh_key_passphrase
 
     - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa) and encrypted private key
@@ -73,6 +74,8 @@
     - name: Adding SSH key to GitHub
       shell: "gh ssh-key add {{ ssh_key.filename }}.pub --title '{{ ansible_user_id }}@{{ ansible_hostname }} (Added by Ansible)'"
       when: "{{ add_ssh_key_to_github }}"
+
+    # TODO Add to DigitalOcean
 
     - name: Notify user to add public key to wherever needed
       pause:
@@ -97,7 +100,8 @@
   block:
     - name: Request user email for git configuration
       pause:
-        prompt: "Please enter user email for git configuration: "
+        prompt: |-
+          Please enter user email for git configuration
       register: git_user_email
 
     - name: Configure git user email
