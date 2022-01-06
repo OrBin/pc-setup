@@ -52,7 +52,7 @@
   get_url:
     url: "https://software.ultimaker.com/cura/Ultimaker_Cura-{{cura_version}}.AppImage"
     dest: /opt/cura.AppImage
-    mode: '711'
+    mode: '0755'
   become: yes
   register: download_cura
 
