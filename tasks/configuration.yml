@@ -46,3 +46,5 @@
     aliases:
       co: checkout
 
+- name: Apply "Breeze Dark" theme to KDE
+  shell: lookandfeeltool -a org.kde.breezedark.desktop
