@@ -28,6 +28,7 @@
       ShowSingle: "false"
       SwitchMode: "Global"
       Use: "true"
+  when: configure_kde
 
 - name: Configure git user name
   git_config:
@@ -50,6 +51,7 @@
   template:
     src: "{{playbook_dir}}/configuration/plasma-org.kde.plasma.desktop-appletsrc"
     dest: "{{ ansible_user_dir }}/.config/plasma-org.kde.plasma.desktop-appletsrc"
+  when: configure_kde
 
 # TODO conditionally add slack to taskbar (in plasma-org.kde.plasma.desktop-appletsrc)
 
@@ -61,6 +63,7 @@
     
     kwin_x11 --replace &
     (kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
+  when: configure_kde
 
 - name: Configure GitHub CLI
   shell: gh config set git_protocol ssh

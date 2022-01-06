@@ -1,6 +1,7 @@
 ---
 install_slack: yes
 prompt_for_manual_actions: no
+configure_kde: no
 ssh_key_passphrase: ''
 git_user_email: foo@example.com
 add_ssh_key_to_github: no
