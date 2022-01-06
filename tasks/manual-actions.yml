@@ -1,36 +1,25 @@
 ---
-- name: Notify user to manually install Chrome extensions
-  pause:
-    prompt: |-
-      Please install chrome extensions.
-      Press enter to automatically open their pages on chrome
+# TODO notify to log in to Chrome
 
-- name: Open Chrome extensions pages
-  # TODO Only do this when not installed. Location may possibly depend on who installs Chrome.
-  # Relevant files/directories:
-  # ~/.config/google-chrome/Default/Extensions/
-  # jq '.extensions.settings | keys' /home/or/.config/google-chrome/Default/Preferences
-  # /home/or/.config/google-chrome/Default/Extensions/
-  # /opt/google/chrome/extensions/external_extensions.json
-  # /opt/google/chrome/master_preferences
-  shell: "google-chrome 'https://chrome.google.com/webstore/detail/{{ item }}'"
-  loop:
-    - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
-    - fihnjjcciajhdojfnbdddfaoknhalnja  # I don't care about cookies
-    - bcjindcccaagfpapjjmafapmmgkkhgoa  # JSON Formatter
-    - hdokiejnpimakedhajhdlcegeplioahd  # LastPass
-    - laookkfknpbbblfpciffpaejjkokdgca  # Momentum
-    - fjcldmjmjhkklehbacihaiopjklihlgg  # News Feed Eradicator
-    - jlmafbaeoofdegohdhinkhilhclaklkp  # OctoLinker
-    - bkhaagjahfmjljalopjnoealnfndnagc  # Octotree - GitHub code tree
-    - hlepfoohegkhhmjieoechaddaejaokhf  # Refined GitHub
-    - niloccemoadcdkdjlinkgdfekeahmflj  # Save to Pocket
-    - epcnnfbjfcgphgdmggkamkmgojdagdnn  # uBlock
-    - ldgiafaliifpknmgofiifianlnbgflgj  # Ugly Email
-    - egmbedhkleiholijlmnlhgcflooajdnb  # Unified Docs Switcher
-    - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
-    - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
-    - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
+- name: Check installed Google Chrome extensions
+  set_fact:
+    installed_chrome_extension_ids: "{{ lookup('file', ansible_user_dir+'/.config/google-chrome/Default/Preferences')  | from_json | moreati.jq.jq('.extensions.settings | keys') }}"
+
+- name: Compute Google Chrome extensions to install
+  set_fact:
+    chrome_extension_ids_to_install: "{{ required_chrome_extension_ids | difference(installed_chrome_extension_ids) }}"
+
+- name: Install Google Chrome extensions
+  block:
+  - name: Notify user to manually install Google Chrome extensions
+    pause:
+      prompt: |-
+        Please install chrome extensions.
+        Press enter to automatically open their pages on chrome
+
+  - name: Open Google Chrome extensions pages
+    shell: "google-chrome {{ ['https://chrome.google.com/webstore/detail/'] | product(chrome_extension_ids_to_install) | map('join', '') | join(' ') }} &"
+  when: (chrome_extension_ids_to_install | length) > 0
 
 - name: Check GitHub CLI auth status
   shell: gh auth status

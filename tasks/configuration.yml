@@ -2,13 +2,13 @@
 - name: Update user .bashrc
   blockinfile:
     block: "{{ lookup('file', user_bashrc_file_path) }}"
-    path: "{{ansible_user_dir}}/.bashrc"
+    path: "{{ ansible_user_dir }}/.bashrc"
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
 - name: Update xkbrc
   ini_file:
-    path: "{{ansible_user_dir}}/.config/kxkbrc"
+    path: "{{ ansible_user_dir }}/.config/kxkbrc"
     section: Layout
     option: "{{ item.key }}"
     value: "{{ item.value }}"
