@@ -48,7 +48,7 @@
     - name: Open Konsole for login to GitHub CLI
       shell: "konsole -e gh auth login --web --scopes admin:public_key"
 
-  when: "{{ gh_auth_status.rc != 0 }}"
+  when: gh_auth_status.rc != 0
 
 - name: stat SSH key
   stat:
@@ -64,14 +64,15 @@
 
     - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa) and encrypted private key
       openssh_keypair:
-        path: "{{ansible_user_dir}}/.ssh/id_rsa"
-        passphrase: "{{ssh_key_passphrase}}"
+        path: "{{ ansible_user_dir }}/.ssh/id_rsa"
+        comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+        passphrase: "{{ ssh_key_passphrase.user_input }}"
         mode: "0600"
       register: ssh_key
 
     - name: Adding SSH key to GitHub
-      shell: "gh ssh-key add {{ ssh_key.filename }} --title '{{ ansible_user_id }}@{{ ansible_hostname }} (Added by Ansible)'"
-      when: "{{add_ssh_key_to_github}}"
+      shell: "gh ssh-key add {{ ssh_key.filename }}.pub --title '{{ ansible_user_id }}@{{ ansible_hostname }} (Added by Ansible)'"
+      when: "{{ add_ssh_key_to_github }}"
 
     - name: Notify user to add public key to wherever needed
       pause:
