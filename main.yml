@@ -28,7 +28,7 @@
 
   - import_tasks: tasks/manual-actions.yml
     tags: ['manual-actions']
-    when: "{{prompt_for_manual_actions}}"
+    when: prompt_for_manual_actions
 
   - import_tasks: tasks/teardown.yml
     tags: ['teardown']
