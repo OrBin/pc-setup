@@ -15,9 +15,8 @@
     name: cmprescott.chrome
   become: yes
 
-- name: Make Google Chrome the default browser
-  shell: xdg-settings set default-web-browser google-chrome.desktop
-  # If this doesn't persist, try this: https://askubuntu.com/a/216342/287192
+- name: Set Google Chrome as the default browser
+  shell: kwriteconfig5 --file kdeglobals --group General --key 'BrowserApplication' google-chrome.desktop
 
 - name: Install Zoom
   apt:
