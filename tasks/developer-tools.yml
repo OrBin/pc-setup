@@ -20,6 +20,7 @@
     - git
     - nmap
     - wireshark
+    - adb
   become: yes
 
 - name: Evaluate completion for GitHub CLI
@@ -64,6 +65,8 @@
       - goland
     classic: yes
   become: yes
+
+# TODO install IDE extensions (e.g. TabNine)
 
 - name: Install Postman
   snap:

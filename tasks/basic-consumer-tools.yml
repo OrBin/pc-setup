@@ -1,3 +1,9 @@
+- name: Install basic consumer tools (apt)
+  apt:
+    name:
+    - xournal
+  become: yes
+
 - name: Install basic consumer tools (snap)
   snap:
     name:
