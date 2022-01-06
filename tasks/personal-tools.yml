@@ -32,7 +32,7 @@
   get_url:
     url: "https://github.com/audacity/audacity/releases/download/Audacity-{{audacity_version}}/audacity-linux-{{audacity_version}}-{{ansible_architecture}}.AppImage"
     dest: /opt/audacity.AppImage
-    mode: '711'
+    mode: '0755'
   become: yes
   register: download_audacity
 
