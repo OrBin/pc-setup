@@ -46,7 +46,7 @@
           Press enter to start
 
     - name: Open Konsole for login to GitHub CLI
-      shell: "konsole -e gh auth login --web"
+      shell: "konsole -e gh auth login --web --scopes admin:public_key"
 
   when: "{{ gh_auth_status.rc != 0 }}"
 
