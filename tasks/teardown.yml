@@ -2,3 +2,4 @@
   file:
     path: "{{temp_dir}}"
     state: absent
+  become: yes
