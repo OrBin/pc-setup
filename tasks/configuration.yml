@@ -46,5 +46,21 @@
     aliases:
       co: checkout
 
-- name: Apply "Breeze Dark" theme to KDE
-  shell: lookandfeeltool -a org.kde.breezedark.desktop
+- name: Configure plasma desktop applets
+  template:
+    src: "{{playbook_dir}}/configuration/plasma-org.kde.plasma.desktop-appletsrc"
+    dest: "{{ ansible_user_dir }}/.config/plasma-org.kde.plasma.desktop-appletsrc"
+
+# TODO conditionally add slack to taskbar (in plasma-org.kde.plasma.desktop-appletsrc)
+
+- name: Configure KDE
+  shell: |
+    lookandfeeltool -a org.kde.breezedark.desktop
+
+    kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
+    
+    kwin_x11 --replace &
+    (kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
+
+- name: Configure GitHub CLI
+  shell: gh config set git_protocol ssh
