@@ -120,3 +120,12 @@
 
 - name: Open Cura to allow restore from backup
   shell: "cura &"
+
+- name: Notify user to log in to Spotify
+  pause:
+    prompt: |-
+      Please log in to Spotify.
+      Press enter to automatically open Spotify
+
+- name: Open Spotify to allow restore from backup
+  shell: "spotify &"
