@@ -62,6 +62,9 @@
     kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
     kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
     
+    kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
+    kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "Meta+Up,Meta+Up,Maximize Window"
+
     kwin_x11 --replace &
     restart_kde_app_with_sleep kglobalaccel5
     restart_kde_app plasmashell
