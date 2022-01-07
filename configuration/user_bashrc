@@ -21,6 +21,19 @@ touchngo() {
     touch "$1" && goland "$1"
 }
 
+kill_kde_app() {
+    kquitapp5 $1 || killall $1 || true
+}
+
+restart_kde_app() {
+    kill_kde_app $1 && kstart5 $1
+}
+
+restart_kde_app_with_sleep() {
+    kill_kde_app $1 && sleep 2s && kstart5 $1
+}
+
+
 alias restart_plasmashell='(kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell > /dev/null 2>&1'
 alias ecr_login='$(aws ecr get-login | sed -E "s/-e none //")'
 

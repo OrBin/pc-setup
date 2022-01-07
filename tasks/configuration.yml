@@ -60,9 +60,11 @@
     lookandfeeltool -a org.kde.breezedark.desktop
 
     kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
+    kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
     
     kwin_x11 --replace &
-    (kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
+    restart_kde_app_with_sleep kglobalaccel5
+    restart_kde_app plasmashell
   when: configure_kde
 
 - name: Configure GitHub CLI
