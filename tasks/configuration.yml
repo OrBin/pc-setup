@@ -86,10 +86,23 @@
 - name: Configure GitHub CLI
   shell: gh config set git_protocol ssh
 
+- name: Find Cura configuration directory
+  find:
+    paths: "{{ ansible_user_dir }}/.local/share/cura/"
+    recurse: no
+    file_type: directory
+    use_regex: yes
+    patterns: ['[0-9\.]+']
+  register: find_cura_config_dir
+
+- name: Save Cura configuration directory
+  set_fact:
+    cura_config_dir: "{{ find_cura_config_dir.files[0].path }}"
+
 - name: Configure Cura
   ini_file:
-    path: "{{ lookup('fileglob', '~/.local/share/cura/*/cura.cfg', wantlist=True) | first }}"
+    path: "{{ cura_config_dir }}/cura.cfg"
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
-  loop: cura_configuration
+  loop: "{{ cura_configuration }}"
