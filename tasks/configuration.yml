@@ -75,8 +75,8 @@
     # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-${current_activity_id}" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
     
     kwin_x11 --replace &
-    restart_kde_app_with_sleep kglobalaccel5
-    restart_kde_app plasmashell
+    (timeout 5 kquitapp5 kglobalaccel5 || killall kglobalaccel5 || true) && sleep 2s && kstart5 kglobalaccel5
+    (timeout 5 kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
   when: configure_kde
 
 # See this (hopefully) safer alternative to configuring KDE:
