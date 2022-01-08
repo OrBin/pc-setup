@@ -1,20 +1,21 @@
 - name: Install personal tools (snap)
   snap:
     name:
-    - telegram-desktop
-    - spotify
+      - telegram-desktop
+      - spotify
   become: yes
 
 - name: Install personal tools (apt)
   apt:
     name:
-    - openscad
+      - openscad
   become: yes
-
 
 - name: Install Kazam
   pip:
-    name: Kazam
+    name:
+      - xdg  # Required for Kazam
+      - Kazam
   become: yes
 
 - name: Add Pinta apt repository into sources list
