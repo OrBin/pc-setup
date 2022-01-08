@@ -107,6 +107,9 @@ systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 [Containments][3][Applets][4][Configuration][Shortcuts]
 global=Alt+F1
 
+[Containments][3][Applets][4][Shortcuts]
+global=Meta+F1
+
 [Containments][3][Applets][5]
 immutability=1
 plugin=org.kde.plasma.pager
