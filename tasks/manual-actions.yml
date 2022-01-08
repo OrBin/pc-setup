@@ -108,6 +108,7 @@
 
 - name: Check if Cura is already configured
   shell: grep -iRl "Ender-3" ~/.local/share/cura/*/cura.cfg
+  ignore_errors: yes
   register: cura_config_check
 
 - name: Configure Cura
@@ -124,6 +125,7 @@
 
 - name: Check if already logged in to Spotify
   shell: grep -Rq autologin ~/snap/spotify/current/.config/spotify/prefs
+  ignore_errors: yes
   register: spotify_login_check
 
 - name: Log in to Spotify
