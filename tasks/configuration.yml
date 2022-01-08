@@ -63,15 +63,33 @@
     kwriteconfig5 --file kwinrc --group NightColor --key Active true
     kwriteconfig5 --file kwinrc --group NightColor --key NightTemperature 5500
     
-    kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
+    kwriteconfig5 --file kded5rc --group "Module-browserintegrationreminder" --key autoload false
     
-    kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
-    kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "Meta+Up,Meta+Up,Maximize Window"
-
+    #kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
+    
+    #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
+    #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "Meta+Up,Meta+Up,Maximize Window"
+    
+    # current_activity_id=$(kreadconfig5 --file kactivitymanagerdrc --group main --key currentActivity)
+    # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-global" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
+    # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-${current_activity_id}" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
+    
     kwin_x11 --replace &
     restart_kde_app_with_sleep kglobalaccel5
     restart_kde_app plasmashell
   when: configure_kde
 
+# See this (hopefully) safer alternative to configuring KDE:
+# https://develop.kde.org/docs/plasma/scripting/
+# https://develop.kde.org/docs/plasma/scripting/examples
+
 - name: Configure GitHub CLI
   shell: gh config set git_protocol ssh
+
+- name: Configure Cura
+  ini_file:
+    path: "{{ lookup('fileglob', '~/.local/share/cura/*/cura.cfg', wantlist=True) | first }}"
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  loop: cura_configuration

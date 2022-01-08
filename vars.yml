@@ -24,6 +24,10 @@ required_chrome_extension_ids:
   - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
   - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
   - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
+cura_configuration:
+  - { section: "general", option: "auto_slice", value: "True" }
+  - { section: "general", option: "accepted_user_agreement", value: "True" }
+  - { section: "cura", option: "active_setting_visibility_preset", value: "all" }
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2
