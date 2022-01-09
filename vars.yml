@@ -1,5 +1,6 @@
 ---
 prompt_for_manual_actions: yes
+force_apt_update: no
 configure_kde: yes
 temp_dir: /tmp/pc-setup
 dive_version: 0.10.0

@@ -110,6 +110,7 @@
 - name: Save Cura configuration directory
   set_fact:
     cura_config_dir: "{{ find_cura_config_dir.files[0].path }}"
+  when: find_cura_config_dir.matched > 0
 
 - name: Configure Cura
   ini_file:
@@ -118,3 +119,4 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
   loop: "{{ cura_configuration }}"
+  when: find_cura_config_dir.matched > 0

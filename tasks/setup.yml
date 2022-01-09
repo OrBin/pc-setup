@@ -21,8 +21,8 @@
   set_fact:
     user_bashrc_file_path: "{{create_user_bashrc.dest}}"
 
-- name: Running apt update if was not run in the last 7 days, running
+- name: Running apt update if was not run in the last 7 days
   apt:
     update_cache: yes
-    cache_valid_time: "{{ 60 * 60 * 24 * 7 }}"
+    cache_valid_time: "{{ 0 if force_apt_update else (60 * 60 * 24 * 7) }}"
   become: yes
