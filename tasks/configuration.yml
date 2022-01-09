@@ -6,6 +6,11 @@
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
+- name: Copy xdg-open workaround script
+  template:
+    src: "{{playbook_dir}}/configuration/xdg-open"
+    dest: "{{ ansible_user_dir }}/bin/xdg-open"
+
 - name: Update xkbrc
   ini_file:
     path: "{{ ansible_user_dir }}/.config/kxkbrc"
