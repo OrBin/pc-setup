@@ -20,6 +20,7 @@
     - nano
     - ffmpeg
     - python3-distutils-extra
+    - net-tools
   become: yes
 
 - name: Generate configuration for hstr
