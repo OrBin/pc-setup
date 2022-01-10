@@ -129,7 +129,9 @@ DialogHeight=558
 DialogWidth=720
 
 [Containments][3][Applets][6][Configuration][General]
-launchers=preferred://browser,preferred://filemanager,applications:org.kde.konsole.desktop
+# Clicking grouped tasks shows "Present Windows" effect
+groupedTaskVisualization=2
+launchers=preferred://browser,preferred://filemanager,applications:org.kde.konsole.desktop,applications:spotify_spotify.desktop
 
 [Containments][3][Applets][7]
 immutability=1
