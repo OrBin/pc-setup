@@ -32,6 +32,3 @@
 
   - import_tasks: tasks/teardown.yml
     tags: ['teardown']
-
-
-# TODO configure desktop, taskbar, lockscreen and hotkeys (where does it belong?)
