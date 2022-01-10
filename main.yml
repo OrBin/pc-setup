@@ -2,9 +2,19 @@
 - hosts: all
 
   vars_files:
-    - vars.yml
+    - default.yml
 
   tasks:
+  - name: stat host vars file
+    stat:
+      path: "{{ host_vars_file_path }}"
+    register: stat_host_vars_file
+
+  - name: Include host vars
+    include_vars:
+      file: "{{ playbook_dir }}/vars/host.yml"
+    when: stat_host_vars_file.stat is defined and stat_host_vars_file.stat.exists
+
   - import_tasks: tasks/user_inputs.yml
     tags: ['user_inputs']
 
