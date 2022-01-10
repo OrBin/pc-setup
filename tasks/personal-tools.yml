@@ -62,4 +62,20 @@
     src: "{{download_cura.dest}}"
     dest: /usr/bin/cura
     state: link
+  register: cura_symlink
+  become: yes
+
+- name: Copy Cura icon
+  copy:
+    src: "{{playbook_dir}}/configuration/cura-icon.png"
+    dest: "/usr/local/share/applications/cura-icon.png"
+    mode: 0644
+  register: cura_icon
+  become: yes
+
+- name: Create a desktop entry for Cura
+  template:
+    src: "{{playbook_dir}}/configuration/com.ultimaker.cura.desktop.j2"
+    dest: "/usr/local/share/applications/com.ultimaker.cura.desktop"
+    mode: 0644
   become: yes
