@@ -46,7 +46,3 @@ pyenv_global: 3.10.1
 pyenv_python_versions:
   - "{{ pyenv_global }}"
 pyenv_virtualenvs: []
-
-
-
-install_slack: no
