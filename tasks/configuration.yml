@@ -120,3 +120,14 @@
     value: "{{ item.value }}"
   loop: "{{ cura_configuration }}"
   when: find_cura_config_dir.matched > 0
+
+- name: Ensure autostart directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.config/autostart"
+    state: directory
+
+- name: Add Telegram Desktop to autostart
+  file:
+    src: "/var/lib/snapd/desktop/applications/telegram-desktop_telegram-desktop.desktop"
+    dest: "{{ ansible_user_dir }}/.config/autostart/telegram-desktop_telegram-desktop.desktop"
+    state: link
