@@ -69,7 +69,9 @@
 
 - name: Configure KDE
   shell: |
-    lookandfeeltool -a org.kde.breezedark.desktop
+    if [ $(kreadconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage --default default) != 'org.kde.breezedark.desktop' ]; then 
+      lookandfeeltool -a org.kde.breezedark.desktop
+    fi
 
     kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
     kwriteconfig5 --file kwinrc --group NightColor --key Active true
