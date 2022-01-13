@@ -82,6 +82,8 @@
     # Turn NumLock on on plasma startup
     kwriteconfig5 --file kcminputrc --group Keyboard --key NumLock "0"
     
+    kwriteconfig5 --file dolphinrc --group General --key RememberOpenedTabs false
+    
     #kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
     
     #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
