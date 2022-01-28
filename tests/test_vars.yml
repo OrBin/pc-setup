@@ -1,5 +1,4 @@
 ---
-install_slack: yes
 prompt_for_manual_actions: no
 force_apt_update: yes
 configure_kde: no

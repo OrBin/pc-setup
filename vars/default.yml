@@ -30,6 +30,7 @@ cura_configuration:
   - { section: "general", option: "auto_slice", value: "True" }
   - { section: "general", option: "accepted_user_agreement", value: "True" }
   - { section: "cura", option: "active_setting_visibility_preset", value: "all" }
+settings_file_path: "{{ ansible_user_dir }}/.config/pc-setup/settings.json"
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2

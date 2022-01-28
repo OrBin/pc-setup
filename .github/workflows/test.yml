@@ -6,6 +6,11 @@ jobs:
     timeout-minutes: 40
     env:
       SSH_KEY_FILE: /tmp/id_rsa
+    strategy:
+      matrix:
+        computer_type:
+          - "work"
+          - "personal"
     steps:
     - name: Install doctl
       run: sudo snap install doctl
@@ -93,6 +98,8 @@ jobs:
         echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
 
     - name: Test
+      env:
+        COMPUTER_TYPE: ${{ matrix.computer_type }}
       run: |
         ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && tests/test.sh"
 

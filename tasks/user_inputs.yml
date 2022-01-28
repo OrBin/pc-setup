@@ -1,16 +1,62 @@
 ---
-- name: Ask whether to install slack or not
-  pause:
-    prompt: Install slack? (y/N)
-  when: install_slack is undefined
-  register: install_slack_prompt
-
-- name: Set install_slack to "yes"
+- name: Read settings file
   set_fact:
-    install_slack: yes
-  when: install_slack is undefined and (install_slack_prompt.user_input|lower) in ['y', 'yes']
+    settings: "{{ lookup('file', settings_file_path)  | from_json }}"
+  ignore_errors: yes
 
-- name: Set install_slack to "no"
+- name: Spread settings securely into variables
   set_fact:
-    install_slack: no
-  when: install_slack is undefined
+    "{{ item }}": "{{ settings[item] }}"
+  loop:
+    - "computer_type"
+  when: settings is defined and settings[item] is defined
+
+- name: Check if computer type should be configured
+  set_fact:
+    should_configure_computer_type: "{{ computer_type is not defined }}"
+
+- name: Configure computer type
+  block:
+    - name: Ask whether it's a work computer
+      pause:
+        prompt: Is this a work computer? (y/N)
+      register: is_work_computer_prompt
+
+    - name: Set computer_type to "work"
+      set_fact:
+        computer_type: work
+      when: computer_type is not defined and (is_work_computer_prompt.user_input|lower) in ['y', 'yes']
+
+    - name: Set computer_type to "personal"
+      set_fact:
+        computer_type: personal
+      when: computer_type is not defined
+
+    - name: Ensure settings directory exists
+      file:
+        # Not setting mode here to avoid changing the mode if it's an existing directory
+        path: "{{ settings_file_path | dirname }}"
+        state: directory
+
+    - name: Ensure settings file exists
+      file:
+        path: "{{ settings_file_path }}"
+        state: touch
+        mode: 0600
+
+    - name: Update settings file
+      copy:
+        dest: "{{ settings_file_path }}"
+        content: "{{ settings | default({}) | combine({ 'computer_type': computer_type }) | to_nice_json }}"
+
+
+    - name: Notify user about setting computer type
+      pause:
+        seconds: 2
+        prompt: |
+          Computer type was set to "{{ computer_type }}".
+          You can reconfigure it any time in {{ settings_file_path }} (possible values: "personal", "work").
+
+  when: should_configure_computer_type
+
+

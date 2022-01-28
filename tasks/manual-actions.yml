@@ -3,7 +3,7 @@
 
 - name: Check installed Google Chrome extensions
   set_fact:
-    installed_chrome_extension_ids: "{{ lookup('file', ansible_user_dir+'/.config/google-chrome/Default/Preferences')  | from_json | moreati.jq.jq('.extensions.settings | keys') }}"
+    installed_chrome_extension_ids: "{{ lookup('file', ansible_user_dir+'/.config/google-chrome/Default/Preferences') | from_json | moreati.jq.jq('.extensions.settings | keys') }}"
 
 - name: Compute Google Chrome extensions to install
   set_fact:

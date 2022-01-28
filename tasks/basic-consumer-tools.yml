@@ -32,4 +32,4 @@
     name: slack
     classic: yes
   become: yes
-  when: install_slack
+  when: computer_type == "work"
