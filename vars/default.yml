@@ -33,6 +33,7 @@ cura_configuration:
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2
+docker_compose_arch: "{{ ansible_architecture }}"
 
 # Used by geerlingguy.nodejs:
 nodejs_version: 16.x
