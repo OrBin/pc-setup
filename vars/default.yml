@@ -31,6 +31,14 @@ cura_configuration:
   - { section: "general", option: "accepted_user_agreement", value: "True" }
   - { section: "cura", option: "active_setting_visibility_preset", value: "all" }
 settings_file_path: "{{ ansible_user_dir }}/.config/pc-setup/settings.json"
+personal_jetbrains_ides:
+  - goland
+  - pycharm-professional
+work_jetbrains_ides:
+  - goland
+  - pycharm-community
+  - intellij-idea-community
+
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2

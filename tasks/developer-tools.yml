@@ -60,13 +60,24 @@
 
 - name: Install JetBrains IDEs
   snap:
-    name:
-      - pycharm-professional
-      - goland
+    name: "{{ jetbrains_ides }}"
     classic: yes
   become: yes
 
 # TODO install IDE extensions (e.g. TabNine)
+
+- name: Download VS Code
+  get_url:
+    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    dest: "{{temp_dir}}"
+    mode: '444'
+  register: download_vscode
+
+- name: Install VS Code
+  apt:
+    deb: "{{ download_vscode.dest }}"
+  become: yes
+  when: computer_type == "work"
 
 - name: Install Postman
   snap:
