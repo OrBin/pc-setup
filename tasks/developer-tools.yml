@@ -3,7 +3,7 @@
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
     dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
-    mode: '0644'
+    mode: "0644"
   become: yes
 
 - name: Add GitHub CLI apt repository into sources list
@@ -70,7 +70,7 @@
   get_url:
     url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
     dest: "{{temp_dir}}"
-    mode: '444'
+    mode: "0644"
   register: download_vscode
 
 - name: Install VS Code
@@ -147,7 +147,7 @@
   get_url:
     url: "https://api.k8slens.dev/binaries/Lens-{{ lens_latest_version_response.json.version }}.{{ packages_architecture }}.deb"
     dest: "{{temp_dir}}"
-    mode: '444'
+    mode: "444"
   become: yes
   register: download_lens
 

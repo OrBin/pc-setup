@@ -60,7 +60,7 @@
   get_url:
     url: https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
     dest: /opt/prettyping
-    mode: '0755'
+    mode: "0755"
   become: yes
   register: download_prettyping
 

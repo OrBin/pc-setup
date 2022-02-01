@@ -15,7 +15,7 @@
   template:
     src: "{{playbook_dir}}/configuration/xdg-open"
     dest: "{{ ansible_user_dir }}/bin/xdg-open"
-    mode: 0775
+    mode: "0775"
 
 - name: Update xkbrc
   ini_file:
