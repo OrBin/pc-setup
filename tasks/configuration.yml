@@ -146,3 +146,42 @@
     before: "\n"
     regexp: "telegram-desktop -- "
     replace: "telegram-desktop -startintray -- "
+
+- name: Initialize JetBrains IDE directories
+  # Letting each IDE to run for 10 seconds to initialize its configuration directory
+  shell:  "{{playbook_dir}}/configuration/initialize_ides.sh 10s {{ jetbrains_ides | join(' ') }}"
+
+- name: Find JetBrains IDE directories
+  find:
+    paths: "{{ ansible_user_dir }}/.config/JetBrains/"
+    file_type: directory
+  register: find_jetbrains_ide_dirs_result
+
+- name: Ensure JetBrains IDE directory exists
+  file:
+    # Not setting mode here to avoid changing the mode if it's an existing directory
+    path: "{{ item.path }}/options"
+    state: directory
+    mode: "0775"
+  loop: "{{ find_jetbrains_ide_dirs_result.files }}"
+
+- name: Ensure JetBrains IDE config file exists and is initialized
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/configuration/empty.xml"
+    dest: "{{ item.1.path }}/options/{{ item.0 }}"
+    mode: "0664"
+    force: no
+  with_nested:
+    - "{{ jetbrains_ides_configuration | map(attribute='file') | unique }}"
+    - "{{ find_jetbrains_ide_dirs_result.files }}"
+
+- name: Configure JetBrains IDEs
+  community.general.xml:
+    path: "{{ item.1.path }}/options/{{ item.0.file }}"
+    xpath: "{{ item.0.xpath }}"
+    attribute: value
+    value: "{{ item.0.value }}"
+    pretty_print: yes
+  with_nested:
+    - "{{ jetbrains_ides_configuration }}"
+    - "{{ find_jetbrains_ide_dirs_result.files }}"

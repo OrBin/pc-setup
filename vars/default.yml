@@ -38,7 +38,12 @@ work_jetbrains_ides:
   - goland
   - pycharm-community
   - intellij-idea-community
-
+jetbrains_ides_configuration:
+  - { file: "other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitCustomization.IsApplied']", value: "true" }
+  - { file: "other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitPromotionState']", value: "SHOWN" }
+  - { file: "editor.xml", xpath: "/application/component[@name='EditorSettings']/option[@name='IS_WHEEL_FONTCHANGE_ENABLED']", value: "true" }
+  - { file: "editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_SIZE']", value: "14" }
+  - { file: "editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_FAMILY']", value: "JetBrains Mono" }
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2
