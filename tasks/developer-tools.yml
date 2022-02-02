@@ -21,6 +21,7 @@
     - nmap
     - wireshark
     - adb
+    - shellcheck
   become: yes
 
 - name: Evaluate completion for GitHub CLI
