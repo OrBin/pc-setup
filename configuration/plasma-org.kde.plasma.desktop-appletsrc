@@ -131,7 +131,8 @@ DialogWidth=720
 [Containments][3][Applets][6][Configuration][General]
 # Clicking grouped tasks shows "Present Windows" effect
 groupedTaskVisualization=2
-launchers=preferred://browser,preferred://filemanager,applications:org.kde.konsole.desktop,applications:spotify_spotify.desktop
+launchers=preferred://browser,preferred://filemanager,applications:org.kde.konsole.desktop,applications:spotify_spotify.desktop{% if computer_type == "work" %},applications:slack_slack.desktop{% endif %}
+
 
 [Containments][3][Applets][7]
 immutability=1
