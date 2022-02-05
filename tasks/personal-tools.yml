@@ -48,6 +48,7 @@
   apt:
     deb: https://repo.steampowered.com/steam/archive/precise/steam_latest.deb
   become: yes
+  when: computer_type == "personal"
 
 - name: Download Cura
   get_url:
