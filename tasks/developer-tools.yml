@@ -21,7 +21,6 @@
     - nmap
     - wireshark
     - adb
-    - shellcheck
   become: yes
 
 - name: Evaluate completion for GitHub CLI
@@ -39,6 +38,7 @@
     name:
     - doctl
     - multipass
+    - shellcheck
   become: yes
 
 - name: Connect doctl to ssh-keys interface
