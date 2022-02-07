@@ -28,6 +28,9 @@
 
 - name: GitHub CLI authentication
   block:
+    - name: Make GitHub CLI non-interactive
+      shell: "gh config set prompt disabled"
+
     - name: Notify user to login to GitHub CLI
       pause:
         prompt: |-
@@ -36,6 +39,9 @@
 
     - name: Open Konsole for login to GitHub CLI
       shell: "konsole -e gh auth login --web --scopes admin:public_key"
+
+    - name: Make GitHub CLI interactive again
+      shell: "gh config set prompt disabled"
 
   when: gh_auth_status.rc != 0
 

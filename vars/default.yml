@@ -63,3 +63,6 @@ pyenv_global: 3.10.1
 pyenv_python_versions:
   - "{{ pyenv_global }}"
 pyenv_virtualenvs: []
+
+# Used by robertdebock.terraform:
+terraform_version: 1.1.5
