@@ -179,3 +179,9 @@
   pip:
     name: "ansible-lint[core,community,yamllint]"
   become: yes
+
+- name: Install Terraform CLI
+  import_role:
+    name: robertdebock.terraform
+  when: computer_type == "work"
+  become: yes
