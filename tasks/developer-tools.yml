@@ -185,3 +185,10 @@
     name: robertdebock.terraform
   when: computer_type == "work"
   become: yes
+
+- name: Install snapcraft
+  snap:
+    name: snapcraft
+    classic: yes
+  when: computer_type == "work"
+  become: yes
