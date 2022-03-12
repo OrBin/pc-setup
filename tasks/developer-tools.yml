@@ -103,6 +103,12 @@
     name: geerlingguy.nodejs
   become: yes
 
+- name: Install Yarn
+  npm:
+    name: yarn
+    global: yes
+  become: yes
+
 - name: Install Go
   import_role:
     name: geerlingguy.go
