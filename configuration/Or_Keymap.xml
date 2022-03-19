@@ -1,0 +1,9 @@
+<keymap version="1" name="Or_Keymap" parent="Default for KDE">
+  <action id="Annotate">
+    <keyboard-shortcut first-keystroke="ctrl alt released a" />
+  </action>
+  <action id="Git.Add" />
+  <action id="Github.Create.Pull.Request">
+    <keyboard-shortcut first-keystroke="alt p" />
+  </action>
+</keymap>

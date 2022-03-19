@@ -161,27 +161,43 @@
     file_type: directory
   register: find_jetbrains_ide_dirs_result
 
-- name: Ensure JetBrains IDE directory exists
+- name: Ensure JetBrains IDE directories and subdirectories exist
   file:
-    # Not setting mode here to avoid changing the mode if it's an existing directory
-    path: "{{ item.path }}/options"
+    path: "{{ item.1.path }}/{{ item.0 }}"
+    state: directory
+    mode: "0775"
+  with_nested:
+    - "{{ jetbrains_ides_configuration | map(attribute='file_path') | map('dirname') | unique }}"
+    - "{{ find_jetbrains_ide_dirs_result.files }}"
+
+- name: Ensure JetBrains IDE keymaps subdirectories exist
+  file:
+    path: "{{ item.path }}/keymaps"
     state: directory
     mode: "0775"
   loop: "{{ find_jetbrains_ide_dirs_result.files }}"
 
-- name: Ensure JetBrains IDE config file exists and is initialized
+- name: Copy keymap to JetBrains IDE directories
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/configuration/Or_Keymap.xml"
+    dest: "{{ item.path }}/keymaps/Or_Keymap.xml"
+    mode: "0664"
+    force: yes
+  loop: "{{ find_jetbrains_ide_dirs_result.files }}"
+
+- name: Ensure JetBrains IDE config files exist and is initialized
   ansible.builtin.copy:
     src: "{{ playbook_dir }}/configuration/empty.xml"
-    dest: "{{ item.1.path }}/options/{{ item.0 }}"
+    dest: "{{ item.1.path }}/{{ item.0 }}"
     mode: "0664"
     force: no
   with_nested:
-    - "{{ jetbrains_ides_configuration | map(attribute='file') | unique }}"
+    - "{{ jetbrains_ides_configuration | map(attribute='file_path') | unique }}"
     - "{{ find_jetbrains_ide_dirs_result.files }}"
 
 - name: Configure JetBrains IDEs
   community.general.xml:
-    path: "{{ item.1.path }}/options/{{ item.0.file }}"
+    path: "{{ item.1.path }}/{{ item.0.file_path }}"
     xpath: "{{ item.0.xpath }}"
     attribute: value
     value: "{{ item.0.value }}"

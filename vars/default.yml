@@ -39,12 +39,13 @@ work_jetbrains_ides:
   - pycharm-community
   - intellij-idea-community
 jetbrains_ides_configuration:
-  - { file: "other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitCustomization.IsApplied']", value: "true" }
-  - { file: "other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitPromotionState']", value: "SHOWN" }
-  - { file: "vcs.xml", xpath: "/application/component[@name='VcsApplicationSettings']/option[@name='COMMIT_FROM_LOCAL_CHANGES']", value: "false" }
-  - { file: "editor.xml", xpath: "/application/component[@name='EditorSettings']/option[@name='IS_WHEEL_FONTCHANGE_ENABLED']", value: "true" }
-  - { file: "editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_SIZE']", value: "14" }
-  - { file: "editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_FAMILY']", value: "JetBrains Mono" }
+  - { file_path: "options/other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitCustomization.IsApplied']", value: "true" }
+  - { file_path: "options/other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitPromotionState']", value: "SHOWN" }
+  - { file_path: "options/vcs.xml", xpath: "/application/component[@name='VcsApplicationSettings']/option[@name='COMMIT_FROM_LOCAL_CHANGES']", value: "false" }
+  - { file_path: "options/editor.xml", xpath: "/application/component[@name='EditorSettings']/option[@name='IS_WHEEL_FONTCHANGE_ENABLED']", value: "true" }
+  - { file_path: "options/editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_SIZE']", value: "14" }
+  - { file_path: "options/editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_FAMILY']", value: "JetBrains Mono" }
+  - { file_path: "options/linux/keymap.xml", xpath: "/application/component[@name='KeymapManager']/active_keymap[@name='Or_Keymap']", value: "" }
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2
