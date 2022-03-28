@@ -9,7 +9,7 @@
 - name: Add GitHub CLI apt repository into sources list
   apt_repository:
     repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
-    filename: /etc/apt/sources.list.d/github-cli.list
+    filename: /etc/apt/sources.list.d/github-cli
     update_cache: yes
   become: yes
 

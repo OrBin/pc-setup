@@ -21,8 +21,8 @@
   - import_tasks: tasks/prepare.yml
     tags: ['prepare']
 
-  - import_tasks: tasks/upgrade-kde.yml
-    tags: ['upgrade-kde']
+  - import_tasks: tasks/basic-distribution-preparation.yml
+    tags: ['basic-distribution-preparation']
 
   - import_tasks: tasks/basic-linux-tools.yml
     tags: ['basic-linux-tools']
