@@ -1,0 +1,27 @@
+---
+- name: Check plasma version
+  shell: plasmashell --version | sed -E 's/^plasmashell ([0-9\.]+)$/\1/'
+  register: plasmashell_version
+
+- name: Print plasma version
+  debug:
+    msg: "{{ plasmashell_version.stdout }}"
+
+- set_fact:
+    upgrade_plasma: "{{ plasmashell_version.stdout is version('5.24', '<') }}"
+
+- name: Upgrade KDE Plasma
+  block:
+  - name: Add Kubuntu backports apt repository into sources list
+    apt_repository:
+      repo: "ppa:kubuntu-ppa/backports"
+      update_cache: yes
+    become: yes
+
+  - name: Run apt upgrade
+    apt:
+      upgrade: yes
+    become: yes
+
+  when: plasmashell_version.stdout is version('5.24', '<')
+
