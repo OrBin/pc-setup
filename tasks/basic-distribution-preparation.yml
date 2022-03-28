@@ -28,5 +28,11 @@
       upgrade: yes
     become: yes
 
+  - name: Upgrade plasma-desktop package
+    apt:
+      name: plasma-desktop
+      state: latest
+    become: yes
+
   when: plasmashell_version.stdout is version('5.24', '<')
 
