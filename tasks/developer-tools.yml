@@ -164,9 +164,11 @@
     deb:  "{{ download_lens.dest }}"
   become: yes
 
-- name: Install kubectl
+- name: Install developer tools (snap - classic)
   snap:
-    name: kubectl
+    name:
+    - kubectl
+    - helm
     classic: yes
   become: yes
 
