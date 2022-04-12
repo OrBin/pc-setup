@@ -67,6 +67,9 @@
 
 # TODO install IDE extensions (e.g. TabNine)
 
+# TODO check installed VS Code version: dpkg -s code | grep '^Version:' | cut -d ' ' -f 2-
+#  then check the version that the download url below redirects to, using https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html
+-
 - name: Download VS Code
   get_url:
     url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
@@ -151,6 +154,8 @@
     url: https://api.k8slens.dev/binaries/latest.json
   register: lens_latest_version_response
 
+# TODO save lens version after installation in a file, then check it in the next run and compare to latest version
+-
 - name: Download Lens
   get_url:
     url: "https://api.k8slens.dev/binaries/Lens-{{ lens_latest_version_response.json.version }}.{{ packages_architecture }}.deb"
