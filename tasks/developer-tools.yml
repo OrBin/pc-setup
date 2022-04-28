@@ -177,6 +177,14 @@
     classic: yes
   become: yes
 
+- name: "Evaluate completions"
+  shell: |
+    "{{ item }}" completion bash | tee $HOME/.{{ item }}_bash_completion
+    echo 'source $HOME/.{{ item }}_bash_completion' >> "{{ user_bashrc_file_path }}"
+  loop:
+    - kubectl
+    - helm
+
 - name: Install pyenv
   import_role:
     name: avanov.pyenv
