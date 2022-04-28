@@ -11,7 +11,11 @@ set_bluez_cards_profile() {
 alias headset_zoom="set_bluez_cards_profile headset_head_unit"
 alias headset_music="set_bluez_cards_profile a2dp_sink"
 
-alias charm=pycharm-professional
+if $(command -v pycharm-professional); then
+    alias charm=pycharm-professional
+else
+    alias charm=pycharm-community
+fi
 
 toucharm() {
     touch "$1" && charm "$1"
