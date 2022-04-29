@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# A workaround to allow cura to open Chrome in order to login:
-# https://github.com/Ultimaker/Cura/issues/10087#issuecomment-904603108
-#
-unset QT_PLUGIN_PATH
-/usr/bin/xdg-open "$@"

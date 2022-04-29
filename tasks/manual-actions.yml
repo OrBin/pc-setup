@@ -3,6 +3,7 @@
 
 - name: Check installed Google Chrome extensions
   set_fact:
+    # TODO: this won't work before running chrome for the first time
     installed_chrome_extension_ids: "{{ lookup('file', ansible_user_dir+'/.config/google-chrome/Default/Preferences') | from_json | moreati.jq.jq('.extensions.settings | keys') }}"
 
 - name: Compute Google Chrome extensions to install
@@ -31,7 +32,7 @@
     - name: Make GitHub CLI non-interactive
       shell: "gh config set prompt disabled"
 
-    - name: Notify user to login to GitHub CLI
+    - name: Notify user to log in to GitHub CLI
       pause:
         prompt: |-
           Please login to GitHub CLI.
@@ -126,7 +127,7 @@
         Press enter to automatically open Cura
 
   - name: Open Cura to allow restore from backup
-    shell: "cura &"
+    shell: "env -u DESKTOP_SESSION -u KDE_FULL_SESSION -u XDG_CURRENT_DESKTOP cura &"
   when: cura_config_check.rc != 0
 
 - name: Check if already logged in to Spotify
