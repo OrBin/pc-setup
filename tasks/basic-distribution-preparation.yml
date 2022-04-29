@@ -18,6 +18,13 @@
     upgrade_plasma: "{{ plasmashell_version.stdout is version('5.24', '<') }}"
   when: configure_kde
 
+- name: Configure apt to use only IPv4
+  lineinfile:
+    path: "/etc/apt/apt.conf.d/99force-ipv4"
+    line: 'Acquire::ForceIPv4 "true";'
+    create: yes
+  become: yes
+
 - name: Upgrade KDE Plasma
   block:
   - name: Add Kubuntu backports apt repository into sources list
