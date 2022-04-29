@@ -18,12 +18,6 @@
       - Kazam
   become: yes
 
-- name: Add Pinta apt repository into sources list
-  apt_repository:
-    repo: "ppa:pinta-maintainers/pinta-stable"
-    update_cache: yes
-  become: yes
-
 - name: Install Pinta
   apt:
     name: pinta
