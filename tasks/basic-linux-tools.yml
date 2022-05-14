@@ -21,6 +21,8 @@
     - ffmpeg
     - python3-distutils-extra
     - net-tools
+    - zip
+    - unzip
   become: yes
 
 - name: Generate configuration for hstr
