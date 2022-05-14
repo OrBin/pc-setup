@@ -213,3 +213,5 @@
     classic: yes
   when: computer_type == "work"
   become: yes
+
+# TODO add eksctl, VirtualBox, gitignore
