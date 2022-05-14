@@ -1,7 +1,7 @@
 ---
 - name: Replace country-specific Ubuntu repo paths with mirror-protocol paths
   # See "Use mirror protocol" in https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux
-  shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_language_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
+  shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_country_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
   become: yes
 
 - name: Check plasma version
