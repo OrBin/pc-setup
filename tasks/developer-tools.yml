@@ -21,6 +21,7 @@
     - nmap
     - wireshark
     - adb
+    - postgresql-client
   become: yes
 
 - name: Evaluate completion for GitHub CLI

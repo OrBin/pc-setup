@@ -23,6 +23,7 @@
     - net-tools
     - zip
     - unzip
+    - traceroute
   become: yes
 
 - name: Generate configuration for hstr
