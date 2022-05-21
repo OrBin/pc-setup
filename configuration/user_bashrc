@@ -11,7 +11,7 @@ set_bluez_cards_profile() {
 alias headset_zoom="set_bluez_cards_profile headset_head_unit"
 alias headset_music="set_bluez_cards_profile a2dp_sink"
 
-if $(command -v pycharm-professional); then
+if command -v pycharm-professional > /dev/null; then
     alias charm=pycharm-professional
 else
     alias charm=pycharm-community
