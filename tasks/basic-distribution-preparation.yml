@@ -3,39 +3,3 @@
   # See "Use mirror protocol" in https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux
   shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_country_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
   become: yes
-
-- name: Check plasma version
-  shell: plasmashell --version | sed -E 's/^plasmashell ([0-9\.]+)$/\1/'
-  register: plasmashell_version
-  when: configure_kde
-
-- name: Print plasma version
-  debug:
-    msg: "{{ plasmashell_version.stdout }}"
-  when: configure_kde
-
-- set_fact:
-    upgrade_plasma: "{{ plasmashell_version.stdout is version('5.24', '<') }}"
-  when: configure_kde
-
-- name: Upgrade KDE Plasma
-  block:
-  - name: Add Kubuntu backports apt repository into sources list
-    apt_repository:
-      repo: "ppa:kubuntu-ppa/backports"
-      update_cache: yes
-    become: yes
-
-  - name: Run apt upgrade
-    apt:
-      upgrade: yes
-    become: yes
-
-  - name: Upgrade plasma-desktop package
-    apt:
-      name: plasma-desktop
-      state: latest
-    become: yes
-
-  when: configure_kde and plasmashell_version.stdout is version('5.24', '<')
-
