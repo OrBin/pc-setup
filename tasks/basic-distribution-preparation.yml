@@ -3,3 +3,17 @@
   # See "Use mirror protocol" in https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux
   shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_country_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
   become: yes
+
+- name: Add Ubuntu 21.10 security repo
+  # Ubuntu 22.04 has upgraded libssl to 3, and does not propose libssl1.1, which causes to issues with various software products
+  # Read more: https://askubuntu.com/a/1403683/287192
+  apt_repository:
+    repo: "deb http://security.ubuntu.com/ubuntu impish-security main"
+    filename: /etc/apt/sources.list.d/impish-security
+    update_cache: yes
+  become: yes
+
+- name: Install libssl1.1
+  apt:
+    name: libssl1.1
+  become: yes
