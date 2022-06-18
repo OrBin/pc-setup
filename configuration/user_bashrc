@@ -52,3 +52,4 @@ alias github_token="grep -P '\Woauth_token:' ~/.config/gh/hosts.yml  | cut -d ':
 alias last_runs='gh run list --branch "$(current_branch)" --user "$(github_user)" --limit 10'
 
 export PATH="$HOME/bin:$PATH"
+export FX_THEME=8

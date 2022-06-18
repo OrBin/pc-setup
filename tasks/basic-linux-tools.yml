@@ -39,6 +39,7 @@
   snap:
     name:
     - glances
+    - fx
   become: yes
 
 - name: Install basic linux tools (pip)
