@@ -24,6 +24,7 @@
     - zip
     - unzip
     - traceroute
+    - exa
   become: yes
 
 - name: Generate configuration for hstr
