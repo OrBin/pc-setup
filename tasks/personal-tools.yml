@@ -11,15 +11,6 @@
       - openscad
   become: yes
 
-# TODO: remove it after it runs on all targets
-- name: Uninstall Kazam (make sure it's not installed via pip, since it's not the stable version)
-  pip:
-    name:
-      - xdg  # Required for Kazam
-      - Kazam
-    state: absent
-  become: yes
-
 - name: Install Kazam
   apt:
     name: kazam
