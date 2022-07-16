@@ -1,10 +1,17 @@
 ---
+- name: Add oh-my-bash to .bashrc
+  blockinfile:
+    block: "{{ lookup('file', playbook_dir + '/configuration/oh_my_bash_conf') }}"
+    path: "{{ ansible_user_dir }}/.bashrc"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - oh-my-bash"
+
 - name: Update user .bashrc
   blockinfile:
     block: "{{ lookup('file', user_bashrc_file_path) }}"
     path: "{{ ansible_user_dir }}/.bashrc"
     backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - user bashrc"
 
 - name: Create directory for personal internal scripts
   file:

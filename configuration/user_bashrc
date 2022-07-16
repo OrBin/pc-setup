@@ -53,3 +53,5 @@ alias last_runs='gh run list --branch "$(current_branch)" --user "$(github_user)
 
 export PATH="$HOME/bin:$PATH"
 export FX_THEME=8
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1  # This is handled by oh-my-bash anyway
