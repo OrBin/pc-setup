@@ -4,6 +4,12 @@
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
     dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
     mode: "0644"
+    force: yes # TODO remove after installing on all target
+  become: yes
+
+# TODO remove after installing on all target
+- name: Remove old GitHub CLI repos
+  shell: "rm -f /etc/apt/sources.list.d/github-cli* && apt-get update"
   become: yes
 
 - name: Add GitHub CLI apt repository into sources list
@@ -22,6 +28,7 @@
     - wireshark
     - adb
     - postgresql-client
+    state: latest
   become: yes
 
 - name: Evaluate completion for GitHub CLI
