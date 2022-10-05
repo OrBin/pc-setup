@@ -4,12 +4,21 @@
   shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_country_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
   become: yes
 
+# TODO: this repo has been unavailble and I'm now using focal's repo (20.04). Remove this after installing on all targets.
+- name: Remove Ubuntu 21.10 security repo
+  apt_repository:
+    repo: "deb http://security.ubuntu.com/ubuntu impish-security main"
+    filename: /etc/apt/sources.list.d/impish-security
+    #update_cache: yes
+    state: absent
+  become: yes
+
 - name: Add Ubuntu 21.10 security repo
   # Ubuntu 22.04 has upgraded libssl to 3, and does not propose libssl1.1, which causes to issues with various software products
   # Read more: https://askubuntu.com/a/1403683/287192
   apt_repository:
-    repo: "deb http://security.ubuntu.com/ubuntu impish-security main"
-    filename: /etc/apt/sources.list.d/impish-security
+    repo: "deb http://security.ubuntu.com/ubuntu focal-security main"
+    filename: /etc/apt/sources.list.d/focal-security
     update_cache: yes
   become: yes
 
