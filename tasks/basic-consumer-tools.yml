@@ -15,6 +15,12 @@
     name: cmprescott.chrome
   become: yes
 
+- name: Update Google Chrome to the latest version
+  apt:
+    name: google-chrome-stable
+    state: latest
+  become: yes
+
 - name: Set Google Chrome as the default browser
   shell: |
     xdg-settings set default-web-browser google-chrome.desktop
