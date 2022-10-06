@@ -56,8 +56,8 @@ docker_compose_arch: "{{ ansible_architecture }}"
 nodejs_version: 16.x
 
 # Used by geerlingguy.go:
-go_version: 1.17.5
-go_checksum: bd78114b0d441b029c8fe0341f4910370925a4d270a6a590668840675b0c653e  # Calculate by: curl https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz | sha256sum
+go_version: 1.18.3
+go_checksum: 956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245  # Calculate by: curl https://dl.google.com/go/go1.17.5.linux-amd64.tar.gz | sha256sum
 
 # Used by avanov.pyenv:
 pyenv_env: user
