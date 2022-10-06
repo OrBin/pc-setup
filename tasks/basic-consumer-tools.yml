@@ -43,7 +43,7 @@
 
 - name: Decide if should reinstall Zoom
   set_fact:
-    should_reinstall_zoom: "{{ check_zoom_current_version.stdout == "" or check_zoom_current_version.stdout is version(zoom_latest_version, '<') }}"
+    should_reinstall_zoom: "{{ check_zoom_current_version.stdout == '' or check_zoom_current_version.stdout is version(zoom_latest_version, '<') }}"
 
 - name: Install Zoom
   apt:
