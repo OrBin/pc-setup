@@ -13,12 +13,8 @@
 - name: Install Google Chrome
   import_role:
     name: cmprescott.chrome
-  become: yes
-
-- name: Update Google Chrome to the latest version
-  apt:
-    name: google-chrome-stable
-    state: latest
+  vars:
+    chrome_latest_version: true
   become: yes
 
 - name: Set Google Chrome as the default browser
