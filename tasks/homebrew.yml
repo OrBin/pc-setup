@@ -1,0 +1,36 @@
+---
+- name: Download Homebrew installation script
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    dest: "{{temp_dir}}/install.sh"
+    mode: "0644"
+  register: download_homebrew_installation_script
+
+- name: Install dependencies
+  apt:
+    name:
+      - build-essential
+      - procps
+      - curl
+      - file
+      - git
+  become: yes
+
+- name: Install homebrew
+  shell: "/bin/bash {{ download_homebrew_installation_script.dest }}"
+  environment:
+    NONINTERACTIVE: "1"
+
+- name: Add homebrew path to .profile
+  blockinfile:
+    block: 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+    path: "{{ ansible_user_dir }}/.profile"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
+
+- name: Add homebrew path to .bashrc
+  blockinfile:
+    block: 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+    path: "{{ ansible_user_dir }}/.bashrc"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
