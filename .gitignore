@@ -115,3 +115,4 @@ fabric.properties
 
 .idea/
 vars/host.yml
+.local_state/
