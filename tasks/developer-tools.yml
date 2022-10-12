@@ -217,4 +217,18 @@
   when: computer_type == "work"
   become: yes
 
-# TODO add eksctl, VirtualBox, gitignore
+- name: Install developer tools (homebrew)
+  community.general.homebrew:
+    name:
+    - derailed/k9s/k9s
+    - fblog
+    - weaveworks/tap/eksctl
+    state: latest
+
+- name: Install buf
+  community.general.homebrew:
+    name: bufbuild/buf/buf
+    state: latest
+  when: computer_type == "work"
+
+# TODO add VirtualBox, gitignore
