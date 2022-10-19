@@ -6,12 +6,31 @@
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - oh-my-bash"
 
+- name: Copy user bash_completion
+  copy:
+    src: "{{user_bash_completion_file_path}}"
+    dest: "{{ ansible_user_dir }}/.bash_completion"
+    backup: yes
+
+- name: Copy user zsh_completion
+  copy:
+    src: "{{user_zsh_completion_file_path}}"
+    dest: "{{ ansible_user_dir }}/.zsh_completion"
+    backup: yes
+
 - name: Update user .bashrc
   blockinfile:
     block: "{{ lookup('file', user_bashrc_file_path) }}"
     path: "{{ ansible_user_dir }}/.bashrc"
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - user bashrc"
+
+- name: Update user .zshrc
+  blockinfile:
+    block: "{{ lookup('file', user_zshrc_file_path) }}"
+    path: "{{ ansible_user_dir }}/.zshrc"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - user zshrc"
 
 - name: Create directory for personal internal scripts
   file:

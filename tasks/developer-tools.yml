@@ -25,15 +25,16 @@
     state: latest
   become: yes
 
-- name: Evaluate completion for GitHub CLI
-  shell: gh completion -s bash
-  register: gh_completion
+- name: "Evaluate GitHub CLI completion for bash"
+  shell: |
+    gh completion -s bash | tee $HOME/.gh_bash_completion
+    echo 'source $HOME/.gh_bash_completion' >> "{{ user_bash_completion_file_path }}"
 
-- name: Add GitHub CLI completion to bash configuration
-  blockinfile:
-    block: "{{gh_completion.stdout}}"
-    path: "{{user_bashrc_file_path}}"
-    marker: ""
+- name: "Evaluate GitHub CLI completion for zsh"
+  shell: |
+    gh completion -s zsh | tee $HOME/.gh_zsh_completion
+    echo 'source $HOME/.gh_zsh_completion' >> "{{ user_zsh_completion_file_path }}"
+
 
 - name: Install developer tools (snap)
   snap:
@@ -217,23 +218,43 @@
     classic: yes
   become: yes
 
-- name: "Evaluate completions"
+- name: "Evaluate completions for bash"
   shell: |
     "{{ item }}" completion bash | tee $HOME/.{{ item }}_bash_completion
-    echo 'source $HOME/.{{ item }}_bash_completion' >> "{{ user_bashrc_file_path }}"
+    echo 'source $HOME/.{{ item }}_bash_completion' >> "{{ user_bash_completion_file_path }}"
+  loop:
+    - kubectl
+    - helm
+    - eksctl
+
+- name: "Evaluate completions for zsh"
+  shell: |
+    "{{ item }}" completion zsh | tee $HOME/.{{ item }}_zsh_completion
+    echo 'source $HOME/.{{ item }}_zsh_completion' >> "{{ user_zsh_completion_file_path }}"
   loop:
     - kubectl
     - helm
 
-- name: Install pyenv
+- name: Install pyenv (bash)
   import_role:
     name: avanov.pyenv
   vars:
     pyenv_setting_path: "{{user_bashrc_file_path}}"
 
+- name: Install pyenv (zsh)
+  import_role:
+    name: avanov.pyenv
+  vars:
+    pyenv_setting_path: "{{user_zshrc_file_path}}"
+
 - name: Add pyenv path to PATH in user bashrc
   lineinfile:
     path: "{{user_bashrc_file_path}}"
+    line: 'eval "$(pyenv init --path)"'
+
+- name: Add pyenv path to PATH in user zshrc
+  lineinfile:
+    path: "{{user_zshrc_file_path}}"
     line: 'eval "$(pyenv init --path)"'
 
 - name: Install ansible-lint

@@ -21,6 +21,41 @@
   set_fact:
     user_bashrc_file_path: "{{create_user_bashrc.dest}}"
 
+- name: Create initial user zshrc file
+  template:
+    src: "{{playbook_dir}}/configuration/user_zshrc"
+    dest: "{{temp_dir}}/user_zshrc"
+    force: yes
+  register: create_user_zshrc
+
+- name: Set user_zshrc_file_path
+  set_fact:
+    user_zshrc_file_path: "{{create_user_zshrc.dest}}"
+
+- name: Create initial user bash_completion file
+  template:
+    src: "{{playbook_dir}}/configuration/empty.j2"
+    dest: "{{temp_dir}}/user_bash_completion"
+    mode: "0640"
+    force: yes
+  register: create_user_bash_completion
+
+- name: Set user_bash_completion_file_path
+  set_fact:
+    user_bash_completion_file_path: "{{create_user_bash_completion.dest}}"
+
+- name: Create initial user zsh_completion file
+  template:
+    src: "{{playbook_dir}}/configuration/empty.j2"
+    dest: "{{temp_dir}}/user_zsh_completion"
+    mode: "0640"
+    force: yes
+  register: create_user_zsh_completion
+
+- name: Set user_zsh_completion_file_path
+  set_fact:
+    user_zsh_completion_file_path: "{{create_user_zsh_completion.dest}}"
+
 - name: Running apt update if was not run in the last 7 days
   apt:
     update_cache: yes

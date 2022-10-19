@@ -34,3 +34,10 @@
     path: "{{ ansible_user_dir }}/.bashrc"
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
+
+- name: Add homebrew path to .zshrc
+  blockinfile:
+    block: 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+    path: "{{ ansible_user_dir }}/.zshrc"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
