@@ -152,6 +152,17 @@
   loop: "{{ cura_configuration }}"
   when: find_cura_config_dir.matched > 0
 
+- name: Add missing Slack desktop entry
+  copy:
+    src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
+    dest: "{{ ansible_user_dir }}/.local/share/applications/slack_slack.desktop"
+  when: computer_type == "work"
+
+- name: Add missing Spotify desktop entry
+  copy:
+    src: "/var/lib/snapd/desktop/applications/spotify_spotify.desktop"
+    dest: "{{ ansible_user_dir }}/.local/share/applications/spotify_spotify.desktop"
+
 - name: Ensure autostart directory exists
   file:
     path: "{{ ansible_user_dir }}/.config/autostart"
