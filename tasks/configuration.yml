@@ -32,6 +32,12 @@
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - user zshrc"
 
+- name: Change shell to zsh
+  ansible.builtin.user:
+    name: "{{ansible_user_id}}"
+    shell: /bin/zsh
+  become: yes
+
 - name: Create directory for personal internal scripts
   file:
     path: "{{ ansible_user_dir }}/bin"
