@@ -28,14 +28,14 @@
     - zsh
   become: yes
 
-- name: Check if oh-my-bash is installed
-  shell: bash -c '[[ -e $OSH ]]'
-  ignore_errors: yes
-  register: omb_check
-
-- name: Install oh-my-bash
-  shell: bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended --prefix "{{ ansible_user_dir }}/omb"
-  when: omb_check.rc != 0
+#- name: Check if oh-my-bash is installed
+#  shell: bash -c '[[ -e $OSH ]]'
+#  ignore_errors: yes
+#  register: omb_check
+#
+#- name: Install oh-my-bash
+#  shell: bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended --prefix "{{ ansible_user_dir }}/omb"
+#  when: omb_check.rc != 0
 
 - name: Check if oh-my-zsh is installed
   shell: zsh -ic '[[ -e $ZSH ]]'
