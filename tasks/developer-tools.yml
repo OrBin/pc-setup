@@ -275,6 +275,32 @@
   when: computer_type == "work"
   become: yes
 
+- name: Install zsh-completions (homebrew)
+  community.general.homebrew:
+    name: zsh-completions
+    state: present
+  register: install_zsh_completions
+
+- name: Update zsh-completions (homebrew)
+  community.general.homebrew:
+    name: zsh-completions
+    state: latest
+
+- name: Add zsh-completions to .zshrc
+  blockinfile:
+    block: |
+        FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+        autoload -Uz compinit
+        compinit
+    path: "{{ ansible_user_dir }}/.zshrc"
+    backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zsh-completions"
+
+- name: Force-rebuild zcompdump to activate zsh completions
+  shell: zsh -ic 'rm -f ~/.zcompdump; compinit'
+  when: install_zsh_completions.changed
+
 - name: Install developer tools (homebrew)
   community.general.homebrew:
     name:
