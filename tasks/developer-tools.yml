@@ -309,6 +309,7 @@
     - weaveworks/tap/eksctl
     - kube-ps1
     - kubectx
+    - fzf
     state: latest
 
 - name: Install buf
