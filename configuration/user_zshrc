@@ -58,3 +58,10 @@ export FX_THEME=8
 # export PYENV_VIRTUALENV_DISABLE_PROMPT=1  # This is handled by oh-my-bash anyway;
 
 source ~/.zsh_completion
+
+source "${HOMEBREW_PREFIX}/opt/kube-ps1/share/kube-ps1.sh"
+PROMPT='$(kube_ps1)'$PROMPT
+
+if [ -f "${HOME}/.zshrc.local" ]; then
+  source "${HOME}/.zshrc.local"
+fi
