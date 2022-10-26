@@ -307,6 +307,8 @@
     - derailed/k9s/k9s
     - fblog
     - weaveworks/tap/eksctl
+    - kube-ps1
+    - kubectx
     state: latest
 
 - name: Install buf
