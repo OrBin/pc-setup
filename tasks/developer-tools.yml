@@ -57,10 +57,16 @@
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
   become: yes
 
+- name: Check dive version
+  shell: dpkg -s dive | grep '^Version:' | cut -d ' ' -f 2-
+  ignore_errors: yes
+  register: installed_dive_version
+
 - name: Install dive
   apt:
     deb: "https://github.com/wagoodman/dive/releases/download/v{{dive_version}}/dive_{{dive_version}}_linux_{{packages_architecture}}.deb"
   become: yes
+  when: "{{ installed_dive_version is failed or installed_dive_version.stdout is version(dive_version, '<') }}"
 
 - name: Install JetBrains IDEs
   snap:
@@ -70,22 +76,53 @@
 
 # TODO install IDE extensions (e.g. TabNine)
 
-# TODO check installed VS Code version: dpkg -s code | grep '^Version:' | cut -d ' ' -f 2-
-#  then check the version that the download url below redirects to, using https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html
--
+- name: Check installed VS Code version
+  # Expected output is formatted like 1.72.2-1665614327
+  shell: dpkg -s code | grep '^Version:' | cut -d ' ' -f 2-
+  ignore_errors: yes
+  when: computer_type == "work"
+  register: installed_vs_code_version
+
+- name: Extract installed VS Code version
+  set_fact:
+    installed_vs_code_version: "{{ installed_vs_code_version.stdout }}"
+  when: computer_type == "work" and installed_vs_code_version is succeeded
+  ignore_errors: yes
+
+- name: Check latest VS Code version
+  ansible.builtin.uri:
+    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    follow_redirects: none
+    status_code: [302, 304, 307]
+  ignore_errors: yes
+  when: computer_type == "work"
+  register: vs_code_download_probe
+
+- name: Extract latest VS Code version
+  # Expected output is formatted like 1.72.2-1665614327
+  set_fact:
+    latest_vs_code_version: "{{ vs_code_download_probe.location | urlsplit('path') | basename | regex_search('code_(.+)_amd64.deb', '\\1') | first }}"
+  when: computer_type == "work" and vs_code_download_probe is succeeded
+  ignore_errors: yes
+
+- name: Decide whether VS Code should be installed
+  set_fact:
+    should_install_vs_code: "{{ installed_vs_code_version is not defined or latest_vs_code_version is not defined or installed_vs_code_version is version(latest_vs_code_version, '<', version_type='semver') }}"
+  when: computer_type == "work"
+
 - name: Download VS Code
   get_url:
     url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
     dest: "{{temp_dir}}"
     mode: "0644"
   register: download_vscode
-  when: computer_type == "work"
+  when: computer_type == "work" and should_install_vs_code
 
 - name: Install VS Code
   apt:
     deb: "{{ download_vscode.dest }}"
   become: yes
-  when: computer_type == "work"
+  when: computer_type == "work" and should_install_vs_code
 
 - name: Install Postman
   snap:
