@@ -286,17 +286,6 @@
     name: zsh-completions
     state: latest
 
-- name: Add zsh-completions to .zshrc
-  blockinfile:
-    block: |
-        FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-        autoload -Uz compinit
-        compinit
-    path: "{{ ansible_user_dir }}/.zshrc"
-    backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - zsh-completions"
-
 - name: Force-rebuild zcompdump to activate zsh completions
   shell: zsh -ic 'rm -f ~/.zcompdump; compinit'
   when: install_zsh_completions.changed
@@ -307,7 +296,6 @@
     - derailed/k9s/k9s
     - fblog
     - weaveworks/tap/eksctl
-    - kube-ps1
     - kubectx
     - fzf
     state: latest

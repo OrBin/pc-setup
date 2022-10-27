@@ -25,12 +25,17 @@
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - user bashrc"
 
+- name: Copy custom zsh theme
+  copy:
+    src: "{{playbook_dir}}/configuration/or.zsh-theme"
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/themes/or.zsh-theme"
+    mode: "0644"
+
 - name: Update user .zshrc
-  blockinfile:
-    block: "{{ lookup('file', user_zshrc_file_path) }}"
-    path: "{{ ansible_user_dir }}/.zshrc"
+  copy:
+    src: "{{user_zshrc_file_path}}"
+    dest: "{{ ansible_user_dir }}/.zshrc"
     backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - user zshrc"
 
 - name: Change shell to zsh
   ansible.builtin.user:
