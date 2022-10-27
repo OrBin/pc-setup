@@ -47,6 +47,7 @@ jetbrains_ides_configuration:
   - { file_path: "options/editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_FAMILY']", value: "JetBrains Mono" }
   - { file_path: "options/linux/keymap.xml", xpath: "/application/component[@name='KeymapManager']/active_keymap[@name='Or_Keymap']", value: "" }
 ubuntu_archives_country_code: il
+vs_code_deb_file_regexp: "code_(.+)_{{ packages_architecture }}.deb"
 
 # Used by geerlingguy.docker:
 docker_compose_version: 1.29.2
