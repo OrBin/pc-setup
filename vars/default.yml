@@ -50,8 +50,7 @@ ubuntu_archives_country_code: il
 vs_code_deb_file_regexp: "code_(.+)_{{ packages_architecture }}.deb"
 
 # Used by geerlingguy.docker:
-docker_compose_version: 1.29.2
-docker_compose_arch: "{{ ansible_architecture }}"
+docker_compose_version: v2.12.2
 
 # Used by geerlingguy.nodejs:
 nodejs_version: 16.x
