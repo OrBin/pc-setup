@@ -195,7 +195,8 @@
 
 - name: Initialize JetBrains IDE directories
   # Letting each IDE to run for 10 seconds to initialize its configuration directory
-  shell:  "{{playbook_dir}}/configuration/initialize_ides.sh {{ jetbrains_ides | join(' ') }}"
+  shell:  "{{playbook_dir}}/configuration/initialize_ides.sh {{ jetbrains_ides_installation.snaps_installed | join(' ') }}"
+  when: (jetbrains_ides_installation | default([])) | length > 0
 
 - name: Find JetBrains IDE directories
   find:
