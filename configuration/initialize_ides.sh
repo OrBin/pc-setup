@@ -1,12 +1,11 @@
 #!/bin/bash
 
-timeout_period="${1}"
+timeout_period="2s"
 echo "Initializing IDEs for ${timeout_period}"
-shift
 
 for ide_name in  "$@"; do
   echo "Initializing ${ide_name}"
-  (timeout "${timeout_period}" "${ide_name}") &
+  (timeout "${timeout_period}" "${ide_name}" "$(mktemp)") &
 done
 
 echo "Waiting..."
