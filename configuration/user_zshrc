@@ -108,7 +108,7 @@ rebase_onto() {
 
 rebase_default() {
   default_branch=$(git rev-parse --abbrev-ref origin/HEAD)
-  rebase_onto $default_branch
+  git fetch && git rebase "$default_branch"
 }
 
 alias rebase_main=rebase_default
