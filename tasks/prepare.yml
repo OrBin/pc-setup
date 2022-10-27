@@ -21,17 +21,6 @@
   set_fact:
     user_bashrc_file_path: "{{create_user_bashrc.dest}}"
 
-- name: Create initial user zshrc file
-  template:
-    src: "{{playbook_dir}}/configuration/user_zshrc"
-    dest: "{{temp_dir}}/user_zshrc"
-    force: yes
-  register: create_user_zshrc
-
-- name: Set user_zshrc_file_path
-  set_fact:
-    user_zshrc_file_path: "{{create_user_zshrc.dest}}"
-
 - name: Create initial user bash_completion file
   template:
     src: "{{playbook_dir}}/configuration/empty.j2"

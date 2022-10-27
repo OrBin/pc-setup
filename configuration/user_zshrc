@@ -134,3 +134,7 @@ source ~/.zsh_completion
 if [ -f "${HOME}/.zshrc.local" ]; then
   source "${HOME}/.zshrc.local"
 fi
+
+{{ hstr_configuration_for_zshrc }}
+{{ thefuck_alias_for_zshrc }}
+{{ pyenv_loading_for_zshrc }}

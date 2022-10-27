@@ -59,10 +59,9 @@
   shell: "zsh {{playbook_dir}}/configuration/generate_hstr_configuration.sh"
   register: hstr_configuration_zsh
 
-- name: Add hstr configuration to zsh configuration
-  lineinfile:
-    path: "{{user_zshrc_file_path}}"
-    line: "{{hstr_configuration_zsh.stdout}}"
+- name: Save hstr configuration to fill in zshrc
+  set_fact:
+    hstr_configuration_for_zshrc: "{{ hstr_configuration_zsh.stdout }}"
 
 - name: Install basic linux tools (snap)
   snap:
@@ -90,13 +89,11 @@
     path: "{{user_bashrc_file_path}}"
     marker: ""
 
-- name: Add thefuck alias to zsh configuration
-  blockinfile:
-    block: |
+- name: Save thefuck alias to fill in zshrc
+  set_fact:
+    thefuck_alias_for_zshrc: |
       {{thefuck_alias.stdout}}
       alias f=fuck
-    path: "{{user_zshrc_file_path}}"
-    marker: ""
 
 - name: Download prettyping
   get_url:

@@ -235,27 +235,29 @@
     - kubectl
     - helm
 
-- name: Install pyenv (bash)
-  import_role:
-    name: avanov.pyenv
-  vars:
-    pyenv_setting_path: "{{user_bashrc_file_path}}"
+- name: Create temporary file for pyenv loading
+  ansible.builtin.tempfile:
+    state: file
+  register: tempfile_for_pyenv_loading
 
-- name: Install pyenv (zsh)
+- name: Install pyenv
   import_role:
     name: avanov.pyenv
   vars:
-    pyenv_setting_path: "{{user_zshrc_file_path}}"
+    pyenv_setting_path: "{{ tempfile_for_pyenv_loading.path }}"
 
 - name: Add pyenv path to PATH in user bashrc
-  lineinfile:
+  ansible.builtin.blockinfile:
+    block: |
+      {{ lookup('file', tempfile_for_pyenv_loading.path) }}
+      eval "$(pyenv init --path)"
     path: "{{user_bashrc_file_path}}"
-    line: 'eval "$(pyenv init --path)"'
 
-- name: Add pyenv path to PATH in user zshrc
-  lineinfile:
-    path: "{{user_zshrc_file_path}}"
-    line: 'eval "$(pyenv init --path)"'
+- name: Save pyenv loading to fill in zshrc
+  set_fact:
+    pyenv_loading_for_zshrc: |
+      {{ lookup('file', tempfile_for_pyenv_loading.path) }}
+      eval "$(pyenv init --path)"
 
 - name: Install ansible-lint
   pip:

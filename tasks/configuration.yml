@@ -32,8 +32,8 @@
     mode: "0644"
 
 - name: Update user .zshrc
-  copy:
-    src: "{{user_zshrc_file_path}}"
+  template:
+    src: "{{playbook_dir}}/configuration/user_zshrc"
     dest: "{{ ansible_user_dir }}/.zshrc"
     backup: yes
 
