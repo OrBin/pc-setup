@@ -9,7 +9,7 @@ install_pip() {
 }
 
 sudo python3 -m pip > /dev/null 2>&1 || install_pip
-sudo python3 -m pip install ansible~=5.1.0 jq~=1.2.1 lxml~=4.7.1
+sudo python3 -m pip install -r requirements.txt
 
 galaxy_requirements_installed="${REPO_ROOT}/.local_state/ansible_galaxy_requirements_installed"
 galaxy_requirements_spec="${REPO_ROOT}/requirements.yml"
