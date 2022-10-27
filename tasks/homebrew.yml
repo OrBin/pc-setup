@@ -16,10 +16,19 @@
       - git
   become: yes
 
+- name: Check if homebrew is installed and configured
+  shell: command -v brew
+  register: check_homebrew_installed
+
+- name: Decide if should install homebrew
+  set_fact:
+    should_install_homebrew: check_homebrew_installed is failed
+
 - name: Install homebrew
   shell: "/bin/bash {{ download_homebrew_installation_script.dest }}"
   environment:
     NONINTERACTIVE: "1"
+  when: should_install_homebrew
 
 - name: Set homebrew prefix
   set_fact:
