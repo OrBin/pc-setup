@@ -47,6 +47,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git pyenv)
 
+{{ pyenv_loading_for_zshrc }}
+
 source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -137,4 +139,3 @@ fi
 
 {{ hstr_configuration_for_zshrc }}
 {{ thefuck_alias_for_zshrc }}
-{{ pyenv_loading_for_zshrc }}
