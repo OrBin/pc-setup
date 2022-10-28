@@ -1,4 +1,4 @@
-# Copied from https://github.com/ansible-collections/ansible.posix/blob/c4be75114b876ff61478a4173a352bacf5ea499d/plugins/callback/profile_tasks.py
+# Based on https://github.com/ansible-collections/ansible.posix/blob/c4be75114b876ff61478a4173a352bacf5ea499d/plugins/callback/profile_tasks.py
 
 # (C) 2016, Joel, https://github.com/jjshoe
 # (C) 2015, Tom Paine, <github@aioue.net>
@@ -62,6 +62,7 @@ sample output: >
 '''
 
 import collections
+import os
 import time
 
 from ansible.module_utils.six.moves import reduce
@@ -81,11 +82,11 @@ def secondsToStr(t):
 
 
 def filled(msg, fchar="*"):
-    if len(msg) == 0:
-        width = 79
-    else:
-        msg = "%s " % msg
-        width = 79 - len(msg)
+    width = os.get_terminal_size().columns
+
+    if len(msg) > 0:
+        msg += " "
+        width -= len(msg)
     if width < 3:
         width = 3
     filler = fchar * width
@@ -100,11 +101,11 @@ def timestamp(self):
 
 def tasktime():
     global tn
-    time_current = time.strftime('%A %d %B %Y  %H:%M:%S %z')
-    time_elapsed = secondsToStr(time.time() - tn)
-    time_total_elapsed = secondsToStr(time.time() - t0)
+    time_current = time.strftime('%H:%M:%S')
     tn = time.time()
-    return filled('%s (%s)%s%s' % (time_current, time_elapsed, ' ' * 7, time_total_elapsed))
+    # Disabled printing elapsed time, since it related to the previous task
+    # (See https://github.com/ansible-collections/ansible.posix/issues/313#issuecomment-1294555705)
+    return filled(f'Started: {time_current}')
 
 
 class CallbackModule(CallbackBase):
