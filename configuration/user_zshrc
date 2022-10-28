@@ -6,6 +6,10 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="or"
 
+# Configure the output format of "time" command to look almost like in bash
+# See ttps://unix.stackexchange.com/a/562651/70501
+TIMEFMT=$'real\t%E\nuser\t%U\nsys\t%S'
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
