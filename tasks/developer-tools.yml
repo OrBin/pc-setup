@@ -156,6 +156,23 @@
     global: yes
   become: yes
 
+# Copied from https://github.com/geerlingguy/ansible-role-go/pull/2/files#diff-3d0ff1709ca48add100327bb2a468e6c508fb92a159c64c4f99ad1df89d9bddeR2-R15
+# TODO: remove it when this PR is merged
+- name: Check Go version
+  command: /usr/local/go/bin/go version
+  ignore_errors: yes
+  register: go_version_result
+  changed_when: false
+
+- name: Remove current Go installation
+  file:
+    state: absent
+    path: /usr/local/go
+  when:
+    - go_version_result is succeeded
+    - go_version not in go_version_result.stdout
+  become: yes
+
 - name: Install Go
   import_role:
     name: geerlingguy.go
