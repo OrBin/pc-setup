@@ -37,6 +37,13 @@
     dest: "{{ ansible_user_dir }}/.zshrc"
     backup: yes
 
+- name: Update user .zprofile
+  copy:
+    src: "{{playbook_dir}}/configuration/user_zprofile"
+    dest: "{{ ansible_user_dir }}/.zprofile"
+    backup: yes
+    mode: "0644"
+
 - name: Change shell to zsh
   ansible.builtin.user:
     name: "{{ansible_user_id}}"
