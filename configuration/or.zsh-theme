@@ -1,6 +1,14 @@
+k8s_prompt_info() {
+    context=$(kubectl config current-context 2>&1)
+    if [ "$context" != "error: current-context is not set" ]; then
+        echo " %{$fg[blue]%}%D{⎈ ${context}}"
+    fi
+}
+
+
 PROMPT='%{$fg[green]%}%D{%H:%M:%S}\
  %{$fg[white]%}%n@%m\
- %{$fg[blue]%}%D{⎈ $(kubectl config current-context)}\
+$(k8s_prompt_info)\
  %{$fg[yellow]%}🐍$(pyenv_prompt_info)\
  $(git_prompt_info)\
 %{$fg[cyan]%}%~%{$reset_color%}\
