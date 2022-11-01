@@ -22,6 +22,7 @@
     - wireshark
     - adb
     - postgresql-client
+    - pv
     state: latest
   become: yes
 
