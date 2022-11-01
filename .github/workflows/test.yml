@@ -59,6 +59,7 @@ jobs:
 
         echo 'ssh \
             -o StrictHostKeyChecking=no \
+            -o RequestTTY=force \
             "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
             -i "${SSH_KEY_FILE}" \
             $*' > "${HOME}/.local/bin/ssh_to_droplet"
@@ -102,10 +103,8 @@ jobs:
         echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
 
     - name: Test
-      env:
-        COMPUTER_TYPE: ${{ matrix.computer_type }}
       run: |
-        ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && tests/test.sh"
+        ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && COMPUTER_TYPE=${{ matrix.computer_type }} tests/test.sh"
 
     - name: Delete droplet
       if: ${{ always() }}
