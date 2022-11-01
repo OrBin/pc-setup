@@ -37,7 +37,7 @@ jobs:
     - name: Create droplet
       id: create_droplet
       run: |
-        droplet_name="${{ steps.build_droplet_name.outputs.name }}"
+        droplet_name="${{ steps.build_droplet_name.outputs.droplet_name }}"
 
         create_response=$( \
           doctl compute droplet create \
