@@ -18,6 +18,7 @@
 
 - name: Check if homebrew is installed and configured
   shell: command -v brew
+  ignore_errors: yes
   register: check_homebrew_installed
 
 - name: Decide if should install homebrew
