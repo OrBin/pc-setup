@@ -8,7 +8,7 @@ install_pip() {
   wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python3 -
 }
 
-sudo python3 -m pip > /dev/null 2>&1 || install_pip
+sudo python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
 sudo python3 -m pip install --root-user-action=ignore -r requirements.txt
 
 galaxy_requirements_installed="${HOME}/.config/pc-setup/ansible_galaxy_requirements_installed"
@@ -23,4 +23,11 @@ else
     echo "Requirements are already installed, skipping"
 fi
 
-time ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_BECOME_ASK_PASS=${ANSIBLE_BECOME_ASK_PASS:-1} ansible-playbook -i "${REPO_ROOT}/inventory.ini" "$@" "${REPO_ROOT}/main.yml"
+time \
+  ANSIBLE_STDOUT_CALLBACK=debug \
+  ANSIBLE_BECOME_ASK_PASS=${ANSIBLE_BECOME_ASK_PASS:-1} \
+  PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}" \
+  ansible-playbook \
+  -i "${REPO_ROOT}/inventory.ini" \
+  "$@" \
+  "${REPO_ROOT}/main.yml"
