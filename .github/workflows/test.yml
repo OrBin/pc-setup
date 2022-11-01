@@ -26,11 +26,18 @@ jobs:
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
         echo "::set-output name=fingerprint::${fingerprint}"
 
+    - name: Build droplet name
+      id: build_droplet_name
+      if: ${{ always() }}
+      run: |
+        droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+        droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
+        echo "::set-output name=droplet_name::${droplet_name}"
+
     - name: Create droplet
       id: create_droplet
       run: |
-        droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}"
-        droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
+        droplet_name="${{ steps.build_droplet_name.outputs.name }}"
 
         create_response=$( \
           doctl compute droplet create \
@@ -45,9 +52,6 @@ jobs:
         
         droplet_ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
         echo "::set-output name=droplet_ip_address::${droplet_ip_address}"
-
-        droplet_id=$(jq -r '.[0].id' <<< "${create_response}")
-        echo "::set-output name=droplet_id::${droplet_id}"
 
     - name: Define ssh_to_droplet
       run: |
@@ -104,6 +108,5 @@ jobs:
         ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && tests/test.sh"
 
     - name: Delete droplet
-      run: |
-        doctl compute droplet delete ${{ steps.create_droplet.outputs.droplet_id }} -f
       if: ${{ always() }}
+      run: doctl compute droplet delete ${{ steps.build_droplet_name.outputs.name }} -f
