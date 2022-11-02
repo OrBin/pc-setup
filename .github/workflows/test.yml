@@ -109,4 +109,4 @@ jobs:
 
     - name: Delete droplet
       if: ${{ always() }}
-      run: doctl compute droplet delete ${{ steps.build_droplet_name.outputs.name }} -f
+      run: doctl compute droplet delete ${{ steps.build_droplet_name.outputs.droplet_name }} -f
