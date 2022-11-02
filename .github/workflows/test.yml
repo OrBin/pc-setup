@@ -30,7 +30,7 @@ jobs:
       id: build_droplet_name
       if: ${{ always() }}
       run: |
-        droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${GITHUB_JOB}"
+        droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${{ matrix.computer_type }}"
         droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
         echo "::set-output name=droplet_name::${droplet_name}"
 
