@@ -55,7 +55,7 @@
   block:
     - name: Request user input for SSH key passphrase
       pause:
-        prompt: |- 
+        prompt: |-
           Please enter passphrase for SSH key
       register: ssh_key_passphrase
 
@@ -87,7 +87,7 @@
             ✅ OctoPrint
             ✅ Home Assistant
             ✅ Any specific servers or services
-          
+
           Press Enter to continue
 
   when: stat_ssh_key.stat is not defined or not stat_ssh_key.stat.exists

@@ -105,30 +105,30 @@
 
 - name: Configure KDE
   shell: |
-    if [ $(kreadconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage --default default) != 'org.kde.breezedark.desktop' ]; then 
+    if [ $(kreadconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage --default default) != 'org.kde.breezedark.desktop' ]; then
       lookandfeeltool -a org.kde.breezedark.desktop
     fi
 
     kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
     kwriteconfig5 --file kwinrc --group NightColor --key Active true
     kwriteconfig5 --file kwinrc --group NightColor --key NightTemperature 5500
-    
+
     kwriteconfig5 --file kded5rc --group "Module-browserintegrationreminder" --key autoload false
-    
+
     # Turn NumLock on on plasma startup
     kwriteconfig5 --file kcminputrc --group Keyboard --key NumLock "0"
-    
+
     kwriteconfig5 --file dolphinrc --group General --key RememberOpenedTabs false
-    
+
     #kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
-    
+
     #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
     #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "Meta+Up,Meta+Up,Maximize Window"
-    
+
     # current_activity_id=$(kreadconfig5 --file kactivitymanagerdrc --group main --key currentActivity)
     # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-global" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
     # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-${current_activity_id}" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
-    
+
     kwin_x11 --replace &
     (timeout 5 kquitapp5 kglobalaccel5 || killall kglobalaccel5 || true) && sleep 2s && kstart5 kglobalaccel5
     (timeout 5 kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell

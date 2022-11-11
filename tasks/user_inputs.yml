@@ -58,5 +58,3 @@
           You can reconfigure it any time in {{ settings_file_path }} (possible values: "personal", "work").
 
   when: should_configure_computer_type
-
-

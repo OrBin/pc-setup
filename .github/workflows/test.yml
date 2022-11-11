@@ -49,13 +49,13 @@ jobs:
             --output json \
             "${droplet_name}"
         )
-        
+
         droplet_ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
         echo "::set-output name=droplet_ip_address::${droplet_ip_address}"
 
     - name: Define ssh_to_droplet
       run: |
-        mkdir -p "${HOME}/.local/bin" 
+        mkdir -p "${HOME}/.local/bin"
 
         echo 'ssh \
             -o StrictHostKeyChecking=no \
@@ -63,14 +63,14 @@ jobs:
             "root@${{ steps.create_droplet.outputs.droplet_ip_address }}" \
             -i "${SSH_KEY_FILE}" \
             $*' > "${HOME}/.local/bin/ssh_to_droplet"
-        
+
         chmod +x "${HOME}/.local/bin/ssh_to_droplet"
         echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
     - name: Wait until SSH server is available and snap is ready
       run: |
         retries=0
-        until [ "${retries}" -ge 30 ]; do 
+        until [ "${retries}" -ge 30 ]; do
           ssh_to_droplet snap && exit 0  # SSH is available
           sleep 1
           retries=$((retries+1))
@@ -79,13 +79,13 @@ jobs:
 
     - name: Install multipass and wait until multipass is ready
       run: |
-        # Trying to run snap too early yields an error: 
+        # Trying to run snap too early yields an error:
         # "too early for operation, device not yet seeded or device model not acknowledged"
-        sleep 5  
+        sleep 5
         ssh_to_droplet snap install multipass
-        
+
         retries=0
-        until [ "${retries}" -ge 30 ]; do 
+        until [ "${retries}" -ge 30 ]; do
           ssh_to_droplet multipass list && exit 0  # multipass is available
           sleep 1
           retries=$((retries+1))
@@ -99,7 +99,7 @@ jobs:
         droplet_local_repo_path="~/${GITHUB_REPOSITORY#*\/}/"
         ssh_to_droplet git clone https://github.com/${{ github.repository }}.git "${droplet_local_repo_path}"
         ssh_to_droplet "cd ${droplet_local_repo_path} && git checkout ${{ github.sha || github.head_ref || github.ref }}"
-        
+
         echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
 
     - name: Test

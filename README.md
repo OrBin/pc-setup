@@ -1,5 +1,5 @@
 # Automated PC setup
-This repo contains an automated flow to setup a computer to my own needs, and is not inteded to 
+This repo contains an automated flow to setup a computer to my own needs, and is not inteded to
 provide any generic setup that may be useful to anybody else.
 
 ## Get started
