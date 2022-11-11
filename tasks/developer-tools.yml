@@ -318,10 +318,20 @@
     - fzf
     state: latest
 
-- name: Install buf
-  community.general.homebrew:
-    name: bufbuild/buf/buf
-    state: latest
+- name: Get latest version of buf
+  community.general.github_release:
+    user: bufbuild
+    repo: buf
+    action: latest_release
+  register: buf_latest_release
+  when: computer_type == "work"
+
+- name: Download buf
+  get_url:
+    url: "https://github.com/bufbuild/buf/releases/download/{{buf_latest_release.tag}}/buf-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
+    dest: /usr/local/bin/buf
+    mode: "0755"
+  become: yes
   when: computer_type == "work"
 
 # TODO add VirtualBox, gitignore
