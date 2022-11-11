@@ -43,6 +43,7 @@ jetbrains_ides_configuration:
   - { file_path: "options/other.xml", xpath: "/application/component[@name='PropertiesComponent']/property[@name='NonModalCommitPromotionState']", value: "SHOWN" }
   - { file_path: "options/vcs.xml", xpath: "/application/component[@name='VcsApplicationSettings']/option[@name='COMMIT_FROM_LOCAL_CHANGES']", value: "false" }
   - { file_path: "options/editor.xml", xpath: "/application/component[@name='EditorSettings']/option[@name='IS_WHEEL_FONTCHANGE_ENABLED']", value: "true" }
+  - { file_path: "options/editor.xml", xpath: "/application/component[@name='YamlEditorOptions']/option[@name='useSmartPaste']", value: "false" }
   - { file_path: "options/editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_SIZE']", value: "14" }
   - { file_path: "options/editor-font.xml", xpath: "/application/component[@name='DefaultFont']/option[@name='FONT_FAMILY']", value: "JetBrains Mono" }
   - { file_path: "options/linux/keymap.xml", xpath: "/application/component[@name='KeymapManager']/active_keymap[@name='Or_Keymap']", value: "" }
