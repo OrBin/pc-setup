@@ -151,10 +151,15 @@
     name: geerlingguy.nodejs
   become: yes
 
-- name: Install Yarn
-  npm:
+
+- name: Install developer tools (npm)
+  community.general.npm:
     name: yarn
     global: yes
+  loop:
+    - yarn
+    - diff-so-fancy
+    - renovate
   become: yes
 
 - name: Install Go
@@ -163,12 +168,6 @@
   vars:
     go_platform: linux
     go_arch: "{{ packages_architecture }}"
-  become: yes
-
-- name: Install diff-so-fancy
-  npm:
-    name: diff-so-fancy
-    global: yes
   become: yes
 
 - name: Configure diff-so-fancy in git config
@@ -275,9 +274,11 @@
       {{ lookup('file', tempfile_for_pyenv_loading.path) }}
       eval "$(pyenv init --path)"
 
-- name: Install ansible-lint
+- name: Install developer tools (pip)
   pip:
-    name: "ansible-lint[core,community,yamllint]"
+    name:
+      - "ansible-lint[core,community,yamllint]"
+      - pre-commit
   become: yes
 
 - name: Install Terraform CLI
