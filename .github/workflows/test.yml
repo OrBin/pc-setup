@@ -3,7 +3,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-20.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       SSH_KEY_FILE: /tmp/id_rsa
     strategy:
@@ -24,7 +24,7 @@ jobs:
         echo '${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}' > "${SSH_KEY_FILE}"
         chmod 0600 "${SSH_KEY_FILE}"
         fingerprint=$(ssh-keygen -l -f "${SSH_KEY_FILE}" -E md5 | cut -d ' ' -f 2 | cut -d ':' -f 2-)
-        echo "::set-output name=fingerprint::${fingerprint}"
+        echo "fingerprint=${fingerprint}" >> $GITHUB_OUTPUT
 
     - name: Build droplet name
       id: build_droplet_name
@@ -32,7 +32,7 @@ jobs:
       run: |
         droplet_name="ci-${GITHUB_REPOSITORY}-${GITHUB_REF_NAME}-${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${{ matrix.computer_type }}"
         droplet_name="${droplet_name//[\/_]/-}" # Replace / and _ with -
-        echo "::set-output name=droplet_name::${droplet_name}"
+        echo "droplet_name=${droplet_name}" >> $GITHUB_OUTPUT
 
     - name: Create droplet
       id: create_droplet
@@ -51,7 +51,7 @@ jobs:
         )
 
         droplet_ip_address=$(jq -r '.[0].networks.v4[] | select(.type == "public").ip_address' <<< "${create_response}")
-        echo "::set-output name=droplet_ip_address::${droplet_ip_address}"
+        echo "droplet_ip_address=${droplet_ip_address}" >> $GITHUB_OUTPUT
 
     - name: Define ssh_to_droplet
       run: |
@@ -100,11 +100,16 @@ jobs:
         ssh_to_droplet git clone https://github.com/${{ github.repository }}.git "${droplet_local_repo_path}"
         ssh_to_droplet "cd ${droplet_local_repo_path} && git checkout ${{ github.sha || github.head_ref || github.ref }}"
 
-        echo "::set-output name=droplet_local_repo_path::${droplet_local_repo_path}"
+        echo "droplet_local_repo_path=${droplet_local_repo_path}" >> $GITHUB_OUTPUT
 
     - name: Test
       run: |
-        ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && COMPUTER_TYPE=${{ matrix.computer_type }} tests/test.sh"
+        set -e
+        ssh_to_droplet "
+          cd ${{ steps.clone.outputs.droplet_local_repo_path }} \
+          && COMPUTER_TYPE=${{ matrix.computer_type }} TERM=xterm tmux new-session -s test_session tests/test.sh \
+          && exit $(cat .tmux_exit_code) \
+        "
 
     - name: Delete droplet
       if: ${{ always() }}
