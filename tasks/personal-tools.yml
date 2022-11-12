@@ -44,7 +44,7 @@
 
 - name: Download Cura
   get_url:
-    url: "https://github.com/Ultimaker/Cura/releases/download/{{cura_version}}/Ultimaker-Cura-{{cura_version}}-linux.AppImage"
+    url: "https://github.com/Ultimaker/Cura/releases/download/{{cura_version}}/Ultimaker-Cura-{{cura_version}}-linux-modern.AppImage"
     dest: /opt/cura.AppImage
     mode: "0755"
   become: yes
