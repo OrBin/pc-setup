@@ -104,7 +104,12 @@ jobs:
 
     - name: Test
       run: |
-        ssh_to_droplet "cd ${{ steps.clone.outputs.droplet_local_repo_path }} && COMPUTER_TYPE=${{ matrix.computer_type }} TERM=xterm tmux new-session -s test_session tests/test.sh"
+        set -e
+        ssh_to_droplet "
+          cd ${{ steps.clone.outputs.droplet_local_repo_path }} \
+          && COMPUTER_TYPE=${{ matrix.computer_type }} TERM=xterm tmux new-session -s test_session tests/test.sh \
+          && exit $(cat .tmux_exit_code) \
+        "
 
     - name: Delete droplet
       if: ${{ always() }}
