@@ -57,9 +57,9 @@ docker_compose_version: v2.12.2
 nodejs_version: 16.x
 
 # Used by geerlingguy.go:
-go_version: 1.18.7
-# Calculate by: curl -s https://dl.google.com/go/go1.18.7.linux-amd64.tar.gz | sha256sum
-go_checksum: 6c967efc22152ce3124fc35cdf50fc686870120c5fd2107234d05d450a6105d8
+go_version: 1.19.3
+# Copy checksum from https://go.dev/dl/
+go_checksum: 74b9640724fd4e6bb0ed2a1bc44ae813a03f1e72a4c76253e2d5c015494430ba
 
 # Used by avanov.pyenv:
 pyenv_env: user
