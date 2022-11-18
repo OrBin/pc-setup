@@ -96,6 +96,7 @@
   vars:
     aliases:
       co: checkout
+      cob: checkout -b
 
 - name: Configure plasma desktop applets
   template:
