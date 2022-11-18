@@ -55,6 +55,13 @@
     path: "{{ ansible_user_dir }}/bin"
     state: directory
 
+- name: Set ptrace_scope for Go debugging
+  ansible.builtin.replace:
+    path: /etc/sysctl.d/10-ptrace.conf
+    regexp: '^(kernel\.yama\.ptrace_scope += +1)$'
+    replace: 'kernel.yama.ptrace_scope = 0'
+  become: yes
+
 - name: Update xkbrc
   ini_file:
     path: "{{ ansible_user_dir }}/.config/kxkbrc"
