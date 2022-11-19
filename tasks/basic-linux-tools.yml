@@ -26,6 +26,7 @@
     - traceroute
     - exa
     - zsh
+    - simplescreenrecorder
   become: yes
 
 #- name: Check if oh-my-bash is installed
