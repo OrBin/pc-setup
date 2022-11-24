@@ -58,6 +58,12 @@
   register: cura_symlink
   become: yes
 
+- name: Ensure /usr/local/share/applications directory exists
+  file:
+    path: "/usr/local/share/applications"
+    state: directory
+    mode: "0755"
+
 - name: Copy Cura icon
   copy:
     src: "{{playbook_dir}}/configuration/cura-icon.png"
