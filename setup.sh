@@ -10,7 +10,7 @@ install_pip() {
 }
 
 sudo python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
-sudo python3 -m pip install --root-user-action=ignore -r requirements.txt
+sudo python3 -m pip install --root-user-action=ignore -r "${REPO_ROOT}/requirements.txt"
 
 galaxy_requirements_installed="${HOME}/.config/pc-setup/ansible_galaxy_requirements_installed"
 galaxy_requirements_spec="${REPO_ROOT}/requirements.yml"
