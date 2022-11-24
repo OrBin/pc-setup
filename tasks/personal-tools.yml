@@ -63,6 +63,8 @@
     path: "/usr/local/share/applications"
     state: directory
     mode: "0755"
+  become: yes
+  when: configure_kde
 
 - name: Copy Cura icon
   copy:
