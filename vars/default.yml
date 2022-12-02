@@ -30,7 +30,9 @@ cura_configuration:
   - { section: "general", option: "auto_slice", value: "True" }
   - { section: "general", option: "accepted_user_agreement", value: "True" }
   - { section: "cura", option: "active_setting_visibility_preset", value: "all" }
-settings_file_path: "{{ ansible_user_dir }}/.config/pc-setup/settings.json"
+config_dir: "{{ ansible_user_dir }}/.config/pc-setup"
+settings_file_path: "{{ config_dir }}/settings.json"
+wallpaper_path: "{{ config_dir }}/wallpaper.jpg"
 personal_jetbrains_ides:
   - goland
   - pycharm-professional
@@ -49,6 +51,10 @@ jetbrains_ides_configuration:
   - { file_path: "options/linux/keymap.xml", xpath: "/application/component[@name='KeymapManager']/active_keymap[@name='Or_Keymap']", value: "" }
 ubuntu_archives_country_code: il
 vs_code_deb_file_regexp: "code_(.+)_{{ packages_architecture }}.deb"
+wallpapers_s3_base_url: "https://or-public-wallpapers-2.s3.eu-central-1.amazonaws.com"
+wallpaper_by_computer_type:
+  personal: "alexander_stream_estuary_side_stones_improved.jpg"
+  work: "carmel_forest_improved.jpg"
 
 # Used by geerlingguy.docker:
 docker_compose_version: v2.12.2

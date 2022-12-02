@@ -105,6 +105,14 @@
       co: checkout
       cob: checkout -b
 
+- name: Download wallpaper
+  get_url:
+    url: "{{ wallpapers_s3_base_url }}/{{ wallpaper_by_computer_type[computer_type] }}"
+    dest: "{{ wallpaper_path }}"
+    mode: "0755"
+  register: download_wallpaper
+  when: configure_kde
+
 - name: Configure plasma desktop applets
   template:
     src: "{{playbook_dir}}/configuration/plasma-org.kde.plasma.desktop-appletsrc"
@@ -136,6 +144,9 @@
     # current_activity_id=$(kreadconfig5 --file kactivitymanagerdrc --group main --key currentActivity)
     # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-global" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
     # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-${current_activity_id}" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
+
+    # Set lock-screen wallpaper
+    kwriteconfig5 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image 'file://{{ download_wallpaper.dest }}'
 
     kwin_x11 --replace &
     (timeout 5 kquitapp5 kglobalaccel5 || killall kglobalaccel5 || true) && sleep 2s && kstart5 kglobalaccel5
