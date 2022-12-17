@@ -131,7 +131,7 @@
   when: cura_config_check.rc != 0
 
 - name: Check if already logged in to Spotify
-  shell: grep -Rq autologin ~/snap/spotify/current/.config/spotify/prefs
+  shell: grep autologin ~/.var/app/com.spotify.Client/config/spotify/prefs
   ignore_errors: yes
   register: spotify_login_check
 
