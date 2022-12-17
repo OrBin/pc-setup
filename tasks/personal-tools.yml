@@ -1,84 +1,21 @@
-- name: Install personal tools (snap)
-  snap:
-    name:
-      - telegram-desktop
-      - spotify
-  become: yes
-
 - name: Install personal tools (apt)
   apt:
     name:
       - openscad
+      - kazam
+      - pinta
   become: yes
 
-- name: Install Kazam
-  apt:
-    name: kazam
-  become: yes
-
-- name: Install Pinta
-  apt:
-    name: pinta
-  become: yes
-
-- name: Download Audacity
-  get_url:
-    url: "https://github.com/audacity/audacity/releases/download/Audacity-{{audacity_version}}/audacity-linux-{{audacity_version}}-x64.AppImage"
-    dest: /opt/audacity.AppImage
-    mode: "0755"
-  become: yes
-  register: download_audacity
-
-- name: Create a symlink to Audacity
-  file:
-    src: "{{download_audacity.dest}}"
-    dest: /usr/bin/audacity
-    state: link
-  become: yes
+- name: Install personal tools (flatpak)
+  community.general.flatpak:
+    name:
+      - com.ultimaker.cura
+      - org.audacityteam.Audacity
+      - com.spotify.Client
+      - org.telegram.desktop
 
 - name: Install Steam
-  apt:
-    deb: https://repo.steampowered.com/steam/archive/precise/steam_latest.deb
-  become: yes
+  community.general.flatpak:
+    name:
+      - com.valvesoftware.Steam
   when: computer_type == "personal"
-
-- name: Download Cura
-  get_url:
-    url: "https://github.com/Ultimaker/Cura/releases/download/{{cura_version}}/Ultimaker-Cura-{{cura_version}}-linux-modern.AppImage"
-    dest: /opt/cura.AppImage
-    mode: "0755"
-  become: yes
-  register: download_cura
-
-- name: Create a symlink to Cura
-  file:
-    src: "{{download_cura.dest}}"
-    dest: /usr/bin/cura
-    state: link
-  register: cura_symlink
-  become: yes
-
-- name: Ensure /usr/local/share/applications directory exists
-  file:
-    path: "/usr/local/share/applications"
-    state: directory
-    mode: "0755"
-  become: yes
-  when: configure_kde
-
-- name: Copy Cura icon
-  copy:
-    src: "{{playbook_dir}}/configuration/cura-icon.png"
-    dest: "/usr/local/share/applications/cura-icon.png"
-    mode: "0644"
-  register: cura_icon
-  become: yes
-  when: configure_kde
-
-- name: Create a desktop entry for Cura
-  template:
-    src: "{{playbook_dir}}/configuration/com.ultimaker.cura.desktop.j2"
-    dest: "/usr/local/share/applications/com.ultimaker.cura.desktop"
-    mode: "0644"
-  become: yes
-  when: configure_kde

@@ -82,58 +82,15 @@
 
 # TODO install IDE extensions (e.g. TabNine)
 
-- name: Check installed VS Code version
-  # Expected output is formatted like 1.72.2-1665614327
-  shell: dpkg -s code | grep '^Version:' | cut -d ' ' -f 2-
-  when: computer_type == "work"
-  register: installed_vs_code_version_check_command
-
-- name: Extract installed VS Code version
-  set_fact:
-    installed_vs_code_version: "{{ installed_vs_code_version_check_command.stdout }}"
-  when: computer_type == "work" and installed_vs_code_version_check_command.stdout != ""
-  ignore_errors: yes
-
-- name: Check latest VS Code version
-  ansible.builtin.uri:
-    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-    follow_redirects: none
-    status_code: [302, 304, 307]
-  ignore_errors: yes
-  when: computer_type == "work"
-  register: vs_code_download_probe
-
-- name: Extract latest VS Code version
-  # Expected output is formatted like 1.72.2-1665614327
-  set_fact:
-    latest_vs_code_version: "{{ vs_code_download_probe.location | urlsplit('path') | basename | regex_search(vs_code_deb_file_regexp, '\\1') | first }}"
-  when: computer_type == "work" and vs_code_download_probe is succeeded
-  ignore_errors: yes
-
-- name: Decide whether VS Code should be installed
-  set_fact:
-    should_install_vs_code: "{{ installed_vs_code_version is not defined or latest_vs_code_version is not defined or installed_vs_code_version is version(latest_vs_code_version, '<', version_type='semver') }}"
-  when: computer_type == "work"
-
-- name: Download VS Code
-  get_url:
-    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-    dest: "{{temp_dir}}"
-    mode: "0644"
-  register: download_vscode
-  when: computer_type == "work" and should_install_vs_code
-
 - name: Install VS Code
-  apt:
-    deb: "{{ download_vscode.dest }}"
-  become: yes
-  when: computer_type == "work" and should_install_vs_code
+  community.general.flatpak:
+    name: com.visualstudio.code
+  when: computer_type == "work"
 
 - name: Install Postman
-  snap:
-    name: postman
-    channel: "{{postman_snap_channel}}"
-  become: yes
+  community.general.flatpak:
+    name:
+      - com.getpostman.Postman
 
 - name: Download and extract AWS CLI
   unarchive:
@@ -150,7 +107,6 @@
   import_role:
     name: geerlingguy.nodejs
   become: yes
-
 
 - name: Install developer tools (npm)
   community.general.npm:

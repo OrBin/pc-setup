@@ -5,9 +5,6 @@ force_apt_update: no
 configure_kde: yes
 temp_dir: /tmp/pc-setup
 dive_version: 0.10.0
-postman_snap_channel: v9/stable
-audacity_version: 3.2.1
-cura_version: 5.2.1
 add_ssh_key_to_github: yes
 required_chrome_extension_ids:
   - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
