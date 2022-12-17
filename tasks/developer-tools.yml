@@ -110,7 +110,7 @@
 
 - name: Install developer tools (npm)
   community.general.npm:
-    name: yarn
+    name: "{{ item }}"
     global: yes
   loop:
     - yarn
