@@ -24,28 +24,10 @@
     xdg-mime default google-chrome.desktop x-scheme-handler/http
     xdg-mime default google-chrome.desktop x-scheme-handler/https
 
-- name: Fetch Zoom's version details
-  uri:
-    url: https://zoom.us/rest/download?os=linux
-  register: zoom_version_details_response
-
-- name: Find Zoom's latest version
-  set_fact:
-    zoom_latest_version: "{{zoom_version_details_response.json.result.downloadVO.zoom.version}}"
-
-- name: Find Zoom's current version
-  shell: dpkg -s zoom | grep '^Version:' | cut -d ' ' -f 2-
-  register: check_zoom_current_version
-
-- name: Decide if should install Zoom
-  set_fact:
-    should_install_zoom: "{{ check_zoom_current_version.stdout == '' or check_zoom_current_version.stdout is version(zoom_latest_version, '<') }}"
-
 - name: Install Zoom
-  apt:
-    deb: https://zoom.us/client/latest/zoom_{{packages_architecture}}.deb
-  become: yes
-  when: should_install_zoom
+  community.general.flatpak:
+    name:
+      - us.zoom.Zoom
 
 - name: Install Slack
   snap:

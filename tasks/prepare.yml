@@ -54,3 +54,7 @@
 - name: Set JetBrains IDEs
   set_fact:
     jetbrains_ides: "{{ work_jetbrains_ides if computer_type == 'work' else personal_jetbrains_ides}}"
+
+- name: Install flatpak
+  import_role:
+    name: don_rumata.ansible_role_install_flatpak
