@@ -3,11 +3,23 @@
 set -e
 REPO_ROOT=$(dirname "${BASH_SOURCE}")
 
+get_password() {
+  stty -echo
+  printf "Enter password: " >&2
+  read password
+  stty echo
+  printf "\n" >&2
+  echo "${password}"
+}
+
 install_pip() {
   sudo apt-get update
   sudo apt-get install python3-distutils -y
   wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python3 -
 }
+
+password=$(get_password)
+sudo -S -k true <<< "${password}"  # Calling sudo once with the password, to validate
 
 sudo python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
 sudo python3 -m pip install --root-user-action=ignore -r "${REPO_ROOT}/requirements.txt"
@@ -26,9 +38,9 @@ fi
 
 time \
   ANSIBLE_STDOUT_CALLBACK=debug \
-  ANSIBLE_BECOME_ASK_PASS=${ANSIBLE_BECOME_ASK_PASS:-1} \
   PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}" \
   ansible-playbook \
   -i "${REPO_ROOT}/inventory.ini" \
+  -e "ansible_become_pass=${password}" \
   "$@" \
   "${REPO_ROOT}/main.yml"
