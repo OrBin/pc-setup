@@ -18,9 +18,11 @@ install_pip() {
   wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python3 -
 }
 
-password=$(get_password)
-sudo -S -k true <<< "${password}"  # Calling sudo once with the password, to validate
-sudo -S true <<< "${password}"  # Calling sudo once again, to make it remember the permissions (which -k had reset before)
+if [[ ! -v CI ]]; then
+  password=$(get_password)
+  sudo -S -k true <<< "${password}"  # Calling sudo once with the password, to validate
+  sudo -S true <<< "${password}"  # Calling sudo once again, to make it remember the permissions (which -k had reset before)
+fi
 
 sudo python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
 sudo python3 -m pip install --root-user-action=ignore -r "${REPO_ROOT}/requirements.txt"
