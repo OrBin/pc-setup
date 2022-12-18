@@ -23,7 +23,7 @@
 
 - name: Decide if should install homebrew
   set_fact:
-    should_install_homebrew: check_homebrew_installed is failed
+    should_install_homebrew: "{{ check_homebrew_installed is failed }}"
 
 - name: Install homebrew
   shell: "/bin/bash {{ download_homebrew_installation_script.dest }}"
