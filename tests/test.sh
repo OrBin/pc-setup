@@ -6,7 +6,7 @@ TESTS_DIR=$(dirname "${BASH_SOURCE}")
 source "${TESTS_DIR}/compute_env.sh"
 
 if [ -n "${TMUX}" ]; then
-  trap 'echo $? > ${TESTS_DIR}/.tmux_exit_code' EXIT
+  trap 'echo $? > ${TESTS_DIR}/.tmux_exit_code' ERR EXIT
 fi
 
 cpu_flags=()
