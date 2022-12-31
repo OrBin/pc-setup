@@ -240,7 +240,6 @@
 - name: Install Terraform CLI
   import_role:
     name: robertdebock.terraform
-  when: computer_type == "work"
   become: yes
 
 - name: Install snapcraft
