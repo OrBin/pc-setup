@@ -23,7 +23,3 @@ roles:
 
   - name: don_rumata.ansible_role_install_flatpak
     version: v1.0.0
-
-collections:
-  - name: moreati.jq
-    version: 0.2.1
