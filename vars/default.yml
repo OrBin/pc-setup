@@ -6,6 +6,8 @@ configure_kde: yes
 temp_dir: /tmp/pc-setup
 dive_version: 0.10.0
 add_ssh_key_to_github: yes
+default_chrome_extension_conf:
+  external_update_url: "https://clients2.google.com/service/update2/crx"
 required_chrome_extension_ids:
   - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
   - fihnjjcciajhdojfnbdddfaoknhalnja  # I don't care about cookies

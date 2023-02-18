@@ -269,3 +269,26 @@
   with_nested:
     - "{{ jetbrains_ides_configuration }}"
     - "{{ find_jetbrains_ide_dirs_result.files }}"
+
+- name: Ensure Chrome extensions directory exists
+  ansible.builtin.file:
+    path: "/opt/google/chrome/extensions"
+    state: directory
+    mode: "0755"
+  become: yes
+  register: extensions_dir
+
+- name: Build Chrome external extensions config
+  set_fact:
+    chrome_external_extensions_config: "{{ chrome_external_extensions_config | default({}) | combine({item: default_chrome_extension_conf}) }}"
+  loop: "{{ required_chrome_extension_ids }}"
+
+- name: Inject Chrome external extensions
+  ansible.builtin.copy:
+    content: "{{ chrome_external_extensions_config | to_nice_json }}"
+    dest: "{{ extensions_dir.path }}/external_extensions.json"
+    mode: "0644"
+    force: yes
+    owner: root
+    group: root
+  become: yes

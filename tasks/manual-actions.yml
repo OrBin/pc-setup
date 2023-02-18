@@ -1,27 +1,6 @@
 ---
 # TODO notify to log in to Chrome
 
-- name: Check installed Google Chrome extensions
-  set_fact:
-    # TODO: this won't work before running chrome for the first time
-    installed_chrome_extension_ids: "{{ lookup('file', ansible_user_dir+'/.config/google-chrome/Default/Preferences') | from_json | moreati.jq.jq('.extensions.settings | keys') }}"
-
-- name: Compute Google Chrome extensions to install
-  set_fact:
-    chrome_extension_ids_to_install: "{{ required_chrome_extension_ids | difference(installed_chrome_extension_ids) }}"
-
-- name: Install Google Chrome extensions
-  block:
-  - name: Notify user to manually install Google Chrome extensions
-    pause:
-      prompt: |-
-        Please install chrome extensions.
-        Press enter to automatically open their pages on chrome
-
-  - name: Open Google Chrome extensions pages
-    shell: "google-chrome {{ ['https://chrome.google.com/webstore/detail/'] | product(chrome_extension_ids_to_install) | map('join', '') | join(' ') }} &"
-  when: (chrome_extension_ids_to_install | length) > 0
-
 - name: Check GitHub CLI auth status
   shell: gh auth status
   ignore_errors: yes
