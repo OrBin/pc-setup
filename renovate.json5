@@ -7,6 +7,6 @@
   "stabilityDays": 2,
   "addLabels": ["dependencies"],
   "prConcurrentLimit": 3,
-  "schedule": ["beform 9am on friday"],
+  "schedule": ["before 9am on friday"],
   "timezone": "Asia/Jerusalem"
 }
