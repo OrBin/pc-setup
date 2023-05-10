@@ -96,14 +96,15 @@
 
 - name: Configure git aliases
   git_config:
-    name: "alias.{{ item.key }}"
+    name: "{{ item.key }}"
     value: "{{ item.value }}"
     scope: global
-  loop: "{{ aliases | dict2items }}"
+  loop: "{{ config_items | dict2items }}"
   vars:
-    aliases:
-      co: checkout
-      cob: checkout -b
+    config_items:
+      alias.co: checkout
+      alias.cob: checkout -b
+      pull.rebase: "false"
 
 - name: Download wallpaper
   get_url:
