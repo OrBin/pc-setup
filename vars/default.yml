@@ -76,4 +76,4 @@ pyenv_virtualenvs: []
 pyenv_update_git_install: yes
 
 # Used by robertdebock.terraform:
-terraform_version: 1.3.3
+terraform_version: 1.4.6
