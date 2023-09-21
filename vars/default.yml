@@ -63,7 +63,7 @@ docker_compose_version: v2.12.2
 nodejs_version: 16.x
 
 # Used by geerlingguy.go:
-go_version: 1.20.2
+go_version: 1.21.1
 # Copy checksum from https://go.dev/dl/
 go_checksum: 4eaea32f59cde4dc635fbc42161031d13e1c780b87097f4b4234cfce671f1768
 
