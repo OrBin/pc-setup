@@ -154,7 +154,7 @@
     # gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true"
     gsettings set org.gnome.settings-daemon.plugins.color night-light-last-coordinates "(32.1, 34.8)"  # Tel Aviv
     gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "true"
-    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature uint32 5500
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 5500
   when: configure_gnome
 
 
