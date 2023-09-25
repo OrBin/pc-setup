@@ -52,6 +52,7 @@
     docker_apt_arch: "{{packages_architecture}}"
     docker_users:
       - "{{ansible_user_id}}"  # Self user (the user running this setup)
+    ansible_distribution: "Ubuntu"
   become: yes
 
 - name: Check dive version
