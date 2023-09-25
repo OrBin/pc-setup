@@ -20,3 +20,8 @@
     name: libssl1.1
   become: yes
   when: configure_kde
+
+- name: Install snapd
+  apt:
+    name: snapd
+  become: yes
