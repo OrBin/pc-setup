@@ -92,7 +92,7 @@
     dest: "{{ wallpaper_path }}"
     mode: "0755"
   register: download_wallpaper
-  when: configure_kde
+  when: configure_kde or configure_gnome
 
 - name: Configure plasma desktop applets
   template:
@@ -133,6 +133,28 @@
     (timeout 5 kquitapp5 kglobalaccel5 || killall kglobalaccel5 || true) && sleep 2s && kstart5 kglobalaccel5
     (timeout 5 kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
   when: configure_kde
+
+- name: Configure Gnome
+  shell: |
+    gsettings set org.gnome.desktop.input-sources mru-sources [('xkb', 'us'), ('xkb', 'il')]
+    gsettings set org.gnome.desktop.input-sources sources [('xkb', 'us'), ('xkb', 'il')]
+
+    gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Alt>Shift_L', '<Alt>Shift_R', '<Alt>Shift']"
+
+    gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Alt>Shift_L', '<Alt>Shift_R', 'XF86Keyboard']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', '<Alt>Shift_R', '<Shift>XF86Keyboard']"
+
+    gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'com.spotify.Client.desktop']"
+
+    gsettings set org.gnome.desktop.background picture-uri "file://{{ download_wallpaper.dest }}"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://{{ download_wallpaper.dest }}"
+
+    # gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled "true"
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-last-coordinates "(32.1, 34.8)"  # Tel Aviv
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "true"
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature uint32 5500
+  when: configure_gnome
+
 
 # See this (hopefully) safer alternative to configuring KDE:
 # https://develop.kde.org/docs/plasma/scripting/
