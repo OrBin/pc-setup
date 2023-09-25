@@ -23,6 +23,7 @@
     kwriteconfig5 --file kdeglobals --group General --key 'BrowserApplication' google-chrome.desktop
     xdg-mime default google-chrome.desktop x-scheme-handler/http
     xdg-mime default google-chrome.desktop x-scheme-handler/https
+  when: configure_kde
 
 - name: Install Zoom
   community.general.flatpak:

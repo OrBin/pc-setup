@@ -179,13 +179,14 @@
   copy:
     src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
     dest: "{{ ansible_user_dir }}/.config/autostart/slack_slack.desktop"
-  when: computer_type == "work"
+  when: computer_type == "work" and configure_kde
 
 - name: Add Telegram Desktop to autostart (startup/boot)
   copy:
     src: "/var/lib/flatpak/app/org.telegram.desktop/current/active/export/share/applications/org.telegram.desktop.desktop"
     dest: "{{ ansible_user_dir }}/.config/autostart/telegram-desktop_telegram-desktop.desktop"
   register: telegram_autostart_desktop_entry
+  when: configure_kde
 
 - name: Make Telegram Desktop autostart in tray
   replace:
@@ -194,6 +195,7 @@
     before: "\n"
     regexp: "telegram-desktop -- "
     replace: "telegram-desktop -startintray -- "
+  when: configure_kde
 
 - name: Initialize JetBrains IDE directories
   # Letting each IDE to run for 10 seconds to initialize its configuration directory

@@ -92,6 +92,7 @@
 
   when: git_config_result.config_values["user.email"] is not defined
 
+# TODO huh?
 - name: Check if Cura is already configured
   shell: grep -iRl "Ender-3" ~/.local/share/cura/*/cura.cfg
   ignore_errors: yes
@@ -107,7 +108,7 @@
 
   - name: Open Cura to allow restore from backup
     shell: "env -u DESKTOP_SESSION -u KDE_FULL_SESSION -u XDG_CURRENT_DESKTOP cura &"
-  when: cura_config_check.rc != 0
+    when: cura_config_check.rc != 0 and configure_kde
 
 - name: Check if already logged in to Spotify
   shell: grep autologin ~/.var/app/com.spotify.Client/config/spotify/prefs

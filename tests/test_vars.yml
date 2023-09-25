@@ -2,6 +2,7 @@
 prompt_for_manual_actions: no
 force_apt_update: yes
 configure_kde: no
+configure_gnome: no
 ssh_key_passphrase: ''
 git_user_email: foo@example.com
 add_ssh_key_to_github: no

@@ -216,7 +216,7 @@
       - pre-commit
   become: yes
 
-- name: Install Terraform CLI
+- name: Install Terraform
   import_role:
     name: robertdebock.terraform
   become: yes

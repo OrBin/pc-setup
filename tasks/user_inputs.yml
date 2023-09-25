@@ -49,7 +49,6 @@
         dest: "{{ settings_file_path }}"
         content: "{{ settings | default({}) | combine({ 'computer_type': computer_type }) | to_nice_json }}"
 
-
     - name: Notify user about setting computer type
       pause:
         seconds: 2
