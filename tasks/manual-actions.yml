@@ -21,6 +21,10 @@
       shell: "konsole -e gh auth login --web --scopes admin:public_key"
       when: configure_kde
 
+    - name: Open gnome-terminal for login to GitHub CLI
+      shell: "gnome-terminal -- gh auth login --web --scopes admin:public_key"
+      when: configure_gnome
+
     - name: Make GitHub CLI interactive again
       shell: "gh config set prompt disabled"
 
