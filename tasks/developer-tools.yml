@@ -26,11 +26,6 @@
     state: latest
   become: yes
 
-- name: "Evaluate GitHub CLI completion for bash"
-  shell: |
-    gh completion -s bash | tee $HOME/.gh_bash_completion
-    echo 'source $HOME/.gh_bash_completion' >> "{{ user_bash_completion_file_path }}"
-
 - name: "Evaluate GitHub CLI completion for zsh"
   shell: |
     gh completion -s zsh | tee $HOME/.gh_zsh_completion
@@ -189,15 +184,6 @@
     classic: yes
   become: yes
 
-- name: "Evaluate completions for bash"
-  shell: |
-    "{{ item }}" completion bash | tee $HOME/.{{ item }}_bash_completion
-    echo 'source $HOME/.{{ item }}_bash_completion' >> "{{ user_bash_completion_file_path }}"
-  loop:
-    - kubectl
-    - helm
-    - eksctl
-
 - name: "Evaluate completions for zsh"
   shell: |
     "{{ item }}" completion zsh | tee $HOME/.{{ item }}_zsh_completion
@@ -216,13 +202,6 @@
     name: avanov.pyenv
   vars:
     pyenv_setting_path: "{{ tempfile_for_pyenv_loading.path }}"
-
-- name: Add pyenv path to PATH in user bashrc
-  ansible.builtin.blockinfile:
-    block: |
-      {{ lookup('file', tempfile_for_pyenv_loading.path) }}
-      eval "$(pyenv init --path)"
-    path: "{{user_bashrc_file_path}}"
 
 - name: Save pyenv loading to fill in zshrc
   set_fact:

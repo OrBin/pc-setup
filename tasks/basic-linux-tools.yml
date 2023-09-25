@@ -29,15 +29,6 @@
     - simplescreenrecorder
   become: yes
 
-#- name: Check if oh-my-bash is installed
-#  shell: bash -c '[[ -e $OSH ]]'
-#  ignore_errors: yes
-#  register: omb_check
-#
-#- name: Install oh-my-bash
-#  shell: bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended --prefix "{{ ansible_user_dir }}/omb"
-#  when: omb_check.rc != 0
-
 - name: Check if oh-my-zsh is installed
   shell: zsh -ic '[[ -e $ZSH ]]'
   ignore_errors: yes
@@ -46,15 +37,6 @@
 - name: Install oh-my-zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   when: omz_check.rc != 0
-
-- name: Generate hstr configuration for bash
-  shell: "bash {{playbook_dir}}/configuration/generate_hstr_configuration.sh"
-  register: hstr_configuration_bash
-
-- name: Add hstr configuration to bash configuration
-  lineinfile:
-    path: "{{user_bashrc_file_path}}"
-    line: "{{hstr_configuration_bash.stdout}}"
 
 - name: Generate hstr configuration for zsh
   shell: "zsh {{playbook_dir}}/configuration/generate_hstr_configuration.sh"
@@ -79,16 +61,9 @@
 
 - name: Evaluate alias for thefuck
   # 2022-10-19: The output is equivalent for bash and zsh
+  # TODO:  make sure it's running in zsh
   shell: thefuck --alias
   register: thefuck_alias
-
-- name: Add thefuck alias to bash configuration
-  blockinfile:
-    block: |
-      {{thefuck_alias.stdout}}
-      alias f=fuck
-    path: "{{user_bashrc_file_path}}"
-    marker: ""
 
 - name: Save thefuck alias to fill in zshrc
   set_fact:

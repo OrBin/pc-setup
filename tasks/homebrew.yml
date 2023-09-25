@@ -41,10 +41,3 @@
     path: "{{ ansible_user_dir }}/.profile"
     backup: yes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
-
-- name: Add homebrew path to .bashrc
-  blockinfile:
-    block: 'eval "$({{ homebrew_prefix }}/bin/brew shellenv)"'
-    path: "{{ ansible_user_dir }}/.bashrc"
-    backup: yes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - homebrew"
