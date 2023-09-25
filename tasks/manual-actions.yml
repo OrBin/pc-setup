@@ -115,6 +115,10 @@
     shell: "env -u DESKTOP_SESSION -u KDE_FULL_SESSION -u XDG_CURRENT_DESKTOP cura &"
     when: cura_config_check.rc != 0 and configure_kde
 
+  - name: Open Cura to allow restore from backup
+    shell: "env -u DESKTOP_SESSION -u XDG_CURRENT_DESKTOP cura &"
+    when: cura_config_check.rc != 0 and configure_gnome
+
 - name: Check if already logged in to Spotify
   shell: grep autologin ~/.var/app/com.spotify.Client/config/spotify/prefs
   ignore_errors: yes
