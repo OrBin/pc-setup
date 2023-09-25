@@ -19,6 +19,7 @@
 
     - name: Open Konsole for login to GitHub CLI
       shell: "konsole -e gh auth login --web --scopes admin:public_key"
+      when: configure_kde
 
     - name: Make GitHub CLI interactive again
       shell: "gh config set prompt disabled"
