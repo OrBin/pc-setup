@@ -136,13 +136,18 @@
 
 - name: Configure Gnome
   shell: |
+    # Keyboard layouts
     gsettings set org.gnome.desktop.input-sources mru-sources "[('xkb', 'us'), ('xkb', 'il')]"
     gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'il')]"
 
+    # Keyboard layout shortcuts
     gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Alt>Shift_L', '<Alt>Shift_R', '<Alt>Shift']"
-
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Alt>Shift_L', '<Alt>Shift_R', 'XF86Keyboard']"
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', '<Alt>Shift_R', '<Shift>XF86Keyboard']"
+
+    # Lock shortcut
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>L']"
+
 
     gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'com.spotify.Client.desktop']"
 
