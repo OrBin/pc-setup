@@ -78,10 +78,10 @@
 
 # TODO install IDE extensions (e.g. TabNine)
 
-- name: Install VS Code
-  community.general.flatpak:
-    name: com.visualstudio.code
-  when: computer_type == "work"
+#- name: Install VS Code
+#  community.general.flatpak:
+#    name: com.visualstudio.code
+#  when: computer_type == "work"
 
 - name: Install Postman
   community.general.flatpak:
@@ -222,12 +222,12 @@
     name: robertdebock.terraform
   become: yes
 
-- name: Install snapcraft
-  snap:
-    name: snapcraft
-    classic: yes
-  when: computer_type == "work"
-  become: yes
+#- name: Install snapcraft
+#  snap:
+#    name: snapcraft
+#    classic: yes
+#  when: computer_type == "work"
+#  become: yes
 
 - name: Install zsh-completions (homebrew)
   community.general.homebrew:
@@ -254,20 +254,20 @@
     - fzf
     state: latest
 
-- name: Get latest version of buf
-  community.general.github_release:
-    user: bufbuild
-    repo: buf
-    action: latest_release
-  register: buf_latest_release
-  when: computer_type == "work"
+#- name: Get latest version of buf
+#  community.general.github_release:
+#    user: bufbuild
+#    repo: buf
+#    action: latest_release
+#  register: buf_latest_release
+#  when: computer_type == "work"
 
-- name: Download buf
-  get_url:
-    url: "https://github.com/bufbuild/buf/releases/download/{{buf_latest_release.tag}}/buf-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
-    dest: /usr/local/bin/buf
-    mode: "0755"
-  become: yes
-  when: computer_type == "work"
+#- name: Download buf
+#  get_url:
+#    url: "https://github.com/bufbuild/buf/releases/download/{{buf_latest_release.tag}}/buf-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
+#    dest: /usr/local/bin/buf
+#    mode: "0755"
+#  become: yes
+#  when: computer_type == "work"
 
 # TODO add VirtualBox, gitignore
