@@ -70,7 +70,7 @@ go_checksum: b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae
 
 # Used by avanov.pyenv:
 pyenv_env: user
-pyenv_global: 3.11.1
+pyenv_global: 3.11.6
 pyenv_python_versions:
   - "{{ pyenv_global }}"
 pyenv_virtualenvs: []
