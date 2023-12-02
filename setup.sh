@@ -15,7 +15,7 @@ get_password() {
 install_pip() {
   sudo apt-get update
   sudo apt-get install python3-distutils -y
-  wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python3 -
+  wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo /usr/bin/python3 -
 }
 
 if [[ ! -v CI ]]; then
@@ -24,8 +24,8 @@ if [[ ! -v CI ]]; then
   sudo -S true <<< "${password}"  # Calling sudo once again, to make it remember the permissions (which -k had reset before)
 fi
 
-sudo python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
-sudo python3 -m pip install --root-user-action=ignore -r "${REPO_ROOT}/requirements.txt"
+sudo /usr/bin/python3 -m pip > /dev/null 2>&1 || (echo "pip is missing, installing" && install_pip)
+sudo /usr/bin/python3 -m pip install --root-user-action=ignore -r "${REPO_ROOT}/requirements.txt"
 
 galaxy_requirements_installed="${HOME}/.config/pc-setup/ansible_galaxy_requirements_installed"
 galaxy_requirements_spec="${REPO_ROOT}/requirements.yml"
@@ -42,7 +42,7 @@ fi
 time \
   ANSIBLE_STDOUT_CALLBACK=debug \
   PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}" \
-  ansible-playbook \
+  /usr/bin/python3 -m ansible playbook \
   -i "${REPO_ROOT}/inventory.ini" \
   -e "ansible_become_pass=${password}" \
   "$@" \
