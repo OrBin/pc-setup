@@ -217,6 +217,13 @@
       - pre-commit
   become: yes
 
+- name: Install developer tools (pip)
+  pip:
+    name:
+      - gimme-aws-creds
+  when: computer_type == "work"
+  become: yes
+
 - name: Install Terraform
   import_role:
     name: robertdebock.terraform
