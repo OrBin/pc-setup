@@ -17,10 +17,6 @@
           Please login to GitHub CLI.
           Press enter to start
 
-    - name: Open Konsole for login to GitHub CLI
-      shell: "konsole -e gh auth login --web --scopes admin:public_key"
-      when: configure_kde
-
     - name: Open gnome-terminal for login to GitHub CLI
       shell: "gnome-terminal -- gh auth login --web --scopes admin:public_key"
       when: configure_gnome
@@ -109,10 +105,6 @@
       prompt: |-
         Please log in to Cura and restore from backup.
         Press enter to automatically open Cura
-
-  - name: Open Cura to allow restore from backup
-    shell: "env -u DESKTOP_SESSION -u KDE_FULL_SESSION -u XDG_CURRENT_DESKTOP cura &"
-    when: cura_config_check.rc != 0 and configure_kde
 
   - name: Open Cura to allow restore from backup
     shell: "env -u DESKTOP_SESSION -u XDG_CURRENT_DESKTOP cura &"

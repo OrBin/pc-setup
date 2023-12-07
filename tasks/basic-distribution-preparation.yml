@@ -1,26 +1,4 @@
 ---
-- name: Replace country-specific Ubuntu repo paths with mirror-protocol paths
-  # See "Use mirror protocol" in https://linuxconfig.org/how-to-select-the-fastest-apt-mirror-on-ubuntu-linux
-  shell: "sed -i -e 's/http:\\/\\/{{ ubuntu_archives_country_code }}.archive/mirror:\\/\\/mirrors/' -e 's/\\/ubuntu\\//\\/mirrors.txt/' /etc/apt/sources.list"
-  become: yes
-  when: configure_kde
-
-- name: Add Ubuntu 20.04 security repo
-  # Ubuntu 22.04 has upgraded libssl to 3, and does not propose libssl1.1, which causes to issues with various software products
-  # Read more: https://askubuntu.com/a/1403683/287192
-  apt_repository:
-    repo: "deb http://security.ubuntu.com/ubuntu focal-security main"
-    filename: /etc/apt/sources.list.d/focal-security
-    update_cache: yes
-  become: yes
-  when: configure_kde
-
-- name: Install libssl1.1
-  apt:
-    name: libssl1.1
-  become: yes
-  when: configure_kde
-
 - name: Install snapd
   apt:
     name: snapd

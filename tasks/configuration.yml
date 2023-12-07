@@ -42,32 +42,6 @@
     replace: 'kernel.yama.ptrace_scope = 0'
   become: yes
 
-- name: Update xkbrc
-  ini_file:
-    path: "{{ ansible_user_dir }}/.config/kxkbrc"
-    section: Layout
-    option: "{{ item.key }}"
-    value: "{{ item.value }}"
-    no_extra_spaces: yes
-  loop: "{{ layout_section | dict2items }}"
-  # Not using ini lookup as input since it does not return the keys, only the values
-  vars:
-    layout_section:
-      DisplayNames: ","
-      LayoutList: "us,il"
-      LayoutLoopCount: "-1"
-      Model: "pc101"
-      Options: "grp:alt_shift_toggle,grp:lalt_lshift_toggle"
-      ResetOldOptions: "true"
-      SwitchMode: "Global"
-      Use: "true"
-      VariantList: ","
-  when: configure_kde
-
-- name: Reload keyboard configuration
-  shell: dbus-send --session /Layouts org.kde.keyboard.reloadConfig
-  when: configure_kde
-
 - name: Configure git user name
   git_config:
     name: user.name
@@ -92,47 +66,7 @@
     dest: "{{ wallpaper_path }}"
     mode: "0755"
   register: download_wallpaper
-  when: configure_kde or configure_gnome
-
-- name: Configure plasma desktop applets
-  template:
-    src: "{{playbook_dir}}/configuration/plasma-org.kde.plasma.desktop-appletsrc"
-    dest: "{{ ansible_user_dir }}/.config/plasma-org.kde.plasma.desktop-appletsrc"
-  when: configure_kde
-
-- name: Configure KDE
-  shell: |
-    if [ $(kreadconfig5 --file kdeglobals --group KDE --key LookAndFeelPackage --default default) != 'org.kde.breezedark.desktop' ]; then
-      lookandfeeltool -a org.kde.breezedark.desktop
-    fi
-
-    kwriteconfig5 --file kwinrc --group TabBox --key LayoutName thumbnail_grid
-    kwriteconfig5 --file kwinrc --group NightColor --key Active true
-    kwriteconfig5 --file kwinrc --group NightColor --key NightTemperature 5500
-
-    kwriteconfig5 --file kded5rc --group "Module-browserintegrationreminder" --key autoload false
-
-    # Turn NumLock on on plasma startup
-    kwriteconfig5 --file kcminputrc --group Keyboard --key NumLock "0"
-
-    kwriteconfig5 --file dolphinrc --group General --key RememberOpenedTabs false
-
-    #kwriteconfig5 --file kglobalshortcutsrc --group plasmashell --key "activate widget 4" "Meta+F1,none,Activate Application Launcher Widget"
-
-    #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Quick Tile Top" "none,none,Quick Tile Window to the Top"
-    #kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "Meta+Up,Meta+Up,Maximize Window"
-
-    # current_activity_id=$(kreadconfig5 --file kactivitymanagerdrc --group main --key currentActivity)
-    # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-global" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
-    # kwriteconfig5 --file kactivitymanagerd-statsrc --group "Favorites-org.kde.plasma.kickoff.favorites.instance-4-${current_activity_id}" --key ordering "applications:telegram-desktop_telegram-desktop.desktop,applications:org.kde.plasma-systemmonitor.desktop,applications:org.kde.kate.desktop,applications:pycharm-professional_pycharm-professional.desktop,applications:goland_goland.desktop,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop"
-
-    # Set lock-screen wallpaper
-    kwriteconfig5 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image 'file://{{ download_wallpaper.dest }}'
-
-    kwin_x11 --replace &
-    (timeout 5 kquitapp5 kglobalaccel5 || killall kglobalaccel5 || true) && sleep 2s && kstart5 kglobalaccel5
-    (timeout 5 kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell
-  when: configure_kde
+  when: configure_gnome
 
 - name: Configure Gnome
   shell: |
@@ -219,17 +153,6 @@
     dest: "{{ ansible_user_dir }}/.local/share/applications/slack_slack.desktop"
   when: computer_type == "work"
 
-- name: Ensure autostart directory exists
-  file:
-    path: "{{ ansible_user_dir }}/.config/autostart"
-    state: directory
-  when: configure_kde
-
-- name: Set autostart directory
-  set_fact:
-    autostart_dir: "{{ ansible_user_dir }}/.config/autostart"
-  when: configure_kde
-
 - name: Set autostart directory
   set_fact:
     autostart_dir: "/etc/xdg/autostart"
@@ -239,7 +162,7 @@
   copy:
     src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
     dest: "{{ autostart_dir }}/slack_slack.desktop"
-  when: computer_type == "work" and (configure_kde or configure_gnome)
+  when: computer_type == "work" and configure_gnome
   become: "{{ configure_gnome }}"
 
 - name: Add Telegram Desktop to autostart (startup/boot)
@@ -247,7 +170,7 @@
     src: "/var/lib/flatpak/app/org.telegram.desktop/current/active/export/share/applications/org.telegram.desktop.desktop"
     dest: "{{ autostart_dir }}/telegram-desktop_telegram-desktop.desktop"
   register: telegram_autostart_desktop_entry
-  when: configure_kde or configure_gnome
+  when: configure_gnome
   become: "{{ configure_gnome }}"
 
 - name: Make Telegram Desktop autostart in tray
@@ -257,7 +180,7 @@
     before: "\n"
     regexp: "telegram-desktop -- "
     replace: "telegram-desktop -startintray -- "
-  when: configure_kde or configure_gnome
+  when: configure_gnome
   become: "{{ configure_gnome }}"
 
 - name: Initialize JetBrains IDE directories

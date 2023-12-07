@@ -2,7 +2,6 @@
 host_vars_file_path: "{{ playbook_dir }}/vars/host.yml"
 prompt_for_manual_actions: yes
 force_apt_update: no
-configure_kde: no
 configure_gnome: yes
 temp_dir: /tmp/pc-setup
 dive_version: 0.10.0
