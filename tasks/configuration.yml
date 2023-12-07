@@ -153,6 +153,7 @@
 
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
     gsettings set org.gnome.desktop.interface clock-format "24h"
+    gsettings set org.gnome.desktop.interface clock-show-weekday true
 
     gsettings set org.gnome.desktop.background picture-uri "file://{{ download_wallpaper.dest }}"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://{{ download_wallpaper.dest }}"
@@ -162,6 +163,9 @@
     gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic "true"
     gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 5500
 
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'  # Do not sleep automatically when charging
+    gsettings set org.gnome.desktop.session idle-delay 600
+
     gsettings set org.gnome.shell.extensions.dash-to-dock dock-alignment "START"
     gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed "true"
     gsettings set org.gnome.shell.extensions.dash-to-dock dock-position "BOTTOM"
@@ -169,7 +173,13 @@
     gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode "FIXED"
     gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
     gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.9
-
+    gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+    gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor 'true'
+    
+    org.gnome.shell.extensions.pop-cosmic show-application-menu 'true'
+    org.gnome.shell.extensions.pop-cosmic show-application-button 'false'
+    org.gnome.shell.extensions.pop-cosmic show-workspaces-button 'false'
+    org.gnome.shell.extensions.pop-cosmic clock-alignment 'RIGHT'
   when: configure_gnome
 
 
