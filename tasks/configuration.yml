@@ -111,10 +111,10 @@
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
     gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor 'true'
     
-    org.gnome.shell.extensions.pop-cosmic show-application-menu 'true'
-    org.gnome.shell.extensions.pop-cosmic show-application-button 'false'
-    org.gnome.shell.extensions.pop-cosmic show-workspaces-button 'false'
-    org.gnome.shell.extensions.pop-cosmic clock-alignment 'RIGHT'
+    gsettings set org.gnome.shell.extensions.pop-cosmic show-application-menu 'true'
+    gsettings set org.gnome.shell.extensions.pop-cosmic show-application-button 'false'
+    gsettings set org.gnome.shell.extensions.pop-cosmic show-workspaces-button 'false'
+    gsettings set org.gnome.shell.extensions.pop-cosmic clock-alignment 'CENTER'
   when: configure_gnome
 
 
