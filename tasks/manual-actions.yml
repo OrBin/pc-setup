@@ -97,9 +97,8 @@
 
   when: git_config_result.config_values["user.email"] is not defined
 
-# TODO huh?
 - name: Check if Cura is already configured
-  shell: grep -iRl "Ender-3" ~/.local/share/cura/*/cura.cfg
+  shell: grep -iRl "Ender-5" ~/.local/share/cura/*/cura.cfg
   ignore_errors: yes
   register: cura_config_check
 
