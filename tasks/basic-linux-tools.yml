@@ -27,6 +27,7 @@
     - exa
     - zsh
     - simplescreenrecorder
+    - dconf-editor
   become: yes
 
 - name: Check if oh-my-zsh is installed
