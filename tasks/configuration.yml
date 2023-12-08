@@ -68,7 +68,20 @@
   register: download_wallpaper
   when: configure_gnome
 
-- name: Configure Gnome
+- name: Install Gnome extensions
+  import_role:
+    name: petermosmans.customize-gnome
+  vars:
+    gnome_extensions:
+      - id: 1414  # Unblank lock screen: https://extensions.gnome.org/extension/1414/unblank/
+        enable: yes
+      - id: 3088  # Extension List: https://extensions.gnome.org/extension/3088/extension-list/
+        enable: yes
+      - id: 4663  # Customize Clock on Lock Screen: https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/
+        enable: yes
+  when: configure_gnome
+
+- name: Configure Gnome (gsettings)
   shell: |
     # Keyboard layouts
     gsettings set org.gnome.desktop.input-sources mru-sources "[('xkb', 'us'), ('xkb', 'il')]"
@@ -81,7 +94,6 @@
 
     # Lock shortcut
     gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>L']"
-
 
     gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'com.spotify.Client.desktop']"
 
@@ -115,6 +127,16 @@
     gsettings set org.gnome.shell.extensions.pop-cosmic show-application-button 'false'
     gsettings set org.gnome.shell.extensions.pop-cosmic show-workspaces-button 'false'
     gsettings set org.gnome.shell.extensions.pop-cosmic clock-alignment 'CENTER'
+    
+    # "Unblank lock screen" settings
+    export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/unblank@sun.wxg@gmail.com/schemas/"
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.unblank power false
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.unblank time 900
+
+    # "Customize Clock on Lock Screen" settings
+    export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/CustomizeClockOnLockScreen@pratap.fastmail.fm/schemas/"
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.lockscreen customize-date-format 'true'
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.lockscreen date-format '%A %d/%m/%Y'
   when: configure_gnome
 
 
