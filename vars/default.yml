@@ -26,6 +26,7 @@ required_chrome_extension_ids:
   - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
   - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
   - hpoiflhmfklhfcfpibmdmpeonphmdbda  # Home Assistant
+  - gphhapmejobijbbhgpjhcjognlahblep  # GNOME Shell integration
 cura_configuration:
   - { section: "general", option: "auto_slice", value: "True" }
   - { section: "general", option: "accepted_user_agreement", value: "True" }
