@@ -94,7 +94,7 @@
   when: git_config_result.config_values["user.email"] is not defined
 
 - name: Check if Cura is already configured
-  shell: grep -iRl "Ender-5" ~/.local/share/cura/*/cura.cfg
+  shell: grep -iRl "Ender-5" ~/.var/app/com.ultimaker.cura/data/cura/*/cura.cfg
   ignore_errors: yes
   register: cura_config_check
 
