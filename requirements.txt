@@ -1,4 +1,4 @@
-ansible~=8.4.0
+ansible~=8.6.1
 jq~=1.6.0
 lxml~=4.9.1
 github3.py~=4.0.1
