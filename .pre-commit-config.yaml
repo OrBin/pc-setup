@@ -17,5 +17,5 @@ repos:
     hooks:
       - id: check-github-actions
       - id: check-github-workflows
-# TODO uncomment this; there's an issue with missing JSON5 library
-#      - id: check-renovate
+      - id: check-renovate
+        additional_dependencies: ['json5']
