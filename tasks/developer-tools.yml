@@ -237,5 +237,3 @@
     - kubectx
     - fzf
     state: latest
-
-# TODO add gitignore
