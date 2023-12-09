@@ -1,4 +1,11 @@
 ---
+# TODO: remove
+- name: "Temporary: remove /opt/Lens"
+  file:
+    path: "/opt/Lens"
+    state: absent
+  become: yes
+
 - name: Download GitHub CLI GPG key public ring
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
@@ -10,6 +17,19 @@
   apt_repository:
     repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
     filename: /etc/apt/sources.list.d/github-cli
+  become: yes
+
+- name: Download Lens GPG key public ring
+  get_url:
+    url: https://downloads.k8slens.dev/keys/gpg
+    dest: /usr/share/keyrings/lens-archive-keyring.gpg
+    mode: "0644"
+  become: yes
+
+- name: Add Lens apt repository into sources list
+  apt_repository:
+    repo: "deb [arch={{packages_architecture}} signed-by=/usr/share/keyrings/lens-archive-keyring.gpg] https://downloads.k8slens.dev/apt/debian stable main"
+    filename: /etc/apt/sources.list.d/lens.list
     update_cache: yes
   become: yes
 
@@ -23,6 +43,7 @@
     - adb
     - postgresql-client
     - pv
+    - lens
     state: latest
   become: yes
 
@@ -139,38 +160,6 @@
       color.diff.old: "red bold"
       color.diff.new: "green bold"
       color.diff.whitespace: "red reverse"
-
-- name: Check latest Lens version
-  uri:
-    url: https://api.k8slens.dev/binaries/latest.json
-  register: lens_latest_version_response
-
-- name: Extract latest Lens version
-  set_fact:
-    latest_lens_version: "{{ lens_latest_version_response.json.version }}"
-
-- name: Check installed Lens version
-  shell: dpkg -s lens | grep '^Version:' | cut -d ' ' -f 2-
-  register: installed_lens_version_check_command
-
-- name: Decide if should install Lens
-  set_fact:
-    should_install_lens: "{{ installed_lens_version_check_command is failed or installed_lens_version_check_command.stdout == '' or installed_lens_version_check_command.stdout is version(latest_lens_version, '<') }}"
-
-- name: Download Lens
-  get_url:
-    url: "https://api.k8slens.dev/binaries/Lens-{{ latest_lens_version }}.{{ packages_architecture }}.deb"
-    dest: "{{temp_dir}}"
-    mode: "444"
-  become: yes
-  when: should_install_lens
-  register: download_lens
-
-- name: Install Lens
-  apt:
-    deb:  "{{ download_lens.dest }}"
-  become: yes
-  when: should_install_lens
 
 - name: Install developer tools (snap - classic)
   snap:
