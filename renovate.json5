@@ -1,12 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
   ],
   "dependencyDashboard": false,
   "stabilityDays": 2,
-  "addLabels": ["dependencies"],
+  "addLabels": [
+    "dependencies",
+  ],
   "prConcurrentLimit": 3,
-  "schedule": ["before 9am on friday"],
-  "timezone": "Asia/Jerusalem"
+  "schedule": [
+    "before 9am on friday",
+  ],
+  "timezone": "Asia/Jerusalem",
+  "pre-commit": {
+    "enabled": true,
+  },
 }
