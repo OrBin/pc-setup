@@ -61,7 +61,7 @@ wallpaper_by_computer_type:
 docker_compose_version: v2.12.2
 
 # Used by geerlingguy.nodejs:
-nodejs_version: 16.x
+nodejs_version: 20.x
 
 # Used by geerlingguy.go:
 go_version: 1.21.1
