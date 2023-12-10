@@ -1,11 +1,4 @@
 ---
-# TODO: remove
-- name: "Temporary: remove /opt/Lens"
-  file:
-    path: "/opt/Lens"
-    state: absent
-  become: yes
-
 - name: Download GitHub CLI GPG key public ring
   get_url:
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
@@ -20,10 +13,7 @@
   become: yes
 
 - name: Download Lens GPG key public ring
-  get_url:
-    url: https://downloads.k8slens.dev/keys/gpg
-    dest: /usr/share/keyrings/lens-archive-keyring.gpg
-    mode: "0644"
+  command: "zsh -c 'curl -fsSL https://downloads.k8slens.dev/keys/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/lens-archive-keyring.gpg > /dev/null'"
   become: yes
 
 - name: Add Lens apt repository into sources list
