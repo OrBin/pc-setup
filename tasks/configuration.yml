@@ -137,6 +137,11 @@
     gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.lockscreen date-format '%A %d/%m/%Y'
   when: configure_gnome
 
+- name: Configure default apps
+  shell: |
+    xdg-mime default vlc_vlc.desktop video/mp4 video/3gp video/3gpp video/x-matroska application/xspf+xml
+  when: configure_gnome
+
 
 # See this (hopefully) safer alternative to configuring KDE:
 # https://develop.kde.org/docs/plasma/scripting/
