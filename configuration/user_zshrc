@@ -119,8 +119,6 @@ rebase_default() {
 
 alias rebase_main=rebase_default
 
-alias restart_plasmashell='(kquitapp5 plasmashell || killall plasmashell || true) && kstart5 plasmashell > /dev/null 2>&1'
-alias restart_kwin='restart_kde_app_with_sleep kwin_x11 > /dev/null 2>&1'
 alias ecr_login='$(aws ecr get-login | sed -E "s/-e none //")'
 alias current_branch='git rev-parse --abbrev-ref HEAD'
 alias github_user="grep -P '\Wuser:' ~/.config/gh/hosts.yml  | cut -d ':' -f2 | sed 's/ //'"

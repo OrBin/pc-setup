@@ -20,7 +20,6 @@
 - name: Set Google Chrome as the default browser
   shell: |
     xdg-settings set default-web-browser google-chrome.desktop
-    kwriteconfig5 --file kdeglobals --group General --key 'BrowserApplication' google-chrome.desktop
     xdg-mime default google-chrome.desktop x-scheme-handler/http
     xdg-mime default google-chrome.desktop x-scheme-handler/https
   when: configure_gnome
