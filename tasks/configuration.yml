@@ -89,7 +89,7 @@
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', '<Alt>Shift_R', '<Shift>XF86Keyboard']"
 
     # Lock shortcut
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>L']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>l', '<Super>Escape']"
 
     gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'com.spotify.Client.desktop']"
 
