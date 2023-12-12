@@ -174,7 +174,7 @@
 
 - name: Install pyenv
   import_role:
-    name: avanov.pyenv
+    name: staticdev.pyenv
   vars:
     pyenv_setting_path: "{{ tempfile_for_pyenv_loading.path }}"
 
