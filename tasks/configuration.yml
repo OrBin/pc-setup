@@ -24,10 +24,18 @@
     backup: yes
     mode: "0644"
 
-- name: Change shell to zsh
+- name: Create "wireshark" group
+  ansible.builtin.group:
+    name: wireshark
+  become: yes
+
+- name: Change shell to zsh and add to groups
   ansible.builtin.user:
     name: "{{ansible_user_id}}"
     shell: /bin/zsh
+    groups:
+      - wireshark
+    append: true
   become: yes
 
 - name: Create directory for personal internal scripts
