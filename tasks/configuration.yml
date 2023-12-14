@@ -83,6 +83,10 @@
         enable: yes
       - id: 4663  # Customize Clock on Lock Screen: https://extensions.gnome.org/extension/4663/customize-clock-on-lock-screen/
         enable: yes
+      - id: 2935  # Control Blur Effect On Lock Screen: https://extensions.gnome.org/extension/2935/control-blur-effect-on-lock-screen/
+        enable: yes
+      - id: 5135  # Audio Selector: https://extensions.gnome.org/extension/5135/audio-selector/
+        enable: yes
   when: configure_gnome
 
 - name: Configure Gnome (gsettings)
@@ -126,14 +130,14 @@
     gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.9
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
     gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor 'true'
-    
+
     gsettings set org.gnome.shell.extensions.pop-cosmic show-application-menu 'true'
     gsettings set org.gnome.shell.extensions.pop-cosmic show-application-button 'false'
     gsettings set org.gnome.shell.extensions.pop-cosmic show-workspaces-button 'false'
     gsettings set org.gnome.shell.extensions.pop-cosmic clock-alignment 'CENTER'
 
     gsettings set org.gnome.shell.extensions.pop-shell fullscreen-launcher 'true'
-    
+
     # "Unblank lock screen" settings
     export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/unblank@sun.wxg@gmail.com/schemas/"
     gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.unblank power false
@@ -143,6 +147,16 @@
     export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/CustomizeClockOnLockScreen@pratap.fastmail.fm/schemas/"
     gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.lockscreen customize-date-format 'true'
     gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.lockscreen date-format '%A %d/%m/%Y'
+
+    # "Control Blur Effect On Lock Screen" settings
+    export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/ControlBlurEffectOnLockScreen@pratap.fastmail.fm/schemas/"
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.blur brightness 0.4
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.blur sigma 2
+
+    # "Audio Selector" settings
+    export SCHEMA_DIR="{{ansible_user_dir}}/.local/share/gnome-shell/extensions/audio-selector@harald65.simon.gmail.com/schemas/"
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.audio-selector show-input-device-menu 'true'
+    gsettings --schemadir $SCHEMA_DIR set org.gnome.shell.extensions.audio-selector show-output-device-menu 'true'
   when: configure_gnome
 
 - name: Configure default apps
