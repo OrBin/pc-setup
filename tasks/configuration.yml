@@ -38,6 +38,14 @@
     append: true
   become: yes
 
+- name: Allow non-root users to capture traffic (for Wireshark)
+  debconf:
+    name: wireshark-common
+    question: wireshark-common/install-setuid
+    vtype: boolean
+    value: "true"
+  become: yes
+
 - name: Create directory for personal internal scripts
   file:
     path: "{{ ansible_user_dir }}/bin"
