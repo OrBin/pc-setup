@@ -218,7 +218,7 @@
 - name: Add Telegram Desktop to autostart (startup/boot)
   copy:
     src: "/var/lib/flatpak/app/org.telegram.desktop/current/active/export/share/applications/org.telegram.desktop.desktop"
-    dest: "{{ autostart_dir }}/telegram-desktop_telegram-desktop.desktop"
+    dest: "{{ autostart_dir }}/"
   register: telegram_autostart_desktop_entry
   when: configure_gnome
   become: "{{ configure_gnome }}"
@@ -228,8 +228,8 @@
     path: "{{ telegram_autostart_desktop_entry.dest }}"
     after: "\nExec="
     before: "\n"
-    regexp: "telegram-desktop -- "
-    replace: "telegram-desktop -startintray -- "
+    regexp: "org.telegram.desktop -- "
+    replace: "org.telegram.desktop -startintray -- "
   when: configure_gnome
   become: "{{ configure_gnome }}"
 
