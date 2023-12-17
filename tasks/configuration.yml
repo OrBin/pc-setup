@@ -203,12 +203,6 @@
   loop: "{{ cura_configuration }}"
   when: find_cura_config_dir.matched > 0
 
-- name: Add missing Slack desktop entry
-  copy:
-    src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
-    dest: "{{ ansible_user_dir }}/.local/share/applications/slack_slack.desktop"
-  when: computer_type == "work"
-
 - name: Set autostart directory
   set_fact:
     autostart_dir: "/etc/xdg/autostart"
@@ -216,8 +210,8 @@
 
 - name: Add Slack to autostart (startup/boot)
   copy:
-    src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
-    dest: "{{ autostart_dir }}/slack_slack.desktop"
+    src: "/var/lib/flatpak/app/com.slack.Slack/current/active/export/share/applications/com.slack.Slack.desktop"
+    dest: "{{ autostart_dir }}/"
   when: computer_type == "work" and configure_gnome
   become: "{{ configure_gnome }}"
 
