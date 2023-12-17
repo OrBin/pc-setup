@@ -99,6 +99,8 @@
 
 - name: Configure Gnome (gsettings)
   shell: |
+    gsettings set org.gnome.system.locale region 'en_IL.UTF-8'
+    
     # Keyboard layouts
     gsettings set org.gnome.desktop.input-sources mru-sources "[('xkb', 'us'), ('xkb', 'il')]"
     gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'il')]"
