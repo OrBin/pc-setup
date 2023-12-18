@@ -56,6 +56,19 @@ wallpapers_s3_base_url: "https://or-public-wallpapers-2.s3.eu-central-1.amazonaw
 wallpaper_by_computer_type:
   personal: "alexander_stream_estuary_side_stones_improved.jpg"
   work: "carmel_forest_improved.jpg"
+favorite_apps:
+  personal:
+    - google-chrome.desktop
+    - org.gnome.Nautilus.desktop
+    - org.gnome.Terminal.desktop
+    - com.spotify.Client.desktop
+  work:
+    - google-chrome.desktop
+    - org.gnome.Nautilus.desktop
+    - org.gnome.Terminal.desktop
+    - com.spotify.Client.desktop
+    - lens-desktop.desktop
+    - com.slack.Slack.desktop
 
 # Used by geerlingguy.docker:
 docker_compose_version: v2.12.2
