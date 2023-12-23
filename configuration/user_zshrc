@@ -143,3 +143,11 @@ fi
 
 {{ hstr_configuration_for_zshrc }}
 {{ thefuck_alias_for_zshrc }}
+
+unlock_pdf() {
+  file=$1
+  password=$2
+  tempfile=$(mktemp)
+  pdftk $file input_pw "${password}" output $tempfile
+  mv $tempfile $file
+}
