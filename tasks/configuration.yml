@@ -99,6 +99,8 @@
 
 - name: Configure Gnome (gsettings)
   shell: |
+    gsettings set org.gnome.system.locale region 'en_IL.UTF-8'
+    
     # Keyboard layouts
     gsettings set org.gnome.desktop.input-sources mru-sources "[('xkb', 'us'), ('xkb', 'il')]"
     gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'il')]"
@@ -107,11 +109,12 @@
     gsettings set org.freedesktop.ibus.general.hotkey triggers "['<Alt>Shift_L', '<Alt>Shift_R', '<Alt>Shift']"
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Alt>Shift_L', '<Alt>Shift_R', 'XF86Keyboard']"
     gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L', '<Alt>Shift_R', '<Shift>XF86Keyboard']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
 
     # Lock shortcut
     gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>l', '<Super>Escape']"
 
-    gsettings set org.gnome.shell favorite-apps "['google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'com.spotify.Client.desktop']"
+    gsettings set org.gnome.shell favorite-apps '{{ favorite_apps.work if computer_type == "work" else favorite_apps.personal | tojson }}'
 
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
     gsettings set org.gnome.desktop.interface clock-format "24h"
@@ -203,12 +206,6 @@
   loop: "{{ cura_configuration }}"
   when: find_cura_config_dir.matched > 0
 
-- name: Add missing Slack desktop entry
-  copy:
-    src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
-    dest: "{{ ansible_user_dir }}/.local/share/applications/slack_slack.desktop"
-  when: computer_type == "work"
-
 - name: Set autostart directory
   set_fact:
     autostart_dir: "/etc/xdg/autostart"
@@ -216,15 +213,15 @@
 
 - name: Add Slack to autostart (startup/boot)
   copy:
-    src: "/var/lib/snapd/desktop/applications/slack_slack.desktop"
-    dest: "{{ autostart_dir }}/slack_slack.desktop"
+    src: "/var/lib/flatpak/app/com.slack.Slack/current/active/export/share/applications/com.slack.Slack.desktop"
+    dest: "{{ autostart_dir }}/"
   when: computer_type == "work" and configure_gnome
   become: "{{ configure_gnome }}"
 
 - name: Add Telegram Desktop to autostart (startup/boot)
   copy:
     src: "/var/lib/flatpak/app/org.telegram.desktop/current/active/export/share/applications/org.telegram.desktop.desktop"
-    dest: "{{ autostart_dir }}/telegram-desktop_telegram-desktop.desktop"
+    dest: "{{ autostart_dir }}/"
   register: telegram_autostart_desktop_entry
   when: configure_gnome
   become: "{{ configure_gnome }}"
@@ -234,8 +231,8 @@
     path: "{{ telegram_autostart_desktop_entry.dest }}"
     after: "\nExec="
     before: "\n"
-    regexp: "telegram-desktop -- "
-    replace: "telegram-desktop -startintray -- "
+    regexp: "org.telegram.desktop -- "
+    replace: "org.telegram.desktop -startintray -- "
   when: configure_gnome
   become: "{{ configure_gnome }}"
 
