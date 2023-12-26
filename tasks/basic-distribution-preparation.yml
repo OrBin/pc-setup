@@ -1,5 +1,7 @@
 ---
-- name: Install snapd
+- name: Install snapd and FUSE
   apt:
-    name: snapd
+    name:
+      - snapd
+      - libfuse2
   become: yes
