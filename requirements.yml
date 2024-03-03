@@ -22,4 +22,4 @@ roles:
     version: v1.0.0
 
   - name: petermosmans.customize-gnome
-    version: 0.2.11
+    version: 0.2.12
