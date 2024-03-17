@@ -77,9 +77,9 @@ docker_compose_version: v2.12.2
 nodejs_version: 20.x
 
 # Used by geerlingguy.go:
-go_version: 1.21.1
+go_version: 1.22.1
 # Copy checksum from https://go.dev/dl/
-go_checksum: b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae
+go_checksum: aab8e15785c997ae20f9c88422ee35d962c4562212bb0f879d052a35c8307c7f
 
 # Used by staticdev.pyenv:
 pyenv_env: user
