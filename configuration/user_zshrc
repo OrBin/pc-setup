@@ -125,7 +125,7 @@ alias github_user="grep -P '\Wuser:' ~/.config/gh/hosts.yml  | cut -d ':' -f2 | 
 alias github_token="grep -P '\Woauth_token:' ~/.config/gh/hosts.yml  | cut -d ':' -f2 | sed 's/ //'"
 alias last_runs='gh run list --branch "$(current_branch)" --user "$(github_user)" --limit 10'
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export FX_THEME=8
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1  # This is handled by oh-my-zsh anyway
