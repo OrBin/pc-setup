@@ -16,7 +16,7 @@ roles:
     version: 2.11.0
 
   - name: robertdebock.terraform
-    version: 4.1.7
+    version: 4.1.8
 
   - name: don_rumata.ansible_role_install_flatpak
     version: v1.0.0
