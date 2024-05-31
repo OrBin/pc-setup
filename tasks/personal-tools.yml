@@ -13,6 +13,7 @@
       - org.audacityteam.Audacity
       - com.spotify.Client
       - org.telegram.desktop
+      - io.gitlab.adhami3310.Footage
 
 - name: Install Steam
   community.general.flatpak:
