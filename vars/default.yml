@@ -19,7 +19,7 @@ required_chrome_extension_ids:
   - bkhaagjahfmjljalopjnoealnfndnagc  # Octotree - GitHub code tree
   - hlepfoohegkhhmjieoechaddaejaokhf  # Refined GitHub
   - niloccemoadcdkdjlinkgdfekeahmflj  # Save to Pocket
-  - epcnnfbjfcgphgdmggkamkmgojdagdnn  # uBlock
+  - cjpalhdlnbpafiamejdnhcphjbkeiagm  # uBlock Origin
   - ldgiafaliifpknmgofiifianlnbgflgj  # Ugly Email
   - egmbedhkleiholijlmnlhgcflooajdnb  # Unified Docs Switcher
   - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
@@ -27,6 +27,7 @@ required_chrome_extension_ids:
   - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
   - hpoiflhmfklhfcfpibmdmpeonphmdbda  # Home Assistant
   - gphhapmejobijbbhgpjhcjognlahblep  # GNOME Shell integration
+  - eimadpbcbfnmbkopoojfekhnkhdbieeh  # Dark Reader
 cura_configuration:
   - { section: "general", option: "auto_slice", value: "True" }
   - { section: "general", option: "accepted_user_agreement", value: "True" }
