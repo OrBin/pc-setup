@@ -10,7 +10,7 @@
   ],
   "prConcurrentLimit": 3,
   "schedule": [
-    "before 9am on friday",
+    "on the 5th day of the month every 1 month at 09:00",
   ],
   "timezone": "Asia/Jerusalem",
   "pre-commit": {
