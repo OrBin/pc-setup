@@ -172,7 +172,7 @@
 
 - name: Configure default apps
   shell: |
-    xdg-mime default vlc_vlc.desktop video/mp4 video/3gp video/3gpp video/x-matroska application/xspf+xml
+    xdg-mime default vlc.desktop video/mp4 video/3gp video/3gpp video/x-matroska application/xspf+xml
   when: configure_gnome
 
 
