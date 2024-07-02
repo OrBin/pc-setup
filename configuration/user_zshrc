@@ -151,3 +151,13 @@ unlock_pdf() {
   pdftk $file input_pw "${password}" output $tempfile
   mv $tempfile $file
 }
+
+framify() {
+  file_name=$1
+  sanitized_file_name="${file_name//[\.\ \"]/_}"
+  frames_dir="${sanitized_file_name}_frames"
+  rm -rf "${frames_dir}"
+  mkdir "${frames_dir}"
+  ffmpeg -i "${file_name}" -q:v 1 "${frames_dir}/${sanitized_file_name}_frame_%03d.jpg"
+  echo "\e[1;32mFinished extracting frames from '${file_name}' into ${frames_dir}/ directory\e[0m"
+}

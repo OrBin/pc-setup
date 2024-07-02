@@ -9,24 +9,14 @@ add_ssh_key_to_github: yes
 default_chrome_extension_conf:
   external_update_url: "https://clients2.google.com/service/update2/crx"
 required_chrome_extension_ids:
-  - jeoacafpbcihiomhlakheieifhpjdfeo  # Disconnect
-  - fihnjjcciajhdojfnbdddfaoknhalnja  # I don't care about cookies
   - bcjindcccaagfpapjjmafapmmgkkhgoa  # JSON Formatter
   - nngceckbapebfimnlniiiahkandclblb  # BitWarden
-  - laookkfknpbbblfpciffpaejjkokdgca  # Momentum
   - fjcldmjmjhkklehbacihaiopjklihlgg  # News Feed Eradicator
-  - jlmafbaeoofdegohdhinkhilhclaklkp  # OctoLinker
   - bkhaagjahfmjljalopjnoealnfndnagc  # Octotree - GitHub code tree
   - hlepfoohegkhhmjieoechaddaejaokhf  # Refined GitHub
-  - niloccemoadcdkdjlinkgdfekeahmflj  # Save to Pocket
   - cjpalhdlnbpafiamejdnhcphjbkeiagm  # uBlock Origin
   - ldgiafaliifpknmgofiifianlnbgflgj  # Ugly Email
-  - egmbedhkleiholijlmnlhgcflooajdnb  # Unified Docs Switcher
-  - gppongmhjkpfnbhagpmjfkannfbllamg  # Wappalyzer
-  - ppaojnbmmaigjmlpjaldnkgnklhicppk  # Webtime Tracker
   - pebcgebefnbdkgpkkeelbpbgijmjackb  # Kumta - Home Front Command alerts
-  - hpoiflhmfklhfcfpibmdmpeonphmdbda  # Home Assistant
-  - gphhapmejobijbbhgpjhcjognlahblep  # GNOME Shell integration
   - eimadpbcbfnmbkopoojfekhnkhdbieeh  # Dark Reader
 cura_configuration:
   - { section: "general", option: "auto_slice", value: "True" }
