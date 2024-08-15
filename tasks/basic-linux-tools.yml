@@ -20,6 +20,7 @@
     - zsh
     - simplescreenrecorder
     - dconf-editor
+    - libnotify-bin
   become: yes
 
 - name: Check if oh-my-zsh is installed
