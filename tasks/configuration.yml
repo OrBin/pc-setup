@@ -50,13 +50,13 @@
   file:
     path: "{{ ansible_user_dir }}/bin"
     state: directory
-    mode: "0700"
   register: scripts_dir
 
 - name: Copy notify_sleep.sh
   copy:
     src: "{{ playbook_dir }}/configuration/notify_sleep.sh"
     dest: "{{ scripts_dir.path }}/notify_sleep.sh"
+    mode: "0700"
   register: notify_sleep_script
   when: computer_type == "personal"
 
