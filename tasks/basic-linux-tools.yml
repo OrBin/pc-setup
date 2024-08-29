@@ -21,6 +21,7 @@
     - simplescreenrecorder
     - dconf-editor
     - libnotify-bin
+    - ripgrep
   become: yes
 
 - name: Check if oh-my-zsh is installed
