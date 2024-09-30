@@ -1,9 +1,24 @@
+- name: Add specified Inkscape PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:inkscape.dev/stable
+    update_cache: false  # We update in the next task
+  become: yes
+
+- name: Add specified OpenShot PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:openshot.developers/ppa
+    update_cache: true
+  become: yes
+
 - name: Install personal tools (apt)
   apt:
     name:
       - openscad
       - kazam
       - pinta
+      - inkscape
+      - openshot-qt
+      - python3-openshot
   become: yes
 
 - name: Install personal tools (flatpak)
