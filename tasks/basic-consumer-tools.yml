@@ -39,4 +39,5 @@
   community.general.flatpak:
     name:
       - com.slack.Slack
+    state: latest
   when: computer_type == "work"

@@ -29,6 +29,7 @@
       - com.spotify.Client
       - org.telegram.desktop
       - io.gitlab.adhami3310.Footage
+    state: latest
 
 - name: Install Steam
   community.general.flatpak:
