@@ -7,6 +7,6 @@ if [[ "$(gnome-screensaver-command --query)" = "The screensaver is active" ]]; t
   exit
 fi
 
-notify-send -t 300000 'Go to sleep!' 'Screen will be locked in 2 minutes'
-sleep 120
+notify-send -t 30000 'Go to sleep!' 'Screen will be locked in 30 seconds'
+sleep 30
 gnome-screensaver-command --activate
