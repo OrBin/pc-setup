@@ -62,17 +62,17 @@
 
 - name: Add notify_sleep.sh to cron
   ansible.builtin.cron:
-    name: notify_sleep 12 AM
-    minute: "*/15"
-    hour: "0"
+    name: "notify_sleep 23:XX"
+    minute: "*/30"
+    hour: "23"
     job: "{{ notify_sleep_script.dest }}"
   when: computer_type == "personal"
 
 - name: Add notify_sleep.sh to cron
   ansible.builtin.cron:
-    name: notify_sleep 1-4 AM
+    name: "notify_sleep 00:XX-04:XX"
     minute: "*/5"
-    hour: "1-4"
+    hour: "0-4"
     job: "{{ notify_sleep_script.dest }}"
   when: computer_type == "personal"
 
